@@ -26,14 +26,14 @@ function AuthForm({ onToggle}) {
         {({
          isSubmitting,
         })=>(
-        <Form className='w-full h-fit flex flex-col gap-y-4'>
+        <Form className='w-full h-fit flex flex-col gap-y-2'>
            <div>
-              <label className="block text-xl font-semibold font-open my-4 text-gray-900">Email</label>
+              <label className="block text-xl font-semibold font-open my-2 text-gray-900">Email</label>
               <Field
                 type="email"
                 name="email"
                 placeholder="Enter your Email"
-                className="w-full p-2 px-4 min-h-12 border placeholder:font-inter placeholder:tracking-tight placeholder:text-base border-[#BAE4FF] rounded-lg outline-0 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full p-2 px-4 min-h-12 border bg-[#F4F9FC] placeholder:font-inter placeholder:tracking-tight placeholder:text-base border-[#BAE4FF] rounded-lg outline-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
               <ErrorMessage
                 name="email"
@@ -42,13 +42,13 @@ function AuthForm({ onToggle}) {
               />
             </div>
             <div className="relative">
-              <label className="block text-xl font-semibold font-open my-4 text-gray-900">Password</label>
+              <label className="block text-xl font-semibold font-open my-2 text-gray-900">Password</label>
               <div className="relative">
                 <Field
                   type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Enter your password"
-                  className="w-full p-2 px-4 border  min-h-12 border-[#BAE4FF] placeholder:tracking-tight placeholder:font-inter placeholder:text-base rounded-lg outline-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full p-2 px-4 border  min-h-12 bg-[#F4F9FC] border-[#BAE4FF] placeholder:tracking-tight placeholder:font-inter placeholder:text-base rounded-lg outline-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
                 <button
                   type="button"
@@ -69,20 +69,20 @@ function AuthForm({ onToggle}) {
             
 
             {/* Remember Me Checkbox */}
-            <div className="flex items-center">
+            <div className="flex items-center mt-4">
               <Field
                 type="checkbox"
                 name="rememberMe"
-                className="mr-2 h-4 w-4 text-[#232321]"
+                className="mr-2 h-4 w-4 accent-[#232321]"
               />
-              <label className="text-sm font-open">Remember Me</label>
+              <label className="text-sm font-open  font-semibold">Remember me</label>
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-[#3399FF] h-12 text-white text-sm py-2 font-rubik rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-5 
+              className="w-full bg-[#3399FF] mt-8 h-12 text-white text-sm py-2 font-rubik rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-5 
               disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Logging in" : "Email Login"}{" "} <FaArrowRight/>
