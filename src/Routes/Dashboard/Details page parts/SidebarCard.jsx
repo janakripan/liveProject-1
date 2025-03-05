@@ -38,7 +38,7 @@ function SidebarCard({ items }) {
                     <p className=" text-sm font-poppins font-normal">
                         {request.name}
                     </p>
-                    <div className={`px-2 py-0.5 font-bold text-xs text-white rounded ${typeColors[request.type]}`}>
+                    <div className={`px-2 py-0.5 font-bold text-xs text-white rounded flex items-center justify-center uppercase  ${typeColors[request.type]}`}>
                         {request.type}
 
                     </div>

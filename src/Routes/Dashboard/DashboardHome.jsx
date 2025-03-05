@@ -20,7 +20,7 @@ function DashboardHome() {
         <h2 className="font-poppins font-semibold text-xl text-gray-900 ml-2">
           Projects
         </h2>
-        <ul className="w-full h-full grid grid-cols-3 gap-1 mt-6">
+        <ul className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 mt-6">
           {dashboardconstant.map((item, index) => (
             <div
               key={index}

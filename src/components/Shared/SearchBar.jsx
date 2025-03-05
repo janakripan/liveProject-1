@@ -1,7 +1,7 @@
 import { Formik, Form, Field } from "formik";
 import { FiSearch } from "react-icons/fi";
 
-const SearchBar = ({ placeholder = "Search...", onSearch }) => {
+const SearchBar = ({ placeholder = "Search anything", onSearch }) => {
   return (
     <Formik
       initialValues={{ query: "" }}
@@ -15,17 +15,17 @@ const SearchBar = ({ placeholder = "Search...", onSearch }) => {
       {({ handleSubmit }) => (
         <Form 
           onSubmit={handleSubmit} 
-          className="flex items-center border rounded-lg p-2 shadow-md w-full h-10 max-w-md bg-white"
+          className="flex items-center border border-[#9A9A9A] rounded-lg p-2  w-full h-[38px] max-w-md "
         >
           
           <Field
             type="text"
             name="query"
             placeholder={placeholder}
-            className="w-full p-2 outline-none bg-transparent"
+            className="w-full p-2 outline-none placeholder:font-poppins placeholder:text-[#9A9A9A] placeholder:text-xs  bg-transparent"
           />
-          <button type="submit" className="" >
-          <FiSearch className="text-gray-500 mx-2" />
+          <button type="submit" className=" text-[20px] text-[#727272]" >
+          <FiSearch className="" />
           </button>
         </Form>
       )}
