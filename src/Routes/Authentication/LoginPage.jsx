@@ -6,7 +6,7 @@ function LoginPage() {
   return (
     <div className='w-full h-screen bg-red-200 grid  lg:grid-cols-2 '>
       <div className='bg-[#EBF5FF] p-4 flex items-center justify-center w-full h-fit lg:h-full  '>
-        <img src={LoginBg} className=' w-[80%] h-[80%] object-cover  ' alt=" login background image" />
+        <img src={LoginBg} className='   ' alt=" login background image" />
 
       </div>
       <div className='bg-white p-4 w-full h-full flex flex-col items-center justify-center lg:p-28 '>
