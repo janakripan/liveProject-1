@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { FaEye,FaEyeSlash  } from "react-icons/fa";
+import { IoEyeOutline,IoEyeOffOutline  } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa";
 import { AuthSchema } from "../../validations/authValidation";
 function AuthForm({ onToggle}) {
@@ -28,12 +28,12 @@ function AuthForm({ onToggle}) {
         })=>(
         <Form className='w-full h-fit flex flex-col gap-y-4'>
            <div>
-              <label className="block text-xl font-semibold font-rubik my-4 text-gray-900">Email</label>
+              <label className="block text-xl font-semibold font-open my-4 text-gray-900">Email</label>
               <Field
                 type="email"
                 name="email"
-                placeholder="Enter your E-mail id"
-                className="w-full p-2 px-4 min-h-12 border border-gray-300 rounded-lg outline-0 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter your Email"
+                className="w-full p-2 px-4 min-h-12 border placeholder:font-inter placeholder:tracking-tight placeholder:text-base border-[#BAE4FF] rounded-lg outline-0 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <ErrorMessage
                 name="email"
@@ -42,20 +42,20 @@ function AuthForm({ onToggle}) {
               />
             </div>
             <div className="relative">
-              <label className="block text-xl font-semibold font-rubik my-4 text-gray-900">Password</label>
+              <label className="block text-xl font-semibold font-open my-4 text-gray-900">Password</label>
               <div className="relative">
                 <Field
                   type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Enter your password"
-                  className="w-full p-2 px-4 border  min-h-12 border-gray-300 rounded-lg outline-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full p-2 px-4 border  min-h-12 border-[#BAE4FF] placeholder:tracking-tight placeholder:font-inter placeholder:text-base rounded-lg outline-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
                 <button
                   type="button"
-                  className="absolute right-3 top-4 text-gray-500"
+                  className="absolute right-3 top-4 text-lg text-[#A7A7A7]"
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showPassword ? <IoEyeOffOutline /> : <IoEyeOutline />}
                 </button>
               </div>
               <ErrorMessage
@@ -75,14 +75,14 @@ function AuthForm({ onToggle}) {
                 name="rememberMe"
                 className="mr-2 h-4 w-4 text-[#232321]"
               />
-              <label className="text-sm">Remember Me</label>
+              <label className="text-sm font-open">Remember Me</label>
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-[#3399FF] h-12 text-white text-sm py-2 rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-5 
+              className="w-full bg-[#3399FF] h-12 text-white text-sm py-2 font-rubik rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-5 
               disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Logging in" : "Email Login"}{" "} <FaArrowRight/>
