@@ -11,20 +11,16 @@ import LoginPage from "./Routes/Authentication/LoginPage.jsx";
 import Home from "./Routes/Home/Home.jsx";
 import DetailedDashboard from "./Routes/Dashboard/Details page parts/DetailedDashboard.jsx";
 
-
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}>
-          <Route index element={<Home />} />
+        <Route path="/" element={<AuthHome />}>
+          <Route path="login" element={<LoginPage />} />
         </Route>
         <Route path="dashboard" element={<Dashboard />}>
           <Route index element={<DashboardHome />} />
-          <Route path="details" element={<DetailedDashboard/>}/>
-        </Route>
-        <Route path="auth" element={<AuthHome />}>
-          <Route path="login" element={<LoginPage />} />
+          <Route path="details" element={<DetailedDashboard />} />
         </Route>
       </Routes>
     </BrowserRouter>
