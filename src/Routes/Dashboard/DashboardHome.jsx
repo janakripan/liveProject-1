@@ -16,17 +16,17 @@ function DashboardHome() {
 
   return (
     <div className="w-full h-[80vh] overflow-y-scroll p-10   bg-[#FAFAFA]">
-      <div className="w-full min-h-full max-w-screen-xl mx-auto p-4 rounded-md drop-shadow-xl shadow-xl ring-1 ring-gray-200 ">
-        <h2 className="font-poppins font-semibold text-xl text-gray-900 ml-2">
+      <div className="w-full min-h-full max-w-screen-xl mx-auto p-4 rounded-md drop-shadow-xl  ring-1 ring-gray-200 ">
+        <h2 className="font-poppins font-semibold text-2xl text-gray-900 ml-2">
           Projects
         </h2>
-        <ul className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 mt-6">
+        <ul className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-10 mt-6 ">
           {dashboardconstant.map((item, index) => (
             <div
               key={index}
-              className="w-full h-fit p-2 flex items-center justify-between px-6 "
+              className="w-full h-fit p-2 flex items-center  justify-between px-4 "
             >
-              <Link className="flex  flex-row items-center justify-between gap-x-6">
+              <Link className="flex  flex-row items-center justify-between gap-x-6 ">
                 <div className="text-5xl">
                   <svg
                     width="48"
@@ -42,7 +42,7 @@ function DashboardHome() {
                   <h3 className="text-xl font-medium font-poppins">
                     {item.title}
                   </h3>
-                  <p>{item.date}</p>
+                  <p className="text-[#515151]">{item.date}</p>
                 </div>
               </Link>
               <div>

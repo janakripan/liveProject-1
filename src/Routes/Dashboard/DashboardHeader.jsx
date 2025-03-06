@@ -30,7 +30,7 @@ function DashboardHeader() {
           )}
         </div>
         <div>
-          <button className="h-8 aspect-square text-lg bg-[#C7C7C7] rounded-md flex items-center justify-center text-[#1C274C] ">
+          <button className="h-10 aspect-square text-lg bg-[#C7C7C7] rounded-md flex items-center justify-center text-[#1C274C] ">
             <img src={loginIcon} alt="Account icon" />
           </button>
         </div>
