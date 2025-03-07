@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import DetailsSidebar from "./DetailsSidebar";
 import { SlOptionsVertical } from "react-icons/sl";
 import { detailNav } from "../../../constants/detailsconstant";
-import { Link, NavLink } from "react-router";
 import Apitester from "./Apitester";
 import { PiPlay } from "react-icons/pi";
 import RequestPage from "./RequestPage";
@@ -17,7 +16,8 @@ function DetailedDashboard() {
     setSwitched(value);
   };
   const handleNavChange = (value) =>{
-    setNavChange(value)
+    setNavChange(value);
+    setIsNavOpen(false)
     
   }
 
@@ -91,13 +91,20 @@ function DetailedDashboard() {
         >
           <ul className="w-full h-fit flex flex-col gap-y-3 ">
             {detailNav.map((items, index) => (
-              <NavLink key={index} to={items.path}>
+              <button
+              onClick={()=>handleNavChange(items.path)}
+              key={index} >
                 <li
-                  className={`px-2 py-1 bg-gray-300 text-sm font-medium font-poppins rounded-lg`}
+                   className={`px-2 py-1 transition-all duration-200 text-base font-medium font-poppins rounded-lg
+                    ${
+                      navChange === items.path
+                      ?"text-white bg-[#38BDF8]"
+                      :""
+                    } `}
                 >
                   {items.title}
                 </li>
-              </NavLink>
+              </button>
             ))}
           </ul>
         </div>
@@ -131,7 +138,7 @@ function DetailedDashboard() {
             Update an existing pet
           </h2>
 
-          {/*buttons to swich bw design and request */}
+          {/*buttons to swich b/w design and request */}
 
           <div className="w-full h-11 border-b-[1px] border-[#DDDDDD]  flex flex-row items-center justify-start ">
             <button
@@ -157,7 +164,7 @@ function DetailedDashboard() {
               Request
             </button>
           </div>
-
+              {/*body of request and design page */}
           {switched ? (
             <div className=" w-full h-fit flex flex-col mt-8 ">
               <RequestPage/>

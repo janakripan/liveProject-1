@@ -15,7 +15,7 @@ function DashboardHome() {
   };
 
   return (
-    <div className="w-full h-[80vh] overflow-y-scroll py-5  bg-[#FAFAFA]">
+    <div className="w-full h-[80vh]  py-5  bg-[#FAFAFA]">
       <div className="w-full min-h-full max-w-screen-xl mx-auto p-4 rounded-md drop-shadow-xl  ring-1 ring-gray-200 ">
         <h2 className="font-poppins font-semibold lg:text-2xl md:text-xl text-lg text-gray-900 ml-2">
           Projects
@@ -29,8 +29,7 @@ function DashboardHome() {
               <Link className="flex  flex-row items-center justify-between gap-x-6 ">
                 <div className="aspect-square lg:h-12 md:h-10 h-8">
                   <svg
-                    width="full"
-                    height="full"
+                  className="h-full w-full"
                     viewBox="0 0 24 24"
                     fill={getColorForFile(item.title || "default")}
                     xmlns="http://www.w3.org/2000/svg"

@@ -1,6 +1,5 @@
 import React from "react";
 import { IoMdPerson } from "react-icons/io";
-import loginIcon from '../../assets/personIcon.png'
 import { useLocation } from "react-router";
 import logo from '../../assets/zudoku-logo-full-light 1.svg';
 import SearchBar from "../../components/Shared/SearchBar";
@@ -13,8 +12,8 @@ function DashboardHeader() {
       <div className={`w-full max-w-screen-xl h-fit min-h-12 mx-auto flex items-start justify-between  py-10 `}>
         <div className=" w-8/12 md:w-5/12">
           {location.pathname === "/dashboard" ? (
-            <div>
-              <h1 className="text-gray-900  font-semibold md:text-2xl text-xl lg:text-3xl font-sans text-left">
+            <div >
+              <h1 className="text-gray-900 font-semibold md:text-2xl text-xl lg:text-3xl font-sans text-left">
                 Hello , Hisham
               </h1>
               <p className="font-sans font-normal md:text-sm text-xs text-gray-900 text-left">
@@ -31,7 +30,8 @@ function DashboardHeader() {
         </div>
         <div>
           <button className="h-10 aspect-square text-lg bg-[#C7C7C7] rounded-md flex items-center justify-center text-[#1C274C] ">
-            <img src={loginIcon} alt="Account icon" />
+            
+            <IoMdPerson/>
           </button>
         </div>
       </div>
