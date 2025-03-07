@@ -115,23 +115,54 @@ export const sidebarconstant = [
 export const detailNav = [
     {
         title:"Overview",
-        path:"",
+        path:"overview",
     },
     {
         title:"Landing",
-        path:"",
+        path:"landing",
     },
     {
         title:"Detailing",
-        path:"",
+        path:"detailing",
     },
     {
         title:"Payment",
-        path:"",
+        path:"payment",
     },
     {
         title:"Product Listing",
-        path:"",
+        path:"productlisting",
     },
    
+]
+
+export const requestaLinks = [
+    {
+        title:"Params ",
+        path:"params",
+    },
+    {
+        title:"Body",
+        path:"body",
+    },
+    {
+        title:"Headers",
+        path:"headers",
+    },
+    {
+        title:"Cookies",
+        path:"cookies",
+    },
+    {
+        title:"Auth",
+        path:"auth",
+    },
+    {
+        title:"Pre Processors",
+        path:"preprocessors",
+    },
+    {
+        title:"Post Processors",
+        path:"postprocessors",
+    },
 ]
