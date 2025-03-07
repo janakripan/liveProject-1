@@ -2,7 +2,7 @@ import React from "react";
 import { IoMdPerson } from "react-icons/io";
 import loginIcon from '../../assets/personIcon.png'
 import { useLocation } from "react-router";
-import logo from '../../assets/logo.png'
+import logo from '../../assets/zudoku-logo-full-light 1.svg';
 import SearchBar from "../../components/Shared/SearchBar";
 
 function DashboardHeader() {
@@ -10,20 +10,20 @@ function DashboardHeader() {
   console.log(location.pathname);
   return (
     <div className={`w-full h-fit  px-4 ${location.pathname === "/dashboard" ? "bg-[#FAFAFA]" : ""}`}>
-      <div className={`w-full max-w-screen-xl h-fit min-h-12 mx-auto flex items-center justify-between  p-10 px-4`}>
-        <div className="w-5/12">
+      <div className={`w-full max-w-screen-xl h-fit min-h-12 mx-auto flex items-start justify-between  py-10 `}>
+        <div className=" w-8/12 md:w-5/12">
           {location.pathname === "/dashboard" ? (
             <div>
-              <h1 className="text-gray-900  font-semibold text-3xl font-sans text-left">
+              <h1 className="text-gray-900  font-semibold md:text-2xl text-xl lg:text-3xl font-sans text-left">
                 Hello , Hisham
               </h1>
-              <p className="font-sans font-normal text-sm text-gray-900 text-left">
+              <p className="font-sans font-normal md:text-sm text-xs text-gray-900 text-left">
                 Here is your project details
               </p>
             </div>
           ) : (
-            <div className="flex flex-row items-center w-full gap-x-14">
-                <img src={logo} className="h-6" alt="logo" />
+            <div className="flex flex-col md:flex-row items-start md:items-center w-full gap-3 lg:gap-x-14">
+                <img src={logo} className="lg:h-6 md:h-5 h-5 " alt="logo" />
                 <SearchBar/>
 
             </div>
