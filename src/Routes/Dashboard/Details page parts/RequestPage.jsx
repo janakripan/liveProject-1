@@ -17,10 +17,10 @@ function RequestPage() {
                     <li key={index} className='w-fit h-fit'>
                         <button
                         onClick={()=>handleClick(items.path)}
-                         className={`px-[18px] py-2 text-[#8C8C8C] text-base font-poppins  rounded-lg transition-all duration-200
+                         className={`px-[18px] py-2 text-[#8C8C8C] text-base font-poppins font-medium  rounded-lg transition-all duration-200
                               ${
                                 changed === items.path
-                                ? "text-gray-900 bg-[#FACC15] "
+                                ? "text-gray-900 bg-[#FACC15]  "
                                 : ""
                                     
                                 }

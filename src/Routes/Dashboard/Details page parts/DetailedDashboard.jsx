@@ -140,7 +140,7 @@ function DetailedDashboard() {
 
           {/*buttons to swich b/w design and request */}
 
-          <div className="w-full h-11 border-b-[1px] border-[#DDDDDD]  flex flex-row items-center justify-start ">
+          <div className="w-full h-11 border-b-[1px] border-[#DDDDDD]  flex flex-row items-center justify-start mt-4 mb-6 ">
             <button
               onClick={() => handleSwitch(false)}
               className={`h-full w-fit flex flex-row items-center justify-center px-10 text-[#8C8C8C] 
@@ -166,7 +166,7 @@ function DetailedDashboard() {
           </div>
               {/*body of request and design page */}
           {switched ? (
-            <div className=" w-full h-fit flex flex-col mt-8 ">
+            <div className=" w-full h-fit flex flex-col  ">
               <RequestPage/>
             </div>
           ) : (

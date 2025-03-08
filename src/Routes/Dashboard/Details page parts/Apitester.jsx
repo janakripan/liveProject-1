@@ -22,7 +22,7 @@ const ApiTester = () => {
   };
   return (
     <>
-      <h4 className="text-2xl font-poppins font-normal mb-2 ">Request Body</h4>
+      <h4 className="text-2xl font-poppins font-normal mb-6 ">Request Body</h4>
 
       <Formik initialValues={initialvalues} onSubmit={handleSubmit}>
         {({ isSubmitting, values }) => (
