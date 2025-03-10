@@ -72,9 +72,10 @@ function DetailedDashboard() {
           </div>
           
         </div>
+        {/*button for mobile sidebar  */}
         <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`w-fit h-10 fixed top-3/4 left-0 z-[9999] -translate-y-3/4 sidebarbutton p-0 bg-slate-300 rounded-r-2xl transition-all duration-200
+            className={`w-fit h-10 fixed top-3/4 left-0 md:hidden z-[9999] -translate-y-3/4 sidebarbutton p-0 bg-slate-300 rounded-r-2xl transition-all duration-200
               ${
                 isOpen
                 ?"translate-x-80"
