@@ -26,13 +26,13 @@ const ApiTester = () => {
 
       <Formik initialValues={initialvalues} onSubmit={handleSubmit}>
         {({ isSubmitting, values }) => (
-          <Form className="w-full h-fit flex flex-row gap-x-6">
+          <Form className="w-full h-fit flex flex-col lg:flex-row gap-6">
 
 
 
             {/* Left side input field */}
 
-            <div className="w-8/12 h-fit bg-[#F9FAFC] font-inter border border-[#DDDDDD] rounded-xl ">
+            <div className="lg:w-8/12 w-full h-fit bg-[#F9FAFC] font-inter border border-[#DDDDDD] rounded-xl ">
               <div className="w-full">
                 <Field
                   type="text"
@@ -107,7 +107,7 @@ const ApiTester = () => {
             </div>
 
             {/* Right side output box */}
-            <div className="w-4/12 flex-1 flex flex-col justify-between bg-[#F9FAFC] rounded-lg border contain-content border-[#DDDDDD]">
+            <div className="lg:w-4/12 flex-1 flex flex-col min-h-40 justify-between bg-[#F9FAFC] rounded-lg border contain-content border-[#DDDDDD]">
               <div className="w-full h-12 border border-[#DDDDDD] flex flex-row items-center justify-between px-4">
                 <h4 className=" text-lg font-semibold text-[#FACC15] ">
                   PUT <span className="text-gray-900">/pet</span>
