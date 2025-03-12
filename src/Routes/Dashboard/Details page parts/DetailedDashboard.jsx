@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DetailsSidebar from "./DetailsSidebar";
 import { SlOptionsVertical } from "react-icons/sl";
 import { detailNav } from "../../../constants/detailsconstant";
@@ -8,9 +8,11 @@ import RequestPage from "./RequestPage";
 import { BsCaretLeft } from "react-icons/bs";
 
 function DetailedDashboard() {
-  const [isOpen, setIsOpen] = useState(true); // mobile sidebar controller
+  const [isOpen, setIsOpen] = useState(false); // mobile sidebar controller
   const [switched, setSwitched] = useState(false); //state to switch between design and request
   const [navChange, setNavChange] = useState("overview"); //state to controll main navigation
+
+
 
   const handleSwitch = (value) => {
     setSwitched(value);
@@ -55,18 +57,15 @@ function DetailedDashboard() {
       {/*sidebar with requests */}
 
       <div className="w-full h-full flex flex-row gap-x-2 pt-3  relative  ">
-        {/* sidebar for normal screens  */}
-        <div className={`h-full  w-80  hidden md:block `}>
-          <DetailsSidebar />
-        </div>
-        {/* sidebar for mobile screen */}
+       
+        <div className={`h-full  w-80  hidden md:block `}/>
         <div
-          className={`h-full  md:hidden  w-fit  absolute top-0 -left-5 z-20 transition-all flex flex-row items-center duration-300 ${
+          className={`h-full w-80 md:w-64 absolute top-0 -left-5 z-20 transition-all flex flex-row items-center duration-300 ${
             isOpen ? "translate-x-0" : "-translate-x-full"
-          } `}
+          } md:translate-x-0 md:block `}
         >
           <div
-            className={`h-full w-80 bg-white  transition-all duration-300  `}
+            className={`h-full md:w-64 w-80 bg-white  transition-all duration-300  `}
           >
             <DetailsSidebar />
           </div>
@@ -84,7 +83,7 @@ function DetailedDashboard() {
           >
             {isOpen?<BsCaretLeft/> :<PiPlay />}
           </button>
-        <div className="w-full h-full mt-2 ">
+        <div className="w-full h-full mt-2 md:pl-5 lg:pl-0 ">
           <h2 className="font-medium font-poppins text-[26px] ">
             Update an existing pet
           </h2>
@@ -121,7 +120,7 @@ function DetailedDashboard() {
               <RequestPage />
             </div>
           ) : (
-            <div className=" w-full h-fit flex flex-col  gap-y-4 ">
+            <div className="  w-full h-fit flex flex-col  gap-y-4 ">
               <div className=" h-fit w-full">
                 <Apitester />
               </div>
