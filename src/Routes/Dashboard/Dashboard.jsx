@@ -3,11 +3,12 @@ import DashboardHeader from './DashboardHeader'
 import { Outlet } from 'react-router'
 
 function Dashboard() {
+  
   return (
     <>
     <DashboardHeader/>
 
-    <div id='dashboardDetail' >
+    <div id='dashboardlayout' >
       <Outlet/>
     </div>
     
