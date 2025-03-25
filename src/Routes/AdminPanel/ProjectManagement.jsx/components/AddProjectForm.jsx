@@ -43,7 +43,7 @@ function AddProjectForm({handleClick}) {
   };
 
   return (
-    <div className="w-full h-fit ">
+    <div className="w-full  h-fit ">
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

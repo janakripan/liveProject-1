@@ -20,10 +20,10 @@ function AdminDashboard() {
       <section>
         {/* dashboard overview */}
         <div className="w-full h-fit">
-          <h3 className="text-2xl font-bold capitalize font-satoshi text-[#1C1B1C] ">
+          <h3 className="md:text-xl text-lg lg:text-2xl font-bold capitalize font-satoshi text-[#1C1B1C] ">
             Dashboard
           </h3>
-          <p className="font-satoshi font-medium text-base text-[#605E5F] mt-2">
+          <p className="font-satoshi font-medium text-sm md:text-base text-[#605E5F] mt-2">
             Overview of your API projects and activity
           </p>
         </div>
@@ -36,14 +36,14 @@ function AdminDashboard() {
         {/* projects table section */}
         <div className="w-full h-fit mt-7 flex flex-col  ">
           <div className="w-full h-fit flex flex-row items-start justify-between  ">
-            <h3 className="font-bold font-satoshi text-2xl text-[#1C1B1C] ">
+            <h3 className="font-bold font-satoshi md:text-xl text-lg lg:text-2xl text-[#1C1B1C] ">
               API Projects
             </h3>
-            <Link className=" text-[#0A84FF] font-medium font-satoshi text-base p-1 ">
+            <Link className=" text-[#0A84FF] font-medium font-satoshi text-sm md:text-base p-1 ">
               See all
             </Link>
           </div>
-          <div className="w-full h-[286px] overflow-hidden mt-4 drop-shadow-sm rounded-lg border-b border-[#E6E1E2]">
+          <div className="w-full h-[286px] overflow-y-hidden overflow-x-scroll  mt-4 drop-shadow-sm rounded-lg border-b border-[#E6E1E2]">
             <ProjectsTable />
           </div>
         </div>
@@ -52,10 +52,10 @@ function AdminDashboard() {
         {/* Request activities section */}
         <div className="w-full h-fit mt-7 flex flex-col">
           <div className="w-full h-fit flex flex-row items-start justify-between  ">
-            <h3 className="font-bold font-satoshi text-2xl text-[#1C1B1C] ">
+            <h3 className="font-bold font-satoshi md:text-xl text-lg lg:text-2xl text-[#1C1B1C] ">
               Request Activities
             </h3>
-            <Link className=" text-[#0A84FF] font-medium font-satoshi text-base p-1 ">
+            <Link className=" text-[#0A84FF] font-medium font-satoshi text-sm md:text-base p-1 ">
               See all
             </Link>
           </div>

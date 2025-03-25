@@ -22,17 +22,17 @@ function RequestCard({ request }) {
 
   return (
     <div className="w-full h-fit px-4 bg-white">
-      <div className=" w-full h-fit p-4  flex flex-row gap-x-2  ">
+      <div className=" w-full h-fit p-4  flex flex-row items-center gap-x-2  ">
         <img
           src={request.image}
-          className="w-[54px] h-[54] "
+          className="lg:w-[54px] w-[30px] h-[30px] lg:h-[54] "
           alt="profile photo"
         />
         <div className="w-full h-full min-h-[56px] flex flex-col justify-between items-start">
-          <h5 className="font-satoshi font-medium text-base text-black">
+          <h5 className="font-satoshi font-medium text-sm md:text-base text-black">
             {request.name} updated {request.projectName} documentation
           </h5>
-          <span className="font-satoshi font-medium text-[#797677] text-base ">{formatTimeAgo(request.time)}</span>
+          <span className="font-satoshi font-medium text-[#797677] md:text-base text-sm ">{formatTimeAgo(request.time)}</span>
         </div>
       </div>
       <hr  className="bg-[#C9C5C6] border border-[#C9C5C6]  w-full "/>

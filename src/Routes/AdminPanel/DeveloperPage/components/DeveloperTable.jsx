@@ -43,7 +43,7 @@ function DeveloperTable({data}) {
         }
       };
   return (
-     <div className="w-full h-fit bg-white border border-[#E6E1E2] overflow-hidden rounded-lg ">
+     <div className="w-full h-fit bg-white border border-[#E6E1E2] overflow-x-auto rounded-lg ">
           <table className="w-full table-auto border-collapse">
             <thead className="bg-[#F5F7F9] text-left">
               <tr className="h-[60px] text-left">

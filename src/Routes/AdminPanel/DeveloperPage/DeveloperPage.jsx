@@ -45,7 +45,7 @@ function DeveloperPage() {
     >
       <div className="w-full h-fit ">
         <div className="w-full h-fit flex flex-row justify-between items-center ">
-          <h1 className="font-satoshi font-bold text-2xl tracking-tight ">
+          <h1 className="font-satoshi font-bold text-xl md:text-xl  lg:text-2xl tracking-tight ">
             API Project Management
           </h1>
 
@@ -53,7 +53,7 @@ function DeveloperPage() {
             onClick={handleClick}
             className=" bg-[#025964] font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 active:scale-95 rounded-lg hover:scale-105 transition-transform duration-300 "
           >
-            <FaPlus /> Add New Project
+            <FaPlus /> <span className="hidden md:block">Add New Project</span>
           </button>
         </div>
 

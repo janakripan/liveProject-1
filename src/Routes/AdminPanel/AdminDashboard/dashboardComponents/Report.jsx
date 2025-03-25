@@ -16,23 +16,23 @@ function Report() {
       return acc;
     }, [])
   ).size;
-  console.log(developerCount);
+
 
   const endpointCount = projectData.reduce((acc, project) => {
     return acc + project.endpoints.length;
   }, 0);
   
   return (
-    <div className="w-full h-fit grid grid-cols-3 gap-x-4">
+    <div className="w-full h-fit grid grid-cols-1  md:grid-cols-3 gap-4">
       <div className="w-full bg-white flex flex-col items-start h-fit drop-shadow-xl   rounded-xl p-4">
         <div className="w-full h-fit flex flex-row justify-between items-center">
-          <h5 className="text-[#AEAAAB] whitespace-nowrap text-base uppercase font-bold font-satoshi ">
+          <h5 className="text-[#AEAAAB] whitespace-nowrap text-sm md:text-base uppercase font-bold font-satoshi ">
             Total Projects
           </h5>
           <img src={projects} alt="project badge" />
         </div>
         <div className="w-fit h-[65px] flex flex-col justify-end">
-          <h4 className=" text-5xl  font-bold text-[#1C1B1C] font-satoshi ">
+          <h4 className="text-2xl md:text-4xl lg:text-5xl  font-bold text-[#1C1B1C] font-satoshi ">
             {projectCount}
           </h4>
         </div>
@@ -40,13 +40,13 @@ function Report() {
 
       <div className="w-full bg-white flex flex-col items-start h-fit drop-shadow-xl rounded-xl p-4">
         <div className="w-full h-fit flex flex-row justify-between items-center">
-          <h5 className="text-[#AEAAAB] whitespace-nowrap text-base uppercase font-bold font-satoshi ">
+          <h5 className="text-[#AEAAAB] whitespace-nowrap text-sm md:text-base uppercase font-bold font-satoshi ">
           Active endpoints
           </h5>
           <img src={endpoints} alt="project badge" />
         </div>
         <div className="w-fit h-[65px]  flex flex-col justify-end">
-          <h4 className=" text-5xl  font-bold text-[#1C1B1C] font-satoshi ">
+          <h4 className=" text-2xl md:text-4xl lg:text-5xl  font-bold text-[#1C1B1C] font-satoshi ">
             {endpointCount}
           </h4>
         </div>
@@ -54,13 +54,13 @@ function Report() {
 
       <div className="w-full bg-white flex flex-col items-start h-fit drop-shadow-xl rounded-xl p-4">
         <div className="w-full h-fit flex flex-row justify-between items-center">
-          <h5 className="text-[#AEAAAB] text-base uppercase font-bold whitespace-nowrap font-satoshi ">
+          <h5 className="text-[#AEAAAB] text-sm md:text-base uppercase font-bold whitespace-nowrap font-satoshi ">
           Total developers
           </h5>
           <img src={developer} alt="project badge" />
         </div>
         <div className="w-fit h-[65px]  flex flex-col justify-end">
-          <h4 className=" text-5xl  font-bold text-[#1C1B1C] font-satoshi ">
+          <h4 className=" text-2xl md:text-4xl lg:text-5xl  font-bold text-[#1C1B1C] font-satoshi ">
             {developerCount}
           </h4>
         </div>

@@ -43,14 +43,14 @@ function ProjectPage() {
     >
       <div className="w-full h-fit ">
         <div className="w-full h-fit flex flex-row justify-between items-center ">
-          <h1 className="font-satoshi font-bold text-2xl tracking-tight ">
+          <h1 className="font-satoshi font-bold lg:text-2xl md:text-xl text-lg tracking-tight ">
             API Project Management
           </h1>
 
           <button 
           onClick={handleClick}
           className=" bg-[#025964] font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 rounded-lg hover:scale-105 transition-transform duration-300 ">
-            <FaPlus /> Add New Project
+            <FaPlus /><span className="hidden md:block"> Add New Project</span>
           </button>
         </div>
 
@@ -83,7 +83,7 @@ function ProjectPage() {
       </div>
       {add && (
         <div className="w-full h-screen fixed  inset-0 backdrop-blur-md flex items-center justify-center ">
-          <div className="w-6/12 h-7/12 lg:w-[800px] lg:h-fit bg-white drop-shadow-2xl p-4 rounded-[10px]">
+          <div className="w-full h-fit  lg:w-[800px] lg:h-fit bg-white drop-shadow-2xl p-4 rounded-[10px]">
             <h3 className="text-2xl font-medium font-manrope capitalize ">
               add new developer
             </h3>
