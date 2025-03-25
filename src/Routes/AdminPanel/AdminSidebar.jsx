@@ -65,13 +65,15 @@ function AdminSidebar() {
                   {isActive ? (
                     <img src={items.iconActive} alt="icon" />
                   ) : (
-                    <svg
-                      className={`w-[22px] h-[22px] group-hover:fill-[#025964] fill-[#605E5F] transition-all duration-500`}
+                    <div>
+                      <svg
+                      className={`w-[22px] h-[22px] group-hover:fill-[#025964] fill-[#605E5F] transition-all duration-300`}
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                     >
                       <path d={items.iconPath} />
                     </svg>
+                    </div>
                   )}
                   {isOpen ? (
                     <span
@@ -91,18 +93,21 @@ function AdminSidebar() {
         </div>
       </div>
       {/* account and login buttons */}
-      <div className="w-full h-fit px-3 mb-6">
+      <div className="w-full  h-fit px-3 mb-6">
         <div>
           
           <NavLink
             to={"account"}
-            className={({isActive})=>`w-full h-[54px] flex flex-row items-center group gap-x-1.5 pl-4 transition-all duration-300 ${
+            className={({isActive})=>`w-full h-[54px] flex flex-row items-center  justify-start group gap-x-1.5 pl-4 transition-all duration-300 ${
               isActive
                 ? "text-[#025964] bg-white rounded-[10px] drop-shadow-lg font-bold "
                 : "text-[#605E5F] font-medium hover:text-[#025964] hover:scale-105"
             }`}
           >
+            <div>
+
             <MdPersonOutline style={{ fontSize:"22px", }} />
+            </div>
 
             
               <span
@@ -115,13 +120,13 @@ function AdminSidebar() {
             
           </NavLink>
           <button
-            className={`w-full h-[54px] flex flex-row items-center group gap-x-1.5 pl-4 transition-all duration-300 text-[#605E5F] font-medium hover:text-[#025964] hover:scale-105"`}
+            className={`w-full h-[54px] flex flex-row items-center group gap-x-1.5 pl-4 transition-all duration-300 text-[#605E5F] font-medium hover:text-[#025964] group  hover:scale-105"`}
           >
-            <IoLogOutOutline style={{ fontSize: "22" }} />
+            <div className="group-hover:scale-105"><IoLogOutOutline style={{ fontSize: "22" }} /></div>
 
            
               <span
-                className={` capitalize whitespace-nowrap font-satoshi transition-all duration-300 ${
+                className={` capitalize whitespace-nowrap font-satoshi group-hover:scale-105 transition-all duration-300 ${
                   isOpen ? "w-fit opacity-100" : "w-0 opacity-0"
                 }`}
               >
