@@ -16,7 +16,7 @@ function DeveloperTable({data}) {
         }, {})
       );
       
-      console.log(merged);
+      
       
 
     const createdTime = (timestamps) => {
@@ -78,7 +78,7 @@ function DeveloperTable({data}) {
                     {data.role}
                   </td>
                   <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
-                    {updatedTime(data.created)}
+                    {createdTime(data.created)}
                   </td>
                   <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
                     <div className="w-full h-full flex flex-row items-center gap-x-2.5">

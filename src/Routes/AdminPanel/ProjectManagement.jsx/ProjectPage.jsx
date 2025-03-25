@@ -5,10 +5,12 @@ import { ImSortAmountAsc } from "react-icons/im";
 import SearchBar from "../AdminDashboard/Shared/SearchBar";
 import ProjectTable from "./components/ProjectTable";
 import { projectData } from "../../../constants/Projects/ProjectConstant";
+import AddProjectForm from "./components/AddProjectForm";
 function ProjectPage() {
   const { isOpen } = useSidebar();
   const [searchQuery, setSearchQuery] = useState("");
   const [displayData, setDisplayData] = useState(projectData); 
+  const [add , setAdd] = useState(false)
   
 
   const handleSearch = (query) => {
@@ -29,6 +31,9 @@ function ProjectPage() {
     console.log(displayData)
     
   };
+  const handleClick = () =>{
+    setAdd(!add)
+  }
 
   return (
     <div
@@ -42,7 +47,9 @@ function ProjectPage() {
             API Project Management
           </h1>
 
-          <button className=" bg-[#025964] font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 rounded-lg hover:scale-105 transition-transform duration-300 ">
+          <button 
+          onClick={handleClick}
+          className=" bg-[#025964] font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 rounded-lg hover:scale-105 transition-transform duration-300 ">
             <FaPlus /> Add New Project
           </button>
         </div>
@@ -74,6 +81,17 @@ function ProjectPage() {
 
         </div>
       </div>
+      {add && (
+        <div className="w-full h-screen fixed  inset-0 backdrop-blur-md flex items-center justify-center ">
+          <div className="w-6/12 h-7/12 lg:w-[800px] lg:h-fit bg-white drop-shadow-2xl p-4 rounded-[10px]">
+            <h3 className="text-2xl font-medium font-manrope capitalize ">
+              add new developer
+            </h3>
+            <hr className="border-[#F1F1F1] mt-1 mb-4" />
+            <AddProjectForm handleClick={handleClick} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

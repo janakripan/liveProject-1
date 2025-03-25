@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSidebar } from "../../../contexts/admin/SidebarContext";
 import { FaPlus } from "react-icons/fa6";
 import { ImSortAmountAsc } from "react-icons/im";
 import SearchBar from "../AdminDashboard/Shared/SearchBar";
 import { projectData } from "../../../constants/Projects/ProjectConstant";
 import DeveloperTable from "./components/DeveloperTable";
+import AddDeveloperForm from "./components/AddDeveloperForm";
 function DeveloperPage() {
   const { isOpen } = useSidebar();
   const [searchQuery, setSearchQuery] = useState("");
-  const data = projectData.flatMap(items=>items.developers)
-    
-  const [displayData, setDisplayData] = useState(data); 
-  console.log(data)
-  
+  const [add, setAdd] = useState(false);
+
+  const data = projectData.flatMap((items) => items.developers);
+  const [displayData, setDisplayData] = useState(data);
 
   const handleSearch = (query) => {
     setSearchQuery(query);
 
     if (!query.trim()) {
       setDisplayData(data || []);
-    
+
       return;
     }
     const lowerCaseQuery = query.toLowerCase();
@@ -29,13 +29,17 @@ function DeveloperPage() {
       )
     );
     setDisplayData(filteredResults);
-    console.log(displayData)
-    
+    console.log(displayData);
+  };
+
+  const handleClick = () => {
+    setAdd(!add);
+   
   };
 
   return (
     <div
-      className={` h-full p-5  transition-all duration-300 ${
+      className={` h-full p-5 relative  transition-all duration-300 ${
         isOpen ? "md:ml-[280px]" : "mx-auto ml-[80px]"
       }`}
     >
@@ -45,11 +49,13 @@ function DeveloperPage() {
             API Project Management
           </h1>
 
-          <button className=" bg-[#025964] font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 rounded-lg hover:scale-105 transition-transform duration-300 ">
+          <button
+            onClick={handleClick}
+            className=" bg-[#025964] font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 active:scale-95 rounded-lg hover:scale-105 transition-transform duration-300 "
+          >
             <FaPlus /> Add New Project
           </button>
         </div>
-
 
         {/* searchbar and sort button */}
 
@@ -69,14 +75,22 @@ function DeveloperPage() {
           </div>
         </div>
 
-      {/* developer table */}
+        {/* developer table */}
         <div className="w-full h-fit my-5 bg-white">
-          <DeveloperTable data={displayData}/>
-
-
-
+          <DeveloperTable data={displayData} />
         </div>
       </div>
+      {add && (
+        <div className="w-full h-screen fixed  inset-0 backdrop-blur-md flex items-center justify-center ">
+          <div className="w-6/12 h-7/12 lg:w-[800px] lg:h-fit bg-white drop-shadow-2xl p-4 rounded-[10px]">
+            <h3 className="text-2xl font-medium font-manrope capitalize ">
+              add new developer
+            </h3>
+            <hr className="border-[#F1F1F1] mt-1 mb-4" />
+            <AddDeveloperForm handleClick={()=>{handleClick(); resetfor}} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
