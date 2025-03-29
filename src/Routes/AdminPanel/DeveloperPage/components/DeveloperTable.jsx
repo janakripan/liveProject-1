@@ -66,7 +66,7 @@ function DeveloperTable({data}) {
               </tr>
             </thead>
             <tbody>
-              {merged.map((data) => (
+              {data.map((data) => (
                 <tr key={data.developer_id} className=" border border-[#E6E1E2]">
                   <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
                     {data.email}

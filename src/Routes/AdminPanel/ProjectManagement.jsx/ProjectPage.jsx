@@ -38,7 +38,7 @@ function ProjectPage() {
   return (
     <div
       className={` h-full p-5  transition-all duration-300 ${
-        isOpen ? "md:ml-[280px]" : "mx-auto ml-[80px]"
+        isOpen ? "md:ml-[280px]" : "mx-auto ml-[44px] md:ml-[80px]"
       }`}
     >
       <div className="w-full h-fit ">
@@ -83,7 +83,7 @@ function ProjectPage() {
       </div>
       {add && (
         <div className="w-full h-screen fixed  inset-0 backdrop-blur-md flex items-center justify-center ">
-          <div className="w-full h-fit  lg:w-[800px] lg:h-fit bg-white drop-shadow-2xl p-4 rounded-[10px]">
+          <div className="ml-[70px] mr-[10px] md:mx-0 w-full h-fit md:w-6/12 md:h-7/12 lg:w-[800px] lg:h-fit bg-white drop-shadow-2xl p-4 rounded-[10px]">
             <h3 className="text-2xl font-medium font-manrope capitalize ">
               add new developer
             </h3>

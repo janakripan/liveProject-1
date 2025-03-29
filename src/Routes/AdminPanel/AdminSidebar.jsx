@@ -3,18 +3,18 @@ import { useSidebar } from "../../contexts/admin/SidebarContext";
 import sidebarLogo from "../../assets/sidebarLogo.svg";
 import { LuChevronsRight } from "react-icons/lu";
 import { sidebarNavlist } from "../../constants/Admin/sibarNavlist";
-import { Link, NavLink, useLocation } from "react-router";
+import {  NavLink, useLocation } from "react-router";
 import { MdPersonOutline } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
 
 function AdminSidebar() {
   const location = useLocation();
-  console.log(location);
+  
   const { isOpen, setIsOpen } = useSidebar();
   return (
     <div
       className={`h-screen z-20  fixed  top-0 left-0 bg-[#F5F7F9] flex flex-col justify-between transition-all duration-300 ${
-        isOpen ? "w-[280px]" : "w-[80px]"
+        isOpen ? "w-[280px]" :  "w-[60px] md:w-[80px] "
       } `}
     >
       {/* dashboard navigations and logo */}
@@ -56,7 +56,7 @@ function AdminSidebar() {
                 <NavLink
                   key={index}
                   to={items.path}
-                  className={`w-full h-[54px] flex flex-row items-center group gap-x-1.5 p-4 transition-all duration-300 ${
+                  className={`w-full h-[40px] md:h-[54px] flex flex-row items-center group gap-x-1.5 my-2 md:my-0 md:p-4 p-2 py-4 transition-all duration-300 ${
                     isActive
                       ? "text-[#025964] bg-white rounded-[10px] drop-shadow-lg font-bold "
                       : "text-[#605E5F] font-medium hover:text-[#025964] hover:scale-105"
@@ -98,7 +98,7 @@ function AdminSidebar() {
           
           <NavLink
             to={"account"}
-            className={({isActive})=>`w-full h-[54px] flex flex-row items-center  justify-start group gap-x-1.5 pl-4 transition-all duration-300 ${
+            className={({isActive})=>`w-full h-[40px] md:h-[54px] flex flex-row items-center  justify-start group gap-x-1.5 pl-2 py-3 md:py-0 md:pl-4 transition-all duration-300 ${
               isActive
                 ? "text-[#025964] bg-white rounded-[10px] drop-shadow-lg font-bold "
                 : "text-[#605E5F] font-medium hover:text-[#025964] hover:scale-105"
@@ -120,7 +120,7 @@ function AdminSidebar() {
             
           </NavLink>
           <button
-            className={`w-full h-[54px] flex flex-row items-center group gap-x-1.5 pl-4 transition-all duration-300 text-[#605E5F] font-medium hover:text-[#025964] group  hover:scale-105"`}
+            className={`w-full h-[40px] md:h-[54px] flex flex-row items-center group gap-x-1.5 pl-2 md:pl-4 transition-all duration-300 text-[#605E5F] font-medium hover:text-[#025964] group  hover:scale-105"`}
           >
             <div className="group-hover:scale-105"><IoLogOutOutline style={{ fontSize: "22" }} /></div>
 

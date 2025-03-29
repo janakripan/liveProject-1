@@ -4,7 +4,7 @@ import AdminSidebar from './AdminSidebar'
 
 function AdminLayout() {
   return (
-    <div className='w-full h-screen overflow-x-hidden overflow-y-auto'>
+    <div className='w-full h-screen overflow-x-hidden overflow-y-auto relative'>
       
     <AdminSidebar/>
 

@@ -39,7 +39,7 @@ function AddDeveloperForm({handleClick}) {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting,resetForm }) => (
           <Form className="flex flex-col gap-y-6">
             <div>
               <label
@@ -127,7 +127,7 @@ function AddDeveloperForm({handleClick}) {
               />
             </div>
             <div className="w-full h-fit flex flex-row gap-x-5 ">
-                <button className="w-full bg-[#F5F5F5] text-[#323343] p-4 border border-[#F3F3F7] duration-300  rounded-md hover:scale-105 active:scale-95 transition" onClick={handleClick}>
+                <button className="w-full bg-[#F5F5F5] text-[#323343] p-4 border border-[#F3F3F7] duration-300  rounded-md hover:scale-105 active:scale-95 transition" onClick={()=>{handleClick();resetForm();}}>
                     Cancel
                 </button>
               <button
