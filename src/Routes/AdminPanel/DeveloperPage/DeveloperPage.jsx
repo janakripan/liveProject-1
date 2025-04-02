@@ -43,9 +43,7 @@ function DeveloperPage() {
 
   return (
     <div
-      className={` h-full p-5 relative  transition-all duration-300 ${
-        isOpen ? "md:ml-[280px]" : "mx-auto ml-[44px] md:ml-[80px]"
-      }`}
+      className={` h-full p-5 relative  transition-all duration-300 flex flex-col w-full max-w-screen-xl  mx-auto`}
     >
       <div className="w-full h-fit ">
         <div className="w-full h-fit flex flex-row justify-between items-center ">
@@ -80,13 +78,13 @@ function DeveloperPage() {
         </div>
 
         {/* developer table */}
-        <div className="w-full h-fit my-5 bg-white">
+        <div className="w-full lg:h-[63vh] overflow-y-auto my-5 bg-white rounded-lg border border-[#E6E1E2]">
           <DeveloperTable data={displayData} />
         </div>
       </div>
       {add && (
-        <div className="w-full h-screen fixed  inset-0 backdrop-blur-md flex items-center justify-center ">
-          <div className=" ml-[70px] mr-[10px] md:mx-0 w-full h-fit md:w-6/12 md:h-7/12 lg:w-[800px] lg:h-fit bg-white drop-shadow-2xl p-4 rounded-[10px]">
+        <div className="w-full h-full fixed  inset-0 backdrop-blur-md flex items-center justify-center ">
+          <div className=" ml-[70px] mr-[10px] md:mx-0 w-full h-fit md:w-6/12 md:h-7/12 lg:w-[800px] lg:h-11/12 bg-white overflow-y-auto drop-shadow-2xl p-4 rounded-[10px]">
             <h3 className="text-2xl font-medium font-manrope capitalize ">
               add new developer
             </h3>

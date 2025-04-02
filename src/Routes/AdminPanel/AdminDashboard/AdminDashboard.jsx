@@ -10,12 +10,10 @@ function AdminDashboard() {
   const latestRequests = [...requests]
     .sort((a, b) => b.lastUpdated - a.lastUpdated)
     .slice(0, 3);
-  const { isOpen } = useSidebar();
+ 
   return (
     <div
-      className={` h-full  px-5 py-5  transition-all duration-300  ${
-        isOpen ? "md:ml-[280px] " : "  ml-[80px] "
-      }`}
+      className={`h-full p-5 relative  transition-all duration-300 flex flex-col w-full max-w-screen-xl  mx-auto`}
     >
       <section>
         {/* dashboard overview */}
