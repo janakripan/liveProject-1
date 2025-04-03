@@ -82,7 +82,7 @@ function ProjectPage() {
       {add && (
         <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
           <div className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-white drop-shadow-2xl p-4 rounded-[10px] `}>
-            <h3 className="text-2xl font-medium font-manrope capitalize ">
+            <h3 className="lg:text-2xl md:text-xl text-lg font-medium font-manrope capitalize ">
               add new developer
             </h3>
             <hr className="border-[#F1F1F1] mt-1 mb-4" />

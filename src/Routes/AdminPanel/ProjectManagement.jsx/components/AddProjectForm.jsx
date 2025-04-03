@@ -54,7 +54,7 @@ function AddProjectForm({handleClick}) {
             <div>
               <label
                 htmlFor="projectName"
-                className="block font-dm-sans  text-[#323343] text-base font-medium mb-2"
+                className="block font-dm-sans  text-[#323343] text-sm md:text-base font-medium mb-2"
               >
                 Project Name
               </label>
@@ -76,7 +76,7 @@ function AddProjectForm({handleClick}) {
             <div>
               <label
                 htmlFor="apiUrl"
-                className="block font-dm-sans  text-[#323343] text-base font-medium mb-2"
+                className="block font-dm-sans  text-[#323343] text-sm md:text-base font-medium mb-2"
               >
                 API URL
               </label>
@@ -98,7 +98,7 @@ function AddProjectForm({handleClick}) {
             <div>
               <label
                 htmlFor="description"
-                className="block font-dm-sans  text-[#323343] text-base font-medium mb-2"
+                className="block font-dm-sans  text-[#323343] text-sm md:text-base font-medium mb-2"
               >
                 Description
               </label>
@@ -121,7 +121,7 @@ function AddProjectForm({handleClick}) {
               <div>
                 <label
                   htmlFor="createdDate"
-                  className="block font-dm-sans  text-[#323343] text-base font-medium mb-2 appearance-none"
+                  className="block font-dm-sans  text-[#323343] text-sm md:text-base font-medium mb-2 appearance-none"
                 >
                   Created Date
                 </label>
@@ -151,7 +151,7 @@ function AddProjectForm({handleClick}) {
               <div>
                 <label
                   htmlFor="deadlineDate"
-                  className="block font-dm-sans  text-[#323343] text-base font-medium mb-2 "
+                  className="block font-dm-sans  text-[#323343] text-sm md:text-base font-medium mb-2 "
                 >
                   Deadline Date
                 </label>
@@ -179,7 +179,7 @@ function AddProjectForm({handleClick}) {
             </div>
             <div className="w-full h-fit flex flex-row gap-x-5 ">
               <button
-                className="w-full bg-[#F5F5F5] text-[#323343] p-4 border-2 border-[#F3F3F7] duration-300  rounded-md hover:scale-105 active:scale-95 transition"
+                className="w-full cursor-pointer bg-[#F5F5F5] text-[#323343] p-4 border-2 border-[#F3F3F7] duration-300  rounded-md hover:scale-105 active:scale-95 transition"
                 onClick={
                   handleClick
                 }
@@ -188,7 +188,7 @@ function AddProjectForm({handleClick}) {
               </button>
               <button
                 type="submit"
-                className="w-full bg-[#025964] text-white p-4 rounded-md hover:scale-105 active:scale-95 duration-300 transition"
+                className="w-full cursor-pointer bg-[#025964] text-white p-4 rounded-md hover:scale-105 active:scale-95 duration-300 transition"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Adding..." : "Add"}
