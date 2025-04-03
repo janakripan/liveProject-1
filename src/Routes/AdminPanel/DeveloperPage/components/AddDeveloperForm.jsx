@@ -44,7 +44,7 @@ function AddDeveloperForm({handleClick}) {
             <div>
               <label
                 htmlFor="userId"
-                className="block font-dm-sans  text-[#323343] text-base font-medium mb-2"
+                className="block font-dm-sans  text-[#323343] text-sm md:text-base font-medium mb-2"
               >
                 User ID
               </label>
@@ -65,7 +65,7 @@ function AddDeveloperForm({handleClick}) {
             <div>
               <label
                 htmlFor="name"
-                className="block font-dm-sans text-base text-[#323343] font-medium mb-2"
+                className="block font-dm-sans text-sm md:text-base text-[#323343] font-medium mb-2"
               >
                 User Name
               </label>
@@ -86,7 +86,7 @@ function AddDeveloperForm({handleClick}) {
             <div>
               <label
                 htmlFor="role"
-                className="block font-dm-sans  text-[#323343] text-base font-medium mb-2"
+                className="block font-dm-sans  text-[#323343] text-sm md:text-base font-medium mb-2"
               >
                 Role
               </label>
@@ -110,7 +110,7 @@ function AddDeveloperForm({handleClick}) {
               />
             </div>
             <div>
-              <label htmlFor="password" className="block  text-[#323343] font-dm-sans text-base font-medium mb-2">
+              <label htmlFor="password" className="block  text-[#323343] font-dm-sans text-sm md:text-base font-medium mb-2">
                 Password
               </label>
               <Field

@@ -77,13 +77,13 @@ function ProjectTable({ data }) {
               </td>
               <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
                 <div className="w-full h-full flex flex-row items-center gap-x-2.5">
-                  <button className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#333333] text-white font-sans rounded-md font-medium text-base ">
+                  <button className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#333333] text-white font-sans rounded-md font-medium text-base hover:cursor-pointer ">
                     View
                   </button>
-                  <button className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-xl ">
+                  <button className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-xl hover:cursor-pointer ">
                     <FiEdit />
                   </button>
-                  <button className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#DC2626] text-[#DC2626] text-xl ">
+                  <button className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#DC2626] text-[#DC2626] text-xl hover:cursor-pointer ">
                     <RiDeleteBin5Line />
                   </button>
                 </div>

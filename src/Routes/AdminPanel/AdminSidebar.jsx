@@ -77,7 +77,7 @@ function AdminSidebar() {
                   )}
                   {isOpen ? (
                     <span
-                      className={` capitalize whitespace-nowrap font-satoshi transition-all duration-300 ${
+                      className={` capitalize whitespace-nowrap font-satoshi transition-all duration-500 ${
                         isOpen ? "w-fit opacity-100" : "w-0 opacity-0"
                       }`}
                     >
