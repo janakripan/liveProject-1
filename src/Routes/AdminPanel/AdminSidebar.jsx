@@ -38,7 +38,7 @@ function AdminSidebar() {
           <div className="border border-[#AEAAAB] bg-white rounded-md">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={` text-base text-black flex items-center justify-center p-[5px] transition-all duration-300 ${
+              className={` cursor-pointer text-base text-black flex items-center justify-center p-[5px] transition-all duration-300 ${
                 isOpen ? "-rotate-180" : "rotate-0"
               }  `}
             >
@@ -120,7 +120,7 @@ function AdminSidebar() {
             
           </NavLink>
           <button
-            className={`w-full h-[40px] md:h-[54px] flex flex-row items-center group gap-x-1.5 pl-2 md:pl-4 transition-all duration-300 text-[#605E5F] font-medium hover:text-[#025964] group  hover:scale-105"`}
+            className={`cursor-pointer w-full h-[40px] md:h-[54px] flex flex-row items-center group gap-x-1.5 pl-2 md:pl-4 transition-all duration-300 text-[#605E5F] font-medium hover:text-[#025964] group  hover:scale-105"`}
           >
             <div className="group-hover:scale-105"><IoLogOutOutline style={{ fontSize: "22" }} /></div>
 
