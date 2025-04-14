@@ -19,13 +19,13 @@ const DashboardHeader = () => {
   const handleChange = (e) => {
     const selectedId = e.target.value;
     if (projectId !== selectedId) {
-      navigate(`/projects/${selectedId}`);
+      navigate(`/user/${selectedId}`);
     }
   };
 
   return (
     <div className="w-full h-fit bg-Bgsecondary box-border ">
-      <div className="w-full max-w-screen-xl mx-auto flex flex-row items-center px-5 py-0 md:justify-between box-border justify-center ">
+      <div className="w-full max-w-screen-xl mx-auto flex flex-row items-center px-5 py-0 justify-between box-border  ">
         <div
           className={`w-fit h-fit  flex flex-row  ${
             location.pathname.endsWith("user") ? "items-end" : "items-center"

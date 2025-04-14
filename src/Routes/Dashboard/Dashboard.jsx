@@ -5,14 +5,14 @@ import { Outlet } from 'react-router'
 function Dashboard() {
   
   return (
-    <>
+    <div className='w-full h-screen bg-Bgprimary'>
     <DashboardHeader/>
 
-    <div id='dashboardlayout' >
+    <div id='dashboardlayout'  >
       <Outlet/>
     </div>
     
-    </>
+    </div>
   )
 }
 

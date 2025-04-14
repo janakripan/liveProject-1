@@ -5,7 +5,6 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import "./index.css";
 import App from "./App.jsx";
 import Dashboard from "./Routes/Dashboard/Dashboard.jsx";
-import DashboardHome from "./Routes/Dashboard/DashboardHome.jsx";
 import AuthHome from "./Routes/Authentication/AuthHome.jsx";
 import LoginPage from "./Routes/Authentication/LoginPage.jsx";
 import Home from "./Routes/Home/Home.jsx";
@@ -16,6 +15,7 @@ import { SidebarProvider } from "./contexts/admin/SidebarContext.jsx";
 import ProjectPage from "./Routes/AdminPanel/ProjectManagement.jsx/ProjectPage.jsx";
 import DeveloperPage from "./Routes/AdminPanel/DeveloperPage/DeveloperPage.jsx";
 import Account from "./Routes/AdminPanel/Account/Account.jsx";
+import UserDashboard from "./Routes/Dashboard/userDashboard/UserDashboard.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -26,7 +26,7 @@ createRoot(document.getElementById("root")).render(
           <Route index element={<LoginPage />} />
         </Route>
         <Route path="user" element={<Dashboard />}>
-          <Route index element={<DashboardHome />} />
+          <Route index element={<UserDashboard />} />
           <Route path="/user/:projectId" element={<DetailedDashboard />} />
         </Route>
         <Route path="admin" element={<AdminLayout />}>
