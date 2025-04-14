@@ -19,6 +19,13 @@
   --font-satoshi: satoshi, "sans-serif";
   --font-manrope: Manrope, "sans-serif";
   --font-dm-sans: DM+Sans, "sans-serif";
+  --color-Bgprimary: #1F2126;
+  --color-Bgsecondary: #1F2126;
+  --color-buttonBlue:#6C5CE7;
+  --color-heading:#E2E2E2;
+  --color-commontext:#8A8D91;
+  
+ 
 }
 /* ✅ Hide calendar icon only on specific fields */
 .hide-calendar {

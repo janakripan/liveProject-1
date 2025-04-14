@@ -25,9 +25,9 @@ createRoot(document.getElementById("root")).render(
         <Route path="/" element={<AuthHome />}>
           <Route index element={<LoginPage />} />
         </Route>
-        <Route path="dashboard" element={<Dashboard />}>
+        <Route path="user" element={<Dashboard />}>
           <Route index element={<DashboardHome />} />
-          <Route path="details" element={<DetailedDashboard />} />
+          <Route path="/user/:projectId" element={<DetailedDashboard />} />
         </Route>
         <Route path="admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />

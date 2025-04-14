@@ -35,6 +35,14 @@ export const projectData = [
             "role": "Developer",
             "permissions": ["read", "write"],
             "created" :1742169600,
+          },
+          {
+            "developer_id": 2,
+            "name": "John",
+            "email": "john@company.com",
+            "role": "Developer",
+            "permissions": ["read", "write"],
+            "created" :1742169600,
           }
         ]
       },
@@ -305,6 +313,22 @@ export const projectData = [
             "developer_id": 1,
             "name": "Alice",
             "email": "alice@company.com",
+            "role": "Developer",
+            "permissions": ["read", "write"],
+            "created" :1742169600,
+          },
+          {
+            "developer_id": 7,
+            "name": "rahul",
+            "email": "rahul@company.com",
+            "role": "Developer",
+            "permissions": ["read", "write"],
+            "created" :1742169600,
+          },
+          {
+            "developer_id": 5,
+            "name": "shajon",
+            "email": "shajon@company.com",
             "role": "Developer",
             "permissions": ["read", "write"],
             "created" :1742169600,
