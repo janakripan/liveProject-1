@@ -10,6 +10,7 @@
 
 @import "tailwindcss";
 
+
 @theme {
   --font-rubik: Rubik, "sans-serif";
   --font-doto: Doto, "sana-serif";
@@ -21,6 +22,7 @@
   --font-dm-sans: DM+Sans, "sans-serif";
   --color-Bgprimary: #1F2126;
   --color-Bgsecondary: #2B2D33;
+  --color-Bghilight:#32343A;
   --color-buttonBlue:#6C5CE7;
   --color-heading:#E2E2E2;
   --color-commontext:#8A8D91;
@@ -47,3 +49,14 @@
   display: none;                             /* Firefox */
 }
 
+@layer utilities {
+ 
+  .no-scrollbar::-webkit-scrollbar {
+      width: 0;
+  }
+ /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: 0;  /* Firefox */
+}
+}

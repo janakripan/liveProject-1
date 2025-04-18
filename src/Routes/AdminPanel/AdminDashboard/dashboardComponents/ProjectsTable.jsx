@@ -22,9 +22,9 @@ function ProjectsTable() {
   };
 
   return (
-    <div className="w-full h-fit bg-white border border-[#E6E1E2] overflow-x-auto lg:overflow-hidden rounded-lg">
+    <div className="w-full h-fit bg-Bgprimary border border-[#4C4F55]  no-scrollbar overflow-x-auto lg:overflow-hidden rounded-lg">
       <table className="w-full table-auto border-collapse">
-        <thead className="bg-[#F5F7F9] text-left">
+        <thead className="bg-Bghilight text-heading text-left">
           <tr className="h-[60px] text-left">
             <th className="w-5/12 font-satoshi font-bold text-base capitalize px-5 py-3">Projects</th>
             <th className="w-1/4font-satoshi font-bold text-base capitalize px-5 py-3 text-left">Status</th>
@@ -37,9 +37,9 @@ function ProjectsTable() {
           {projectData.map((project) => (
             <tr
               key={project.project_id}
-              className="border-b border-[#E6E1E2] "
+              className="border-b border-[#4C4F55] text-heading "
             >
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
+              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
                 {project.name}
               </td>
               <td className="px-5 py-4 ">

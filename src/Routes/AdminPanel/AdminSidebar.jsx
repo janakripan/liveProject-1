@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useSidebar } from "../../contexts/admin/SidebarContext";
-import sidebarLogo from "../../assets/sidebarLogo.svg";
+import sidebarLogo from "../../assets/zudoku-logo-full-light 1 (1).svg";
 import { LuChevronsRight } from "react-icons/lu";
 import { sidebarNavlist } from "../../constants/Admin/sibarNavlist";
-import {  NavLink, useLocation } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import { MdPersonOutline } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
 
 function AdminSidebar() {
   const location = useLocation();
-  
+
   const { isOpen, setIsOpen } = useSidebar();
   return (
     <div
-      className={`h-screen z-20  fixed  top-0 left-0 bg-[#F5F7F9] flex flex-col justify-between transition-all duration-300 ${
-        isOpen ? "w-[280px]" :  "w-[60px] md:w-[80px] "
+      className={`h-screen z-20  fixed  top-0 left-0 bg-Bgsecondary flex flex-col justify-between transition-all duration-300 ${
+        isOpen ? "w-[280px]" : "w-[60px] md:w-[80px] "
       } `}
     >
       {/* dashboard navigations and logo */}
@@ -35,10 +35,10 @@ function AdminSidebar() {
           ) : (
             ""
           )}
-          <div className="border border-[#AEAAAB] bg-white rounded-md">
+          <div className="border border-[#CCCCCC] bg-[#7F828A] rounded-md">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={` cursor-pointer text-base text-black flex items-center justify-center p-[5px] transition-all duration-300 ${
+              className={` cursor-pointer text-base text-[#CCCCCC] flex items-center justify-center p-[5px] transition-all duration-300 ${
                 isOpen ? "-rotate-180" : "rotate-0"
               }  `}
             >
@@ -58,21 +58,29 @@ function AdminSidebar() {
                   to={items.path}
                   className={`w-full h-[40px] md:h-[54px] flex flex-row items-center group gap-x-1.5 my-2 md:my-0 md:p-4 p-2 py-4 transition-all duration-300 ${
                     isActive
-                      ? "text-[#025964] bg-white rounded-[10px] drop-shadow-lg font-bold "
-                      : "text-[#605E5F] font-medium hover:text-[#025964] hover:scale-105"
+                      ? "text-buttonBlue bg-Bghilight rounded-[10px] drop-shadow-lg font-bold "
+                      : "text-commontext font-medium hover:text-buttonBlue hover:scale-105"
                   }`}
                 >
                   {isActive ? (
-                    <img src={items.iconActive} alt="icon" />
+                    <div>
+                      <svg
+                        className={`w-[22px] h-[22px] fill-buttonBlue transition-all duration-300`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d={items.iconPath} />
+                      </svg>
+                    </div>
                   ) : (
                     <div>
                       <svg
-                      className={`w-[22px] h-[22px] group-hover:fill-[#025964] fill-[#605E5F] transition-all duration-300`}
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d={items.iconPath} />
-                    </svg>
+                        className={`w-[22px] h-[22px] group-hover:fill-buttonBlue fill-commontext transition-all duration-300`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d={items.iconPath} />
+                      </svg>
                     </div>
                   )}
                   {isOpen ? (
@@ -95,44 +103,42 @@ function AdminSidebar() {
       {/* account and login buttons */}
       <div className="w-full  h-fit px-3 mb-6">
         <div>
-          
           <NavLink
             to={"account"}
-            className={({isActive})=>`w-full h-[40px] md:h-[54px] flex flex-row items-center  justify-start group gap-x-1.5 pl-2 py-3 md:py-0 md:pl-4 transition-all duration-300 ${
-              isActive
-                ? "text-[#025964] bg-white rounded-[10px] drop-shadow-lg font-bold "
-                : "text-[#605E5F] font-medium hover:text-[#025964] hover:scale-105"
-            }`}
+            className={({ isActive }) =>
+              `w-full h-[40px] md:h-[54px] flex flex-row items-center  justify-start group gap-x-1.5 pl-2 py-3 md:py-0 md:pl-4 transition-all duration-300 ${
+                isActive
+                  ? "text-buttonBlue bg-Bghilight rounded-[10px] drop-shadow-lg font-bold "
+                  : "text-commontext font-medium hover:text-buttonBlue hover:scale-105"
+              }`
+            }
           >
             <div>
-
-            <MdPersonOutline style={{ fontSize:"22px", }} />
+              <MdPersonOutline style={{ fontSize: "22px" }} />
             </div>
 
-            
-              <span
-                className={`  whitespace-nowrap  transition-all duration-300 ${
-                  isOpen ? "w-fit opacity-100" : "w-0 opacity-0"
-                }`}
-              >
-                Account
-              </span>
-            
+            <span
+              className={`  whitespace-nowrap  transition-all duration-300 ${
+                isOpen ? "w-fit opacity-100" : "w-0 opacity-0"
+              }`}
+            >
+              Account
+            </span>
           </NavLink>
           <button
-            className={`cursor-pointer w-full h-[40px] md:h-[54px] flex flex-row items-center group gap-x-1.5 pl-2 md:pl-4 transition-all duration-300 text-[#605E5F] font-medium hover:text-[#025964] group  hover:scale-105"`}
+            className={`cursor-pointer w-full h-[40px] md:h-[54px] flex flex-row items-center group gap-x-1.5 pl-2 md:pl-4 transition-all duration-300 text-commontext font-medium hover:text-buttonBlue group  hover:scale-105"`}
           >
-            <div className="group-hover:scale-105"><IoLogOutOutline style={{ fontSize: "22" }} /></div>
+            <div className="group-hover:scale-105">
+              <IoLogOutOutline style={{ fontSize: "22" }} />
+            </div>
 
-           
-              <span
-                className={` capitalize whitespace-nowrap font-satoshi group-hover:scale-105 transition-all duration-300 ${
-                  isOpen ? "w-fit opacity-100" : "w-0 opacity-0"
-                }`}
-              >
-                Logout
-              </span>
-           
+            <span
+              className={` capitalize whitespace-nowrap font-satoshi group-hover:scale-105 transition-all duration-300 ${
+                isOpen ? "w-fit opacity-100" : "w-0 opacity-0"
+              }`}
+            >
+              Logout
+            </span>
           </button>
         </div>
       </div>

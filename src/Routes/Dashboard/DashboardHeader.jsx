@@ -40,7 +40,7 @@ const DashboardHeader = () => {
               <select
                 onChange={handleChange}
                 value={projectId}
-                className=" text-heading border-0  font-satoshi font-bold text-base capitalize bg-Bgprimary  p-2 rounded"
+                className=" text-heading border-0  font-satoshi font-bold text-base capitalize bg-Bgsecondary focus:outline-0  p-2 rounded"
               >
                 {userProjects.map((project) => (
                   <option key={project.project_id} value={project.project_id}>

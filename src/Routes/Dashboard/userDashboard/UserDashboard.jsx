@@ -15,7 +15,7 @@ const UserDashboard = () => {
     const handleclick = (projectId) =>{
       
         navigate(`/user/${projectId}`);
-        console.log(id)
+       
       
 
     }

@@ -1,8 +1,10 @@
 import React from "react";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { useNavigate } from "react-router";
 
-function ProjectTable({ data }) {
+function ProjectTable({ data,setEdit,setEditId, }) {
+  const navigate = useNavigate();
   const createdTime = (timestamps) => {
     const date = new Date(timestamps * 1000);
     return date.toLocaleDateString("en-GB");
@@ -27,10 +29,10 @@ function ProjectTable({ data }) {
     }
   };
   return (
-    <div className="w-full  bg-white border border-[#E6E1E2] overflow-x-auto rounded-lg ">
+    <div className="w-full  bg-Bghilight border border-[#4C4F55] overflow-x-auto no-scrollbar rounded-lg ">
       <table className="w-full table-auto border-collapse">
-        <thead className="bg-[#F5F7F9] text-left">
-          <tr className="h-[60px] text-left">
+        <thead className="bg-Bghilight text-left">
+          <tr className="h-[60px] text-heading text-left">
             <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
               project name
             </th>
@@ -56,31 +58,35 @@ function ProjectTable({ data }) {
         </thead>
         <tbody>
           {data.map((project) => (
-            <tr key={project.project_id} className=" border border-[#E6E1E2]">
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
+            <tr key={project.project_id} className=" border bg-Bgprimary text-heading border-[#4C4F55]">
+              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
                 {project.name}
               </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
+              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
                 {project.description}
               </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
+              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
                 {project.base_url}
               </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
+              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
                 {project.status}
               </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
+              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
                 {createdTime(project.created)}
               </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
+              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
                 {updatedTime(project.lastUpdated)}
               </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal text-black">
+              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
                 <div className="w-full h-full flex flex-row items-center gap-x-2.5">
-                  <button className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#333333] text-white font-sans rounded-md font-medium text-base hover:cursor-pointer ">
+                  <button 
+                  onClick={() => navigate(`/admin/project/${project.project_id}`)}
+                  className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#3A3D44] text-white font-sans rounded-md font-medium text-base hover:cursor-pointer ">
                     View
                   </button>
-                  <button className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-xl hover:cursor-pointer ">
+                  <button 
+                  onClick={()=>{setEdit(true);setEditId(project.project_id);}}
+                  className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-xl hover:cursor-pointer ">
                     <FiEdit />
                   </button>
                   <button className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#DC2626] text-[#DC2626] text-xl hover:cursor-pointer ">

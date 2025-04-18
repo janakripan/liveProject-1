@@ -1,6 +1,6 @@
 import React from 'react'
 
-function ApiDisplay() {
+const AddModule = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function ApiDisplay() {
   )
 }
 
-export default ApiDisplay
+export default AddModule
