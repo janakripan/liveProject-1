@@ -8,7 +8,6 @@ import Dashboard from "./Routes/Dashboard/Dashboard.jsx";
 import AuthHome from "./Routes/Authentication/AuthHome.jsx";
 import LoginPage from "./Routes/Authentication/LoginPage.jsx";
 import Home from "./Routes/Home/Home.jsx";
-import DetailedDashboard from "./Routes/Dashboard/Details page parts/DetailedDashboard.jsx";
 import AdminLayout from "./Routes/AdminPanel/AdminLayout.jsx";
 import AdminDashboard from "./Routes/AdminPanel/AdminDashboard/AdminDashboard.jsx";
 import { SidebarProvider } from "./contexts/admin/SidebarContext.jsx";

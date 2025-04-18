@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { projectData } from "../../../constants/Projects/ProjectConstant";
 import { FaPlus } from "react-icons/fa6";
 import { FaCaretRight } from "react-icons/fa";
 import { ImSortAmountAsc } from "react-icons/im";
 import SearchBar from "../AdminDashboard/Shared/SearchBar";
+import ProjectModulesTable from "./components/ProjectModulesTable";
 
 
 
@@ -21,7 +22,14 @@ const AdminProjectDetails = () => {
   const project = projectData.find((p) => String(p.project_id) === String(projectId));
   console.log("Project Data:", project);
   
-  const [displayData, setDisplayData] = useState(project?.modules || []);
+  
+  const [displayData, setDisplayData] = useState(project || []);
+  useEffect(() => {
+    const updatedProject = projectData.find(
+      (p) => String(p.project_id) === String(projectId)
+    );
+    setDisplayData(updatedProject || []);
+  }, [projectId]);
   console.log(displayData)
 
   
@@ -41,12 +49,12 @@ const AdminProjectDetails = () => {
      setSearchQuery(query);
     
         if (!query.trim()) {
-          setDisplayData(project.modules || []);
+          setDisplayData(project || []);
     
           return;
         }
         const lowerCaseQuery = query.toLowerCase();
-        const filteredResults = project.modules.filter((item) =>
+        const filteredResults = (project?.modules || []).filter((item) =>
           Object.values(item).some((value) =>
             String(value).toLowerCase().includes(lowerCaseQuery)
           )
@@ -54,10 +62,7 @@ const AdminProjectDetails = () => {
         setDisplayData(filteredResults);
 
   }
-  const handleAddClick = () =>{
-
-  }
-
+  
 
 
   
@@ -67,11 +72,12 @@ const AdminProjectDetails = () => {
     >
       <div className="w-full h-full">
         <div className="w-full h-fit flex flex-row justify-between items-center  ">
-          <div className="flex flex-row items-center gap-2 ">
+          <div className="flex flex-col md:flex-row items-center gap-2 ">
             <span className="font-satoshi text-[#40CBE0] font-medium text-base ">
               Project
             </span>
-            <span className={`text-xs text-[#5A5A5A] transition-all duration-200 ${
+           <div className="flex flex-row gap-2 items-center">
+           <span className={`text-xs text-[#5A5A5A] transition-all duration-200 ${
                 selectOpen ?"rotate-90" : "rotate-0"
             } `}>
               <FaCaretRight />
@@ -92,6 +98,7 @@ const AdminProjectDetails = () => {
                 ))}
               </select>
             </div>
+           </div>
           </div>
 
           <button 
@@ -118,6 +125,12 @@ const AdminProjectDetails = () => {
               Sort
             </button>
           </div>
+        </div>
+
+        {/* module details table */}
+        <div className="w-full max-h-[75vh] h-fit  lg:max-h-[63vh] overflow-y-auto my-5 no-scrollbar rounded-lg border border-[#4C4F55]">
+          <ProjectModulesTable displayData={displayData} />
+
         </div>
 
       </div>

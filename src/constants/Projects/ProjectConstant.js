@@ -466,7 +466,7 @@ export const projectData = [
     created: 1742227200,
     name: "API fire",
     description:
-      "<p><strong>Internal APIs</strong> for the company. This includes all services related to <em>user management</em>, access control, and more.</p>",
+      " for the company. This includes all services related to user management, access control, and more.",
     base_url: "https://api.company.com",
     version: "v1.0",
     status: "completed",
@@ -474,7 +474,7 @@ export const projectData = [
     modules: [
       {
         module_id: 1,
-        name: "Payment API",
+        name: "Introduction",
         description:
           "<p>The <strong>Payment API</strong> enables you to perform all the operations available through our web interface, offering complete control over your payment workflows programmatically.</p><p>Built on <strong>RESTful architecture</strong>, the Payment API provides predictable and structured URLs, making it easy to integrate into your applications. It adheres to standard HTTP protocols, allowing seamless interaction using a wide range of HTTP clients.</p><p>Each resource, such as <em>transactions</em>, <em>customers</em>, and <em>payment gateways</em>, is accessible via a unique URL. You can discover the endpoints by referencing the <strong>API Root Endpoint</strong>.</p>",
         url_type: "API Root Endpoint",

@@ -9,6 +9,7 @@
 
 
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 
 @theme {
@@ -28,6 +29,11 @@
   --color-commontext:#8A8D91;
 
  
+}
+@layer base {
+  .ProseMirror {
+    @apply focus:outline-none focus:ring-0 text-heading w-full h-full caret-heading;
+  }
 }
 /* ✅ Hide calendar icon only on specific fields */
 .hide-calendar {
