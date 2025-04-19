@@ -19,9 +19,9 @@ function Report() {
 
 
   const endpointCount = projectData.reduce((acc, project) => {
-    return acc + project.endpoints.length;
+    return acc + project.modules?.length;
   }, 0);
-  
+  console.log(endpointCount)
   return (
     <div className="w-full h-fit grid grid-cols-1  md:grid-cols-3 gap-4">
       <div className="w-full bg-Bghilight flex flex-col items-start h-fit drop-shadow-xl   rounded-xl p-4">

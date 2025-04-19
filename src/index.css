@@ -35,6 +35,21 @@
     @apply focus:outline-none focus:ring-0 text-heading w-full h-full caret-heading;
   }
 }
+
+.editor-wrapper strong,
+.editor-wrapper em,
+.editor-wrapper u,
+.editor-wrapper a,
+.editor-wrapper strike,
+.editor-wrapper mark,
+.editor-wrapper h1,
+.editor-wrapper h2,
+.editor-wrapper h3 {
+  color: inherit !important;
+}
+
+
+
 /* ✅ Hide calendar icon only on specific fields */
 .hide-calendar {
   -webkit-appearance: none;                  /* Chrome, Safari, Edge */

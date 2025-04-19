@@ -48,7 +48,7 @@ function ProjectsTable() {
               
               </td>
               <td className="px-5 py-4 ">
-                {project.endpoints.length}
+                {project.modules?.length}
               </td>
               <td className="px-5 py-4 ">
                 {formatDate(project.lastUpdated)}

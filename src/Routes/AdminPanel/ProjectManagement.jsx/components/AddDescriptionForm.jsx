@@ -34,7 +34,7 @@ const ModuleSchema = Yup.object({
   description: Yup.string().required("Description is required"),
 });
 
-const AddDescriptionForm = ({ onSubmit, formRef }) => {
+const AddDescriptionForm = ({ formRef }) => {
   return (
     <Formik
       innerRef={formRef}
@@ -45,7 +45,10 @@ const AddDescriptionForm = ({ onSubmit, formRef }) => {
         description: "",
       }}
       validationSchema={ModuleSchema}
-      onSubmit={onSubmit}
+      onSubmit={(values, actions) => {
+        
+        return values;
+      }}
     >
       {({ errors, touched }) => (
         <Form className="w-full p-4 bg-Bgprimary rounded shadow space-y-4">
@@ -53,6 +56,7 @@ const AddDescriptionForm = ({ onSubmit, formRef }) => {
           <div>
             <label
               htmlFor="name"
+              name="name"
               className="block text-heading text-base font-medium mb-1"
             >
               Module Name
@@ -105,6 +109,7 @@ const AddDescriptionForm = ({ onSubmit, formRef }) => {
           <div>
             <label
               htmlFor="description"
+              name="description"
               className="block text-heading font-satoshi font-medium  mb-1"
             >
               Description
