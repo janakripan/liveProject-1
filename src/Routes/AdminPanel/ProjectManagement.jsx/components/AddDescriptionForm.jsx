@@ -8,7 +8,7 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 const SubAttributesField = () => {
   const { values } = useFormikContext();
 
-  if (!values.isSubAttribute) return null;
+  if (!values.isSubModule) return null;
 
   return (
     <div className="mt-4">
@@ -16,7 +16,7 @@ const SubAttributesField = () => {
         as="textarea"
         name="subAttributes"
         placeholder="Enter sub attributes"
-        className="w-full border border-Bghilight px-3 py-2 rounded focus:outline-none focus:ring-1 focus:ring-buttonBlue text-heading min-h-[100px]"
+        className="w-full  border border-Bghilight px-3 py-2 rounded focus:outline-none focus:ring-1 focus:ring-buttonBlue text-heading min-h-[100px]"
       />
     </div>
   );
@@ -40,12 +40,12 @@ const AddDescriptionForm = ({ formRef }) => {
       innerRef={formRef}
       initialValues={{
         name: "",
-        isSubAttribute: false,
+        isSubModule: true,
         subAttributes: "",
         description: "",
       }}
       validationSchema={ModuleSchema}
-      onSubmit={(values, actions) => {
+      onSubmit={(values) => {
         
         return values;
       }}
@@ -73,7 +73,7 @@ const AddDescriptionForm = ({ formRef }) => {
 
           {/* Toggle for Sub Attribute */}
           <div className="flex items-center text-heading gap-2">
-            <Field name="isSubAttribute">
+            <Field name="isSubModule">
               {({ field, form }) => (
                 <FormControlLabel
                   control={
@@ -81,7 +81,7 @@ const AddDescriptionForm = ({ formRef }) => {
                       {...field}
                       checked={field.value}
                       onChange={(e) =>
-                        form.setFieldValue("isSubAttribute", e.target.checked)
+                        form.setFieldValue("isSubModule", e.target.checked)
                       }
                       sx={{
                         color: "#E2E2E2",
@@ -101,8 +101,8 @@ const AddDescriptionForm = ({ formRef }) => {
           </div>
 
           <SubAttributesField />
-          {errors.subAttributes && touched.subAttributes && (
-            <div className="text-red-500 text-sm">{errors.subAttributes}</div>
+          {errors.isSubModule && touched.isSubModule && (
+            <div className="text-red-500 text-sm">{errors.isSubModule}</div>
           )}
 
           {/* Description (Rich Text Editor) */}

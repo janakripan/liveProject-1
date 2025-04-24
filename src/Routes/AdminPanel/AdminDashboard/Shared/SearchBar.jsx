@@ -56,7 +56,7 @@ function SearchBar({ onSearch, placeholder, className = "" }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={placeholder}
-          className={`w-full h-[46px] px-4 pl-8 pr-10 border border-[#AEAAAB] placeholder:font-medium placeholder:font-satoshi placeholder:text-[#797677] rounded-lg focus:outline-none focus:ring-1 focus:ring-[#025964] transition  ${className}`}
+          className={`w-full h-[46px] px-4 text-heading placeholder:text-commontext pl-8 pr-10 border border-[#AEAAAB] placeholder:font-medium placeholder:font-satoshi  rounded-lg focus:outline-none focus:ring-1 focus:ring-[#025964] transition  ${className}`}
         />
         {query && (
           <button

@@ -4,7 +4,7 @@ import AddDescriptionForm from "./components/AddDescriptionForm";
 import { useNavigate } from "react-router";
 import AddUrlForm from "./components/AddUrlForm";
 
-const AddModule = () => {
+const AddSubModule = () => {
   const descriptionRef = useRef();
   const urlRef = useRef();
   const navigate = useNavigate();
@@ -139,4 +139,4 @@ const AddModule = () => {
   );
 };
 
-export default AddModule;
+export default AddSubModule;

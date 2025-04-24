@@ -12,6 +12,9 @@
 @plugin "@tailwindcss/typography";
 
 
+
+
+
 @theme {
   --font-rubik: Rubik, "sans-serif";
   --font-doto: Doto, "sana-serif";
@@ -32,9 +35,10 @@
 }
 @layer base {
   .ProseMirror {
-    @apply focus:outline-none focus:ring-0 text-heading w-full h-full caret-heading;
+      @apply focus:outline-none focus:ring-0 text-heading w-full h-full caret-heading;
   }
 }
+
 
 .editor-wrapper strong,
 .editor-wrapper em,

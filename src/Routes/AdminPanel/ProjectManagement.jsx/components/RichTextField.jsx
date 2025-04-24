@@ -1,23 +1,39 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useField, useFormikContext } from "formik";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
-import Code from "@tiptap/extension-code";
-import Strike from "@tiptap/extension-strike";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
-import Placeholder from "@tiptap/extension-placeholder"; 
-import debounce from "lodash.debounce"; 
-
+import Placeholder from "@tiptap/extension-placeholder";
+import TextStyle from "@tiptap/extension-text-style";
+import debounce from "lodash.debounce";
+import Color from "@tiptap/extension-color";
 import { ImBold, ImItalic } from "react-icons/im";
-import { FaCode, FaUnderline } from "react-icons/fa6";
+import { FaCode, FaStrikethrough, FaUnderline } from "react-icons/fa6";
 import { IoLink } from "react-icons/io5";
-import { LuListOrdered } from "react-icons/lu";
+import { LuList, LuListOrdered } from "react-icons/lu";
+import { ColorPickerDropdown } from "../../AdminDashboard/Shared/ColorPickerDropdown ";
+import FontSize from "../../../../utils/Fontsize";
 
-//  Memoized toolbar to avoid re-renders
 const MenuBar = React.memo(({ editor }) => {
+  const [, setEditorState] = useState(0);
+
+  useEffect(() => {
+    if (!editor) return;
+
+    const updateHandler = () => setEditorState((s) => s + 1);
+
+    editor.on("update", updateHandler);
+    editor.on("selectionUpdate", updateHandler);
+
+    return () => {
+      editor.off("update", updateHandler);
+      editor.off("selectionUpdate", updateHandler);
+    };
+  }, [editor]);
+
   if (!editor) return null;
 
   const handleChange = (e) => {
@@ -30,11 +46,13 @@ const MenuBar = React.memo(({ editor }) => {
       case "h1":
       case "h2":
       case "h3":
-        editor.chain().focus().toggleHeading({ level: parseInt(value[1]) }).run();
+        editor
+          .chain()
+          .focus()
+          .toggleHeading({ level: parseInt(value[1]) })
+          .run();
         break;
-      case "strike":
-        editor.chain().focus().toggleStrike().run();
-        break;
+
       case "highlight":
         editor.chain().focus().toggleHighlight().run();
         break;
@@ -51,18 +69,19 @@ const MenuBar = React.memo(({ editor }) => {
   };
 
   return (
-    <div className="flex flex-wrap gap-4 mb-2 w-full bg-Bghilight px-5 py-2 rounded-md">
+    <div className="flex flex-wrap items-center  gap-4 mb-2 w-full bg-Bghilight px-5 py-2 rounded-md">
       <select
         onChange={handleChange}
         defaultValue=""
         className="px-2 py-1 rounded border border-heading bg-Bghilight text-sm text-heading focus:outline-none focus:ring-1 focus:ring-buttonBlue"
       >
-        <option value="" disabled>Select...</option>
+        <option value="" disabled>
+          Select...
+        </option>
         <option value="paragraph">Paragraph</option>
         <option value="h1">H1</option>
         <option value="h2">H2</option>
         <option value="h3">H3</option>
-        <option value="strike">Strike</option>
         <option value="highlight">Highlight</option>
         <option value="left">Left Align</option>
         <option value="center">Center Align</option>
@@ -70,25 +89,71 @@ const MenuBar = React.memo(({ editor }) => {
       </select>
 
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
-        className={editor.isActive("bold") ? "font-bold text-blue-600 text-2xl" : "text-2xl text-heading"}
+        className={`p-2 rounded-lg transition-all duration-300 text-2xl ${
+          editor.isActive("bold")
+            ? "font-bold border border-heading  text-blue-600 "
+            : "font-bold text-heading"
+        }`}
       >
         <ImBold />
       </button>
+      <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleStrike().run()}
+        className={
+          editor.isActive("strike")
+            ? "font-bold text-blue-600 text-2xl"
+            : "text-2xl text-heading"
+        }
+      >
+        <FaStrikethrough />
+      </button>
 
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={editor.isActive("italic") ? "italic text-blue-600 text-2xl" : "text-2xl text-heading"}
+        className={
+          editor.isActive("italic")
+            ? "italic text-blue-600 text-2xl"
+            : "text-2xl text-heading"
+        }
       >
         <ImItalic />
       </button>
 
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleUnderline().run()}
-        className={editor.isActive("underline") ? "underline text-blue-600 text-2xl" : "text-2xl text-heading"}
+        className={
+          editor.isActive("underline")
+            ? "underline text-blue-600 text-2xl"
+            : "text-2xl text-heading"
+        }
       >
         <FaUnderline />
       </button>
+
+      <select
+        onChange={(e) => {
+          const value = e.target.value;
+          if (value) {
+            editor.chain().focus().setFontSize(value).run();
+          }
+        }}
+        value={editor.getAttributes("fontSize").fontSize || ""}
+        className="px-2 py-1 rounded border border-heading bg-Bghilight text-sm text-heading focus:outline-none focus:ring-1 focus:ring-buttonBlue"
+      >
+        <option value="">Font Size</option>
+        <option value="12">12</option>
+        <option value="14">14</option>
+        <option value="16">16</option>
+        <option value="18">18</option>
+        <option value="20">20</option>
+        <option value="24">24</option>
+        <option value="28">28</option>
+      </select>
 
       <button
         className="text-heading text-2xl"
@@ -106,18 +171,42 @@ const MenuBar = React.memo(({ editor }) => {
       </button>
 
       <button
+        type="button"
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={editor.isActive("orderedList") ? "text-blue-600 text-2xl" : "text-2xl text-heading"}
+        className={
+          editor.isActive("orderedList")
+            ? "text-blue-600 text-2xl"
+            : "text-2xl text-heading"
+        }
       >
         <LuListOrdered />
       </button>
 
       <button
+        type="button"
+        onClick={() => editor.chain().focus().toggleBulletList().run()}
+        className={
+          editor.isActive("bulletList")
+            ? "text-blue-600 text-2xl"
+            : "text-2xl text-heading"
+        }
+      >
+        <LuList />
+      </button>
+
+      <button
+        type="button"
         onClick={() => editor.chain().focus().toggleCode().run()}
-        className={editor.isActive("code") ? "text-blue-600 text-2xl" : "text-2xl text-heading"}
+        className={
+          editor.isActive("code")
+            ? "text-blue-600 text-2xl"
+            : "text-2xl text-heading"
+        }
       >
         <FaCode />
       </button>
+
+      <ColorPickerDropdown editor={editor} />
     </div>
   );
 });
@@ -137,15 +226,16 @@ const RichTextField = ({ name, label }) => {
       StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
       Underline,
       Link,
-      Code,
-      Strike,
       Highlight,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
-      Placeholder.configure({ placeholder: "Type your description..." })
+      Placeholder.configure({ placeholder: "Type your description..." }),
+      TextStyle,
+      Color,
+      FontSize,
     ],
     content: field.value || "",
     onUpdate: ({ editor }) => {
-      debouncedSetValue(editor.getHTML()); 
+      debouncedSetValue(editor.getHTML());
     },
   });
 
@@ -157,13 +247,12 @@ const RichTextField = ({ name, label }) => {
 
       <MenuBar editor={editor} />
 
-      
       <div
         onClick={() => editor?.chain().focus().run()}
         className="editor-wrapper border rounded bg-Bgprimary border-Bghilight min-h-[150px] p-2 prose prose-sm max-w-none list-outside text-commontext focus:outline-none focus:ring-1 focus:ring-buttonBlue"
       >
         {editor ? (
-          <EditorContent key={name} editor={editor} /> 
+          <EditorContent key={name} editor={editor} />
         ) : (
           <div>Loading editor...</div>
         )}

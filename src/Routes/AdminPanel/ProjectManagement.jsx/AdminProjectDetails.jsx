@@ -6,6 +6,9 @@ import { FaCaretRight } from "react-icons/fa";
 import { ImSortAmountAsc } from "react-icons/im";
 import SearchBar from "../AdminDashboard/Shared/SearchBar";
 import ProjectModulesTable from "./components/ProjectModulesTable";
+import { IoMdClose } from "react-icons/io";
+import AddModuleForm from "./components/AddModuleForm";
+import EditModuleForm from "./components/EditModuleForm";
 
 
 
@@ -13,14 +16,18 @@ import ProjectModulesTable from "./components/ProjectModulesTable";
 const AdminProjectDetails = () => {
     const [selectOpen , setSelectOpen] = useState(false)
     const [add , setAdd] = useState(false)
+    const [edit , setEdit] = useState(false)
+    const [editId , setEditId] = useState(null)
+    const [editModuleId , setEditModuleId] = useState(null)
     const [searchQuery, setSearchQuery] = useState("");
+
       
     const selectRef = useRef(null);
 
   const { projectId } = useParams();
   const navigate = useNavigate()
   const project = projectData.find((p) => String(p.project_id) === String(projectId));
-  console.log("Project Data:", project);
+  
   
   
   const [displayData, setDisplayData] = useState(project || []);
@@ -30,7 +37,7 @@ const AdminProjectDetails = () => {
     );
     setDisplayData(updatedProject || []);
   }, [projectId]);
-  console.log(displayData)
+
 
   
 
@@ -61,6 +68,9 @@ const AdminProjectDetails = () => {
         );
         setDisplayData(filteredResults);
 
+  }
+  const handleEditClick = ()=>{
+    setEdit(false)
   }
   
 
@@ -102,7 +112,7 @@ const AdminProjectDetails = () => {
           </div>
 
           <button 
-          onClick={() => navigate(`/admin/project/${projectId}/add-module`)}
+          onClick={() =>setAdd(true)}
           className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 rounded-lg hover:scale-105 transition-transform duration-300 ">
             <FaPlus />
             <span className="hidden md:block"> Add New Module</span>
@@ -129,12 +139,56 @@ const AdminProjectDetails = () => {
 
         {/* module details table */}
         <div className="w-full max-h-[75vh] h-fit  lg:max-h-[63vh] overflow-y-auto my-5 no-scrollbar rounded-lg border border-[#4C4F55]">
-          <ProjectModulesTable displayData={displayData} />
+          <ProjectModulesTable displayData={displayData} setEditModuleId={setEditModuleId} setEditId={setEditId} editId={editId} setEdit={()=>setEdit(true)} />
 
         </div>
 
       </div>
+      {add && (
+        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
+          <div
+            className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
+          >
+            <div className="w-full flex flex-row justify-between ">
+              <h3 className="lg:text-2xl md:text-xl text-heading text-lg font-medium font-manrope capitalize ">
+                add new Module
+              </h3>
+              <button
+                className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "
+                onClick={() => setAdd(false)}
+              >
+                <IoMdClose />
+              </button>
+            </div>
+            <hr className="border-[#F1F1F1] mt-1 mb-4" />
+            <AddModuleForm handleClick={()=>setAdd(false)}/>
+          </div>
+        </div>
+      )}
+       {/* Edit project popup */}
+       {edit && (
+        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
+          <div
+            className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
+          >
+            <div className="w-full flex flex-row justify-between ">
+              <h3 className="lg:text-2xl md:text-xl text-heading text-lg font-medium font-manrope capitalize ">
+                edit project
+              </h3>
+              <button
+                className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "
+                onClick={() => setEdit(false)}
+              >
+                <IoMdClose />
+              </button>
+            </div>
+            <hr className="border-[#F1F1F1] mt-1 mb-4" />
+            <EditModuleForm handleEditClick={handleEditClick} editId={editId} editModuleId={editModuleId} />
+          </div>
+        </div>
+      )}
     </div>
+
   );
 };
 

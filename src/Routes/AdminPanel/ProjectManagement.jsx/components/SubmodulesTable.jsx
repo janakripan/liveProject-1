@@ -3,7 +3,7 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useNavigate } from "react-router";
 
-const ProjectModulesTable = ({
+const SubmodulesTable = ({
   displayData,
   editId,
   setEditId,
@@ -11,10 +11,26 @@ const ProjectModulesTable = ({
   setEditModuleId,
 }) => {
   const navigate = useNavigate()
+
   function formatUnixDate(unixTimestamp, useDashes = false) {
     const date = new Date(unixTimestamp * 1000);
     const formatted = date.toLocaleDateString("en-GB");
     return formatted;
+  }
+ 
+  function timeAgo(unixTimestamp) {
+    const now = Date.now();
+    const updated = new Date(unixTimestamp * 1000).getTime();
+    const diffInSeconds = Math.floor((now - updated) / 1000);
+  
+    const minutes = Math.floor(diffInSeconds / 60);
+    const hours = Math.floor(diffInSeconds / 3600);
+    const days = Math.floor(diffInSeconds / 86400);
+  
+    if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
+    if (minutes < 60) return `${minutes} minutes ago`;
+    if (hours < 24) return `${hours} hours ago`;
+    return `${days} days ago`;
   }
 
   return (
@@ -26,14 +42,9 @@ const ProjectModulesTable = ({
               SL
             </th>
             <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
-              Modules
+             sub Modules
             </th>
-            <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
-              Status
-            </th>
-            <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
-              Submodules
-            </th>
+            
             <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
               Created
             </th>
@@ -48,9 +59,10 @@ const ProjectModulesTable = ({
           </tr>
         </thead>
         <tbody>
-          {displayData.modules?.map((module, index) => (
+          {displayData.sub_modules?.map((module, index) => (
+            
             <tr
-              key={module.module_id}
+              key={module.sub_module_id}
               className=" border bg-Bgprimary text-heading border-[#4C4F55]"
             >
               <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
@@ -60,35 +72,29 @@ const ProjectModulesTable = ({
                 {module.name}
               </td>
               <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
-                {displayData.status}
+                {formatUnixDate(module.created)}
               </td>
               <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
-                {module.sub_modules.length}
-              </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
-                {formatUnixDate(displayData.created)}
-              </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
-                {formatUnixDate(displayData.lastUpdated)}
+                {timeAgo(module.lastUpdated)}
               </td>
               <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
                 <div className="w-full h-full flex flex-row items-center justify-between gap-x-2.5">
                   <button
-                    onClick={() =>
-                      navigate(
-                        `/admin/project/${displayData.project_id}/modules/${module.module_id}`
-                      )
-                    }
+                    // onClick={() =>
+                    //   navigate(
+                    //     `/admin/project/${displayData.project_id}/modules/${module.module_id}`
+                    //   )
+                    // }
                     className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#3A3D44] text-white font-sans rounded-md font-medium text-base hover:cursor-pointer "
                   >
                     View
                   </button>
                   <button
-                    onClick={() => {
-                      setEdit(true);
-                      setEditId(displayData.project_id);
-                      setEditModuleId(module.module_id);
-                    }}
+                    // onClick={() => {
+                    //   setEdit(true);
+                    //   setEditId(displayData.project_id);
+                    //   setEditModuleId(module.module_id);
+                    // }}
                     className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-xl hover:cursor-pointer "
                   >
                     <FiEdit />
@@ -106,4 +112,4 @@ const ProjectModulesTable = ({
   );
 };
 
-export default ProjectModulesTable;
+export default SubmodulesTable;
