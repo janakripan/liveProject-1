@@ -16,9 +16,12 @@ import { IoLink } from "react-icons/io5";
 import { LuList, LuListOrdered } from "react-icons/lu";
 import { ColorPickerDropdown } from "../../AdminDashboard/Shared/ColorPickerDropdown ";
 import FontSize from "../../../../utils/Fontsize";
+import { CgArrowsBreakeV } from "react-icons/cg";
+
 
 const MenuBar = React.memo(({ editor }) => {
   const [, setEditorState] = useState(0);
+
 
   useEffect(() => {
     if (!editor) return;
@@ -38,6 +41,7 @@ const MenuBar = React.memo(({ editor }) => {
 
   const handleChange = (e) => {
     const value = e.target.value;
+    
 
     switch (value) {
       case "paragraph":
@@ -75,9 +79,7 @@ const MenuBar = React.memo(({ editor }) => {
         defaultValue=""
         className="px-2 py-1 rounded border border-heading bg-Bghilight text-sm text-heading focus:outline-none focus:ring-1 focus:ring-buttonBlue"
       >
-        <option value="" disabled>
-          Select...
-        </option>
+        
         <option value="paragraph">Paragraph</option>
         <option value="h1">H1</option>
         <option value="h2">H2</option>
@@ -91,9 +93,9 @@ const MenuBar = React.memo(({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBold().run()}
-        className={`p-2 rounded-lg transition-all duration-300 text-2xl ${
+        className={`p-2 rounded-lg transition-all duration-50 text-2xl ${
           editor.isActive("bold")
-            ? "font-bold border border-heading  text-blue-600 "
+            ? "font-bold border border-heading shadow-inner shadow-heading text-blue-600 "
             : "font-bold text-heading"
         }`}
       >
@@ -102,11 +104,11 @@ const MenuBar = React.memo(({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleStrike().run()}
-        className={
+        className={`p-2 rounded-lg transition-all duration-50 text-2xl ${
           editor.isActive("strike")
-            ? "font-bold text-blue-600 text-2xl"
-            : "text-2xl text-heading"
-        }
+            ? "font-bold  shadow-inner shadow-heading text-blue-600 "
+            : "font-bold text-heading"
+        }`}
       >
         <FaStrikethrough />
       </button>
@@ -114,11 +116,11 @@ const MenuBar = React.memo(({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={
+        className={`p-2 rounded-lg transition-all duration-50 text-2xl ${
           editor.isActive("italic")
-            ? "italic text-blue-600 text-2xl"
-            : "text-2xl text-heading"
-        }
+            ? "font-bold  shadow-inner shadow-heading text-blue-600 "
+            : "font-bold text-heading"
+        }`}
       >
         <ImItalic />
       </button>
@@ -126,11 +128,11 @@ const MenuBar = React.memo(({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleUnderline().run()}
-        className={
+        className={`p-2 rounded-lg transition-all duration-50 text-2xl ${
           editor.isActive("underline")
-            ? "underline text-blue-600 text-2xl"
-            : "text-2xl text-heading"
-        }
+            ? "font-bold  shadow-inner shadow-heading text-blue-600 "
+            : "font-bold text-heading"
+        }`}
       >
         <FaUnderline />
       </button>
@@ -173,11 +175,11 @@ const MenuBar = React.memo(({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={
+        className={`p-2 rounded-lg transition-all duration-50 text-2xl ${
           editor.isActive("orderedList")
-            ? "text-blue-600 text-2xl"
-            : "text-2xl text-heading"
-        }
+            ? "font-bold  shadow-inner shadow-heading text-blue-600 "
+            : "font-bold text-heading"
+        }`}
       >
         <LuListOrdered />
       </button>
@@ -185,23 +187,31 @@ const MenuBar = React.memo(({ editor }) => {
       <button
         type="button"
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={
+        className={`p-2 rounded-lg transition-all duration-50 text-2xl ${
           editor.isActive("bulletList")
-            ? "text-blue-600 text-2xl"
-            : "text-2xl text-heading"
-        }
+            ? "font-bold  shadow-inner shadow-heading text-blue-600 "
+            : "font-bold text-heading"
+        }`}
       >
         <LuList />
       </button>
 
       <button
         type="button"
+        onClick={() => editor.chain().focus().setHorizontalRule().run()}
+        className="p-2 rounded-lg transition-all duration-50 text-2xl font-bold text-heading hover:text-blue-600"
+      >
+      <CgArrowsBreakeV />
+      </button>
+
+      <button
+        type="button"
         onClick={() => editor.chain().focus().toggleCode().run()}
-        className={
+        className={`p-2 rounded-lg transition-all duration-50 text-2xl ${
           editor.isActive("code")
-            ? "text-blue-600 text-2xl"
-            : "text-2xl text-heading"
-        }
+            ? "font-bold  shadow-inner shadow-heading text-blue-600 "
+            : "font-bold text-heading"
+        }`}
       >
         <FaCode />
       </button>

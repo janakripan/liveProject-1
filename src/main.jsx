@@ -9,6 +9,7 @@ import App from "./App.jsx";
 
 
 
+
 const ModuleDetails = lazy(()=>import("./Routes/AdminPanel/ProjectManagement.jsx/ModuleDetails.jsx"))
 const AuthHome = lazy(() => import("./Routes/Authentication/AuthHome.jsx"));
 const LoginPage = lazy(() => import("./Routes/Authentication/LoginPage.jsx"));
@@ -20,6 +21,7 @@ const AdminDashboard = lazy(() => import("./Routes/AdminPanel/AdminDashboard/Adm
 const ProjectPage = lazy(() => import("./Routes/AdminPanel/ProjectManagement.jsx/ProjectPage.jsx"));
 const AdminProjectDetails = lazy(() => import("./Routes/AdminPanel/ProjectManagement.jsx/AdminProjectDetails.jsx"));
 const AddSubModule = lazy(() => import("./Routes/AdminPanel/ProjectManagement.jsx/AddSubModule.jsx"));
+const SubModulePreview = lazy(() => import("./Routes/AdminPanel/ProjectManagement.jsx/SubModulePreview.jsx"));
 const DeveloperPage = lazy(() => import("./Routes/AdminPanel/DeveloperPage/DeveloperPage.jsx"));
 const Account = lazy(() => import("./Routes/AdminPanel/Account/Account.jsx"));
 
@@ -42,7 +44,7 @@ createRoot(document.getElementById("root")).render(
               <Route path="project/:projectId" element={<AdminProjectDetails />} />
               <Route path="project/:projectId/modules/:moduleId" element={<ModuleDetails/>} />
               <Route path="project/:projectId/modules/:moduleId/add-submodule" element={<AddSubModule/>}/>
-              {/* <Route path="project/:projectId/add-module" element={<AddModule />} /> */}
+              <Route path="project/:projectId/preview" element={<SubModulePreview/>} />
               <Route path="developer" element={<DeveloperPage />} />
               <Route path="account" element={<Account />} />
             </Route>

@@ -1,26 +1,11 @@
 import React from "react";
-import { Formik, Form, Field, useFormikContext } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import RichTextField from "./RichTextField";
-import { Checkbox, FormControlLabel } from "@mui/material";
 
-//  Conditionally show Sub Attributes Textarea
-const SubAttributesField = () => {
-  const { values } = useFormikContext();
 
-  if (!values.isSubModule) return null;
 
-  return (
-    <div className="mt-4">
-      <Field
-        as="textarea"
-        name="subAttributes"
-        placeholder="Enter sub attributes"
-        className="w-full  border border-Bghilight px-3 py-2 rounded focus:outline-none focus:ring-1 focus:ring-buttonBlue text-heading min-h-[100px]"
-      />
-    </div>
-  );
-};
+
 
 //  Validation Schema
 const ModuleSchema = Yup.object({
@@ -41,7 +26,6 @@ const AddDescriptionForm = ({ formRef }) => {
       initialValues={{
         name: "",
         isSubModule: true,
-        subAttributes: "",
         description: "",
       }}
       validationSchema={ModuleSchema}
@@ -71,39 +55,9 @@ const AddDescriptionForm = ({ formRef }) => {
             )}
           </div>
 
-          {/* Toggle for Sub Attribute */}
-          <div className="flex items-center text-heading gap-2">
-            <Field name="isSubModule">
-              {({ field, form }) => (
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      {...field}
-                      checked={field.value}
-                      onChange={(e) =>
-                        form.setFieldValue("isSubModule", e.target.checked)
-                      }
-                      sx={{
-                        color: "#E2E2E2",
-                        "&.Mui-checked": {
-                          color: "#E2E2E2",
-                        },
-                        "& .MuiSvgIcon-root": {
-                          fontSize: 24,
-                        },
-                      }}
-                    />
-                  }
-                  label="Sub Attribute"
-                />
-              )}
-            </Field>
-          </div>
+         
 
-          <SubAttributesField />
-          {errors.isSubModule && touched.isSubModule && (
-            <div className="text-red-500 text-sm">{errors.isSubModule}</div>
-          )}
+         
 
           {/* Description (Rich Text Editor) */}
           <div>

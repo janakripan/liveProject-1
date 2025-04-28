@@ -30,7 +30,9 @@ function AdminDashboard() {
             <h3 className="font-bold font-satoshi md:text-xl text-lg lg:text-2xl text-heading ">
               API Projects
             </h3>
-            <Link className=" text-[#0A84FF] font-medium font-satoshi text-sm md:text-base  p-1 ">
+            <Link
+            to={"project"}
+             className=" text-[#0A84FF] font-medium font-satoshi text-sm md:text-base  p-1 ">
               See all
             </Link>
           </div>

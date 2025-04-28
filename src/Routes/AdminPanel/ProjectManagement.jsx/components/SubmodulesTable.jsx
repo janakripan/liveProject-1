@@ -12,7 +12,7 @@ const SubmodulesTable = ({
 }) => {
   const navigate = useNavigate()
 
-  function formatUnixDate(unixTimestamp, useDashes = false) {
+  function formatUnixDate(unixTimestamp) {
     const date = new Date(unixTimestamp * 1000);
     const formatted = date.toLocaleDateString("en-GB");
     return formatted;

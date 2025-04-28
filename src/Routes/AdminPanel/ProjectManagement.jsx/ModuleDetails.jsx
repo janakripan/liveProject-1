@@ -36,7 +36,7 @@ const ModuleDetails = () => {
   };
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
+   
 
     if (!query.trim()) {
       setDisplayData(project?.modules || []);
@@ -80,7 +80,7 @@ const ModuleDetails = () => {
                   ref={selectRef}
                   onFocus={() => setSelectOpen(true)}
                   onBlur={() => setSelectOpen(false)}
-                  value={projectId}
+                  value={moduleId}
                   className=" text-heading border-0 appearance-none transition-all  font-satoshi font-bold text-base capitalize bg-Bgprimary focus:outline-0  p-2 rounded"
                 >
                   {project.modules.map((project) => (

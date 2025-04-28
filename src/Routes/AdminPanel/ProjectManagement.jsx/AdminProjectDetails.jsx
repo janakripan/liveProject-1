@@ -19,7 +19,7 @@ const AdminProjectDetails = () => {
     const [edit , setEdit] = useState(false)
     const [editId , setEditId] = useState(null)
     const [editModuleId , setEditModuleId] = useState(null)
-    const [searchQuery, setSearchQuery] = useState("");
+
 
       
     const selectRef = useRef(null);
@@ -53,7 +53,7 @@ const AdminProjectDetails = () => {
   };
 
   const handleSearch = (query) =>{
-     setSearchQuery(query);
+     
     
         if (!query.trim()) {
           setDisplayData(project || []);
@@ -111,12 +111,22 @@ const AdminProjectDetails = () => {
            </div>
           </div>
 
-          <button 
+          <div className=" flex flex-row items-center gap-2 ">
+          <button
+            onClick={() => navigate(`/admin/project/${projectId}/preview`)}
+           className="font-satoshi text-base cursor-pointer font-semibold text-heading bg-[#30D158] px-4 py-3 rounded-lg hover:scale-105 active:scale-95 transition-transform duration-300 ">
+              Preview
+            </button>
+
+            <button 
           onClick={() =>setAdd(true)}
-          className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 rounded-lg hover:scale-105 transition-transform duration-300 ">
+          className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-base text-white flex flex-row items-center justify-center active:scale-95 gap-x-2.5 px-4 py-3 rounded-lg hover:scale-105 transition-transform duration-300 ">
             <FaPlus />
             <span className="hidden md:block"> Add New Module</span>
           </button>
+          </div>
+
+          
         </div>
 
         {/* searchbar and sort button */}
