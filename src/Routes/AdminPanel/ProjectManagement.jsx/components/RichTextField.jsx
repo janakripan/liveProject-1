@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { useField, useFormikContext } from "formik";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -8,20 +8,17 @@ import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextStyle from "@tiptap/extension-text-style";
-import debounce from "lodash.debounce";
 import Color from "@tiptap/extension-color";
 import { ImBold, ImItalic } from "react-icons/im";
 import { FaCode, FaStrikethrough, FaUnderline } from "react-icons/fa6";
-import { IoLink } from "react-icons/io5";
 import { LuList, LuListOrdered } from "react-icons/lu";
 import { ColorPickerDropdown } from "../../AdminDashboard/Shared/ColorPickerDropdown ";
 import FontSize from "../../../../utils/Fontsize";
 import { CgArrowsBreakeV } from "react-icons/cg";
-
+import { FaLink } from "react-icons/fa6";
 
 const MenuBar = React.memo(({ editor }) => {
   const [, setEditorState] = useState(0);
-
 
   useEffect(() => {
     if (!editor) return;
@@ -41,7 +38,6 @@ const MenuBar = React.memo(({ editor }) => {
 
   const handleChange = (e) => {
     const value = e.target.value;
-    
 
     switch (value) {
       case "paragraph":
@@ -79,7 +75,6 @@ const MenuBar = React.memo(({ editor }) => {
         defaultValue=""
         className="px-2 py-1 rounded border border-heading bg-Bghilight text-sm text-heading focus:outline-none focus:ring-1 focus:ring-buttonBlue"
       >
-        
         <option value="paragraph">Paragraph</option>
         <option value="h1">H1</option>
         <option value="h2">H2</option>
@@ -169,7 +164,7 @@ const MenuBar = React.memo(({ editor }) => {
           }
         }}
       >
-        <IoLink />
+        <FaLink />
       </button>
 
       <button
@@ -201,7 +196,7 @@ const MenuBar = React.memo(({ editor }) => {
         onClick={() => editor.chain().focus().setHorizontalRule().run()}
         className="p-2 rounded-lg transition-all duration-50 text-2xl font-bold text-heading hover:text-blue-600"
       >
-      <CgArrowsBreakeV />
+        <CgArrowsBreakeV />
       </button>
 
       <button
@@ -221,17 +216,16 @@ const MenuBar = React.memo(({ editor }) => {
   );
 });
 
-const RichTextField = ({ name, label }) => {
+const RichTextField = ({ name, label ,editorRef}) => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
 
   // Debounced update to reduce render overhead
-  const debouncedSetValue = useCallback(
-    debounce((val) => setFieldValue(name, val), 200),
-    []
-  );
-
+  const setEditorValue = (val) => {
+    setFieldValue(name, val);
+  };
   const editor = useEditor({
+    key: field.value,
     extensions: [
       StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
       Underline,
@@ -243,11 +237,24 @@ const RichTextField = ({ name, label }) => {
       Color,
       FontSize,
     ],
-    content: field.value || "",
+    content:
+      field.value &&
+      typeof field.value === "object" &&
+      field.value.type === "doc"
+        ? field.value
+        : { type: "doc", content: [] },
     onUpdate: ({ editor }) => {
-      debouncedSetValue(editor.getHTML());
+      const json = editor.getJSON();
+      setEditorValue(json);
     },
   });
+  
+  // ✅ Separate useEffect to assign ref
+  useEffect(() => {
+    if (editorRef && editor) {
+      editorRef.current = editor;
+    }
+  }, [editor, editorRef]);
 
   return (
     <div className="mb-4">
@@ -262,14 +269,25 @@ const RichTextField = ({ name, label }) => {
         className="editor-wrapper border rounded bg-Bgprimary border-Bghilight min-h-[150px] p-2 prose prose-sm max-w-none list-outside text-commontext focus:outline-none focus:ring-1 focus:ring-buttonBlue"
       >
         {editor ? (
-          <EditorContent key={name} editor={editor} />
+          <EditorContent key={field.value} editor={editor} />
         ) : (
           <div>Loading editor...</div>
         )}
       </div>
 
       {meta.touched && meta.error && (
-        <div className="text-red-500 text-sm mt-1">{meta.error}</div>
+        <div
+          tabIndex={0}
+          onBlur={() => {
+            if (editor) {
+              const json = editor.getJSON();
+              setFieldValue(name, json); // force update on blur
+            }
+          }}
+          className="text-red-500 text-sm mt-1"
+        >
+          {meta.error}
+        </div>
       )}
     </div>
   );

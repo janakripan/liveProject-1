@@ -7,18 +7,21 @@ const apiFieldSchema = Yup.object().shape({
   apiContent: Yup.string().required("API content is required"),
 });
 
-const AddUrlForm = ({ formRef }) => {
+const AddUrlForm = ({ formRef,initialValues }) => {
+  const defaultValues = {
+    urlType: "",
+    apiContent: "",
+  };
+
+  const mergedInitialValues = { ...defaultValues, ...initialValues };
   return (
     <div className="w-full h-fit">
       <Formik
         innerRef={formRef}
-        initialValues={{
-          urlType: "",
-          apiContent: "",
-        }}
+        initialValues={mergedInitialValues}
+        enableReinitialize
         validationSchema={apiFieldSchema}
         onSubmit={(values) => {
-          // submission handled from parent
           return values;
         }}
       >

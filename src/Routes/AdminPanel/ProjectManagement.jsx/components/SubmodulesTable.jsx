@@ -1,16 +1,15 @@
 import React from "react";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 const SubmodulesTable = ({
   displayData,
-  editId,
-  setEditId,
-  setEdit,
-  setEditModuleId,
+  
 }) => {
   const navigate = useNavigate()
+  const {projectId} = useParams()
+  console.log(projectId)
 
   function formatUnixDate(unixTimestamp) {
     const date = new Date(unixTimestamp * 1000);
@@ -31,6 +30,9 @@ const SubmodulesTable = ({
     if (minutes < 60) return `${minutes} minutes ago`;
     if (hours < 24) return `${hours} hours ago`;
     return `${days} days ago`;
+  }
+  const handleEditClick = (moduleId,subModuleId) =>{
+    navigate(`/admin/project/${projectId}/preview/module/${moduleId}/submodule/${subModuleId}/edit`);
   }
 
   return (
@@ -90,11 +92,7 @@ const SubmodulesTable = ({
                     View
                   </button>
                   <button
-                    // onClick={() => {
-                    //   setEdit(true);
-                    //   setEditId(displayData.project_id);
-                    //   setEditModuleId(module.module_id);
-                    // }}
+                    onClick={handleEditClick}
                     className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-xl hover:cursor-pointer "
                   >
                     <FiEdit />

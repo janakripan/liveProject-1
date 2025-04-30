@@ -10,6 +10,7 @@ import App from "./App.jsx";
 
 
 
+const EditSubModule = lazy(()=>import("./Routes/AdminPanel/ProjectManagement.jsx/components/EditSubModule.jsx"))
 const ModuleDetails = lazy(()=>import("./Routes/AdminPanel/ProjectManagement.jsx/ModuleDetails.jsx"))
 const AuthHome = lazy(() => import("./Routes/Authentication/AuthHome.jsx"));
 const LoginPage = lazy(() => import("./Routes/Authentication/LoginPage.jsx"));
@@ -45,6 +46,7 @@ createRoot(document.getElementById("root")).render(
               <Route path="project/:projectId/modules/:moduleId" element={<ModuleDetails/>} />
               <Route path="project/:projectId/modules/:moduleId/add-submodule" element={<AddSubModule/>}/>
               <Route path="project/:projectId/preview" element={<SubModulePreview/>} />
+              <Route path="project/:projectId/preview/module/:moduleId/submodule/:subModuleId/edit" element={<EditSubModule />} />
               <Route path="developer" element={<DeveloperPage />} />
               <Route path="account" element={<Account />} />
             </Route>

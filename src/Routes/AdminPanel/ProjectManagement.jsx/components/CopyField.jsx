@@ -1,24 +1,41 @@
-import React from "react";
-import { FaRegCopy } from "react-icons/fa";
+import React, { useState } from "react";
+import { MdOutlineContentCopy } from "react-icons/md";
+import { IoCheckmarkDone } from "react-icons/io5";
+
 
 const CopyField = ({ heading, content }) => {
-  const handleCopy = () => {
-    navigator.clipboard.writeText(content);
+  const [copied, setCopied] = useState(false);
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 5000);
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
   };
 
   return (
     <div className=" w-full h-fit rounded-md  bg-Bgprimary shadow-sm">
       <div className="flex justify-between rounded-t-md py-3 px-5 bg-[#2B2D33] items-center ">
-        <h3 className="font-satoshi text-heading font-bold capitalize text-base">{heading}</h3>
+        <h3 className="font-satoshi text-heading font-bold capitalize text-base">
+          {heading}
+        </h3>
         <button
           onClick={handleCopy}
-          className="text-commontext hover:underline text-sm flex items-center gap-1"
+          className="text-commontext active:bg-Bghilight hover:underline text-sm flex items-center gap-1"
         >
-          <FaRegCopy className="text-base" />
-          Copy
+          {copied ? (
+            <IoCheckmarkDone className="text-[#BFC1C4] text-base" />
+          ) : (
+            <MdOutlineContentCopy className="text-[#BFC1C4] text-base" />
+          )}
+          {copied ? "Copied" : "Copy"}
         </button>
       </div>
-      <pre className="whitespace-pre-wrap p-5 bg-Bghilight rounded-b-md font-satoshi text-base font-normal text-heading">{content}</pre>
+      <pre className="whitespace-pre-wrap p-5 bg-Bghilight rounded-b-md font-satoshi text-base font-normal text-heading">
+        {content}
+      </pre>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import RichTextField from "./RichTextField";
@@ -11,26 +11,35 @@ import RichTextField from "./RichTextField";
 const ModuleSchema = Yup.object({
   name: Yup.string().required("Module name is required"),
   isSubAttribute: Yup.boolean(),
-  subAttributes: Yup.string().when("isSubAttribute", {
-    is: true,
-    then: (schema) => schema.required("Sub attributes are required"),
-    otherwise: (schema) => schema.notRequired(),
-  }),
-  description: Yup.string().required("Description is required"),
+  description: Yup.mixed().test(
+    'is-tiptap-doc',
+    'Description is required',
+    value => value && typeof value === 'object' && value.type === 'doc'
+  )
 });
 
-const AddDescriptionForm = ({ formRef }) => {
+
+const AddDescriptionForm = ({ formRef,initialValues,editorRef  }) => {
+
+  const defaultValues = {
+    name: "",
+    isSubAttribute: true,
+    description:  {
+      type: "doc",
+      content: [],
+    },
+  };
+  
+  const mergedInitialValues = { ...defaultValues, ...initialValues };
+  
   return (
     <Formik
       innerRef={formRef}
-      initialValues={{
-        name: "",
-        isSubModule: true,
-        description: "",
-      }}
+      initialValues={mergedInitialValues}
+      enableReinitialize
       validationSchema={ModuleSchema}
       onSubmit={(values) => {
-        
+        console.log("Submitted values:", values);
         return values;
       }}
     >
@@ -68,7 +77,7 @@ const AddDescriptionForm = ({ formRef }) => {
             >
               Description
             </label>
-            <RichTextField name="description" />
+            <RichTextField name="description"  editorRef={editorRef} />
             {errors.description && touched.description && (
               <div className="text-red-500 text-sm mt-1">
                 {errors.description}

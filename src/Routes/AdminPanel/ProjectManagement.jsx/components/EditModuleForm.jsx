@@ -15,7 +15,7 @@ function EditModuleForm({ handleEditClick, editId,editModuleId }) {
   useEffect(() => {
     if (editId) {
       const selectedProject = projectData.find(
-        (project) => project.project_id === editId
+        (project) => String(project.project_id) === String(editId)
       );
 
       if (selectedProject) {
@@ -28,7 +28,7 @@ function EditModuleForm({ handleEditClick, editId,editModuleId }) {
         });
       }
     }
-  }, [editModuleId]);
+  }, [editModuleId,editId]);
 
   
 
@@ -54,7 +54,7 @@ function EditModuleForm({ handleEditClick, editId,editModuleId }) {
         enableReinitialize
         onSubmit={handleEditSubmit}
       >
-        {({ isSubmitting, resetForm }) => (
+        {({ isSubmitting }) => (
           <Form className="flex flex-col gap-y-4">
             <div>
               <label
@@ -71,7 +71,7 @@ function EditModuleForm({ handleEditClick, editId,editModuleId }) {
                 className="w-full py-4 px-5 border text-heading placeholder:text-commontext focus:outline-none focus:ring-1 focus:ring-buttonBlue placeholder:font-dm-sans placeholder:font-normal placeholder:text-base border-[#7F828A80] rounded-sm"
               />
               <ErrorMessage
-                name="projectName"
+                name="moduleName"
                 component="div"
                 className="text-red-500 text-sm"
               />

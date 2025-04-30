@@ -1,19 +1,38 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoIosSave } from "react-icons/io";
-import AddDescriptionForm from "./components/AddDescriptionForm";
-import { useNavigate } from "react-router";
-import AddUrlForm from "./components/AddUrlForm";
+import { useNavigate, useParams } from "react-router";
 import { MdDeleteForever } from "react-icons/md";
+import AddDescriptionForm from "./AddDescriptionForm";
+import AddUrlForm from "./AddUrlForm";
+import { projectData } from "../../../../constants/Projects/ProjectConstant";
 
-const AddSubModule = () => {
+const EditSubModule = () => {
   const descriptionRef = useRef();
   const urlRef = useRef();
-  const editorRef = useRef();
   const navigate = useNavigate();
   const [isDefault, setIsDefault] = useState(true);
   const [formError, setFormError] = useState("");
+  const { projectId, moduleId, subModuleId } = useParams();
 
   const [urlSets, setUrlSets] = useState([]);
+
+  const project = projectData.find(
+    (p) => String(p.project_id) === String(projectId)
+  );
+
+  const module = project?.modules?.find(
+    (m) => String(m.module_id) === String(moduleId)
+  );
+
+  const subModule = module?.sub_modules?.find(
+    (s) => String(s.sub_module_id) === String(subModuleId)
+  );
+
+  useEffect(() => {
+    if (subModule?.urlSets?.length > 0) {
+      setUrlSets(subModule.urlSets);
+    }
+  }, [subModule]);
 
   const addUrlSet = async () => {
     if (urlRef.current) {
@@ -28,9 +47,11 @@ const AddSubModule = () => {
         return;
       }
 
+      await urlRef.current.submitForm();
       const urlData = urlRef.current.values;
 
       setUrlSets((prev) => [...prev, urlData]);
+      console.log(urlSets);
 
       urlRef.current.resetForm();
     }
@@ -63,22 +84,26 @@ const AddSubModule = () => {
       try {
         const descData = await descriptionRef.current.submitForm();
         
-        const combinedData = {
-          ...descData,
 
+        const combinedData = {
+          sub_module_id: subModuleId,
+          ...descData,
+          description: descData,
           urls: urlSets,
         };
 
         console.log("✅ Combined Data:", combinedData);
 
         descriptionRef.current.resetForm();
-        editorRef.current?.commands.clearContent();
         setUrlSets([]);
+
+        navigate(`/admin/project/${projectId}/preview`);
       } catch (error) {
         console.error("Form submission error:", error);
       }
     }
   };
+
   const handleDeleteUrlSet = (indexToRemove) => {
     const updatedSets = urlSets.filter((_, idx) => idx !== indexToRemove);
     setUrlSets(updatedSets);
@@ -92,7 +117,7 @@ const AddSubModule = () => {
         {/* header */}
         <div className="w-full h-fit flex flex-row justify-between items-center">
           <h1 className="capitalize text-heading font-bold font-satoshi text-2xl ">
-            Create module
+            {subModule ? `Edit Submodule: ${subModule.name}` : "Edit Submodule"}
           </h1>
           <div className="w-fit h-fit flex flex-row gap-2">
             <button
@@ -143,7 +168,14 @@ const AddSubModule = () => {
               isDefault ? " block" : " hidden"
             }`}
           >
-            <AddDescriptionForm formRef={descriptionRef} editorRef={editorRef} />
+            <AddDescriptionForm
+              formRef={descriptionRef}
+              initialValues={{
+                name: subModule?.name || "",
+                isSubAttribute: subModule?.isSubAttribute || true,
+                description: subModule?.description || "",
+              }}
+            />
           </div>
 
           <div
@@ -155,6 +187,10 @@ const AddSubModule = () => {
               formRef={urlRef}
               urlSets={urlSets}
               setUrlSets={setUrlSets}
+              initialValues={{
+                urlType: "",
+                apiContent: "",
+              }}
             />
           </div>
 
@@ -186,7 +222,10 @@ const AddSubModule = () => {
                         <strong>Type:</strong> {set.urlType}
                       </p>
                       <p className="mt-1 whitespace-pre-wrap">
-                        <strong>API:</strong> {set.apiContent}
+                        <strong>API:</strong>{" "}
+                        {set.apiContent?.trim() || (
+                          <em className="text-gray-400">[Empty]</em>
+                        )}
                       </p>
                     </div>
                     <button
@@ -206,4 +245,4 @@ const AddSubModule = () => {
   );
 };
 
-export default AddSubModule;
+export default EditSubModule;
