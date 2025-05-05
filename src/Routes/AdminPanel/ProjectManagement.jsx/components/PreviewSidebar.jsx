@@ -53,9 +53,11 @@ export default function PreviewSidebar({ data, scrollContainerRef, edit,setEditP
       }
     };
   }, [data, scrollContainerRef]);
+  
+  
   return (
     <div className="w-full h-full bg-Bgsecondary text-heading p-1.5 space-y-4">
-      {data.map((module) => (
+      {data?.map((module) => (
         <div key={module.module_id}>
           {/* Parent Item */}
           <div

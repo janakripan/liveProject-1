@@ -13,7 +13,7 @@ import App from "./App.jsx";
 
 
 const AssignedProjectDetails = lazy(()=>import("./Routes/AdminPanel/Assign Project/AssignedProjectDetails.jsx"))
-const UserProjectDetails = lazy(()=>import("./Routes/Dashboard/userDashboard/UserProjectDetails.jsx"))
+const UserProjectDetails = lazy(()=>import("./Routes/Dashboard/DtailedProjectPage/UserProjectDetails.jsx"))
 const DeveloperDetailsPage = lazy(()=>import("./Routes/AdminPanel/DeveloperPage/DeveloperDetailsPage.jsx"))
 const AssignProjectPage = lazy(()=>import("./Routes/AdminPanel/Assign Project/AssignProjectPage.jsx"))
 const EditSubModule = lazy(()=>import("./Routes/AdminPanel/ProjectManagement.jsx/components/EditSubModule.jsx"))

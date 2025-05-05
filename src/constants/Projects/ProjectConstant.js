@@ -881,6 +881,14 @@ export const projectData = [
     ],
     developers: [
       {
+        developer_id: 1,
+        name: "Alice",
+        email: "alice@company.com",
+        role: "Developer",
+        permissions: ["read", "write"],
+        created: 1742169600,
+      },
+      {
         developer_id: 2,
         name: "John",
         email: "john@company.com",
@@ -1089,10 +1097,6 @@ export const projectData = [
     project_id: 8,
     created: 1742227200,
     name: "API fire",
-    description:
-      " for the company. This includes all services related to user management, access control, and more.",
-    base_url: "https://api.company.com",
-    version: "v1.0",
     status: "completed",
     lastUpdated: "1742789070",
     modules: [
@@ -1108,17 +1112,40 @@ export const projectData = [
             lastUpdated: "1712462312",
             description:
               "<p>Retrieve all users from the system with optional query parameters for <code>limit</code> and <code>offset</code>.</p>",
-            url_type: "user endpoint",
-            url_code: "/users",
+              urlSets: [
+                {
+                  urlType: "endpoint",
+                  urlContent: "/users",
+                },
+                {
+                  urlType: "request_example",
+                  urlContent: ` {
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: {
+                      name: "Alice Johnson",
+                      email: "alice@example.com",
+                    },
+                  }`,
+                },
+                {
+                  urlType: "response_example",
+                  urlContent: `{
+                     "status": 201,
+                     "data": {
+                        "id": 3,
+                        "name": "Alice Johnson",
+                        "email": "alice@example.com"
+                      }
+                  }`,
+                },
+              ],
             method: "GET",
             query_params: {
               limit: 10,
               offset: 0,
             },
-            request_example:
-              '<pre><code>{\n  "headers": {\n    "Authorization": "Bearer &lt;token&gt;"\n  },\n  "params": {\n    "limit": 10,\n    "offset": 0\n  }\n}</code></pre>',
-            response_example:
-              '<pre><code>{\n  "status": 200,\n  "data": [\n    { "id": 1, "name": "John Doe" },\n    { "id": 2, "name": "Jane Smith" }\n  ]\n}</code></pre>',
           },
           {
             sub_module_id: 812,
