@@ -3,13 +3,8 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useNavigate } from "react-router";
 
-function DeveloperTable({ data,setEdit,setEditData }) {
+function AssignProjectTable({ data,setEdit,setEditId, }) {
   const navigate = useNavigate();
-
-  const handleViewClick = (developerId) => {
-    navigate(`/admin/developer/${developerId}`);
-  };
-
   const createdTime = (timestamps) => {
     const date = new Date(timestamps * 1000);
     return date.toLocaleDateString("en-GB");
@@ -34,58 +29,57 @@ function DeveloperTable({ data,setEdit,setEditData }) {
     }
   };
   return (
-    <div className="w-full h-fit bg-Bgprimary border border-Bghilight overflow-x-auto rounded-lg ">
+    <div className="w-full  bg-Bghilight border border-[#4C4F55] overflow-x-auto no-scrollbar rounded-lg ">
       <table className="w-full table-auto border-collapse">
         <thead className="bg-Bghilight text-left">
           <tr className="h-[60px] text-heading text-left">
-            <th className="text-base w-1/4 font-satoshi font-bold capitalize px-5 py-3">
-              User ID
+            <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
+              project name
             </th>
-            <th className="text-base w-1/4 font-satoshi font-bold capitalize px-5 py-3">
-              User name
+            <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
+              status
             </th>
-            <th className="text-base w-1/6 font-satoshi font-bold capitalize px-5 py-3">
-              role
+            <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
+              members
             </th>
-            <th className="text-base w-1/6 font-satoshi font-bold capitalize px-5 py-3">
+            <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
               created
             </th>
-            <th className="text-base w-1/6 font-satoshi font-bold capitalize px-5 py-3">
-              Action
+            <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
+              last updated
+            </th>
+            <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
+              action
             </th>
           </tr>
         </thead>
         <tbody>
-          {data.map((data) => (
-            <tr
-              key={data.developer_id}
-              className=" border border-Bghilight text-heading"
-            >
+          {data.map((project) => (
+            <tr key={project.project_id} className=" border bg-Bgprimary text-heading border-[#4C4F55]">
               <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
-                {data.email}
+                {project.name}
               </td>
               <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
-                {data.name}
+                {project.status}
               </td>
               <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
-                {data.role}
+                {project.developers.length}
               </td>
               <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
-                {createdTime(data.created)}
+                {createdTime(project.created)}
+              </td>
+              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+                {updatedTime(project.lastUpdated)}
               </td>
               <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
                 <div className="w-full h-full flex flex-row items-center gap-x-2.5">
-                  <button
-                    onClick={() => handleViewClick(data.developer_id)}
-                    className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#333333] text-white font-sans rounded-md font-medium text-base hover:cursor-pointer "
-                  >
+                  <button 
+                  onClick={() => navigate(`/admin/assign/${project.project_id}`)}
+                  className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#3A3D44] text-white font-sans rounded-md font-medium text-base hover:cursor-pointer ">
                     View
                   </button>
                   <button 
-                  onClick={()=>{setEdit(true);setEditData({userId: data.email,
-                    name: data.name,
-                    role: data.role,
-                    password: "",})}}
+                  onClick={()=>{setEdit(true);setEditId(project.project_id);}}
                   className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-xl hover:cursor-pointer ">
                     <FiEdit />
                   </button>
@@ -102,4 +96,4 @@ function DeveloperTable({ data,setEdit,setEditData }) {
   );
 }
 
-export default DeveloperTable;
+export default AssignProjectTable;

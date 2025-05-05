@@ -6,6 +6,7 @@
 @import url("https://fonts.cdnfonts.com/css/satoshi");
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 
 @import "tailwindcss";
@@ -24,6 +25,7 @@
   --font-satoshi: satoshi, "sans-serif";
   --font-manrope: Manrope, "sans-serif";
   --font-dm-sans: DM+Sans, "sans-serif";
+  --font-nunito: Nunito ,"sans-serif";
   --color-Bgprimary: #1F2126;
   --color-Bgsecondary: #2B2D33;
   --color-Bghilight:#32343A;

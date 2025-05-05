@@ -2,7 +2,8 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
 
-function AddDeveloperForm({handleClick}) {
+const EditDeveloperForm = ({setEdit,editData}) => {
+    console.log(editData)
   const initialValues = {
     userId: "",
     name: "",
@@ -34,26 +35,26 @@ function AddDeveloperForm({handleClick}) {
 
   return (
     <div className="w-full h-fit ">
-      
       <Formik
-        initialValues={initialValues}
+        initialValues={editData || initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting,resetForm }) => (
+        {({ isSubmitting, resetForm }) => (
           <Form className="flex flex-col gap-y-6">
             <div>
               <label
                 htmlFor="userId"
-                className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2"
+                className="block font-dm-sans  text-commontext text-sm md:text-base font-medium mb-2"
               >
                 User ID
               </label>
               <Field
-                type="email" 
+                type="email"
                 id="userId"
                 name="userId"
                 placeholder="Enter Email ID"
+                disabled
                 className="w-full py-4 px-5 border placeholder:text-[#9EA3A7] placeholder:font-dm-sans placeholder:font-normal placeholder:text-base text-heading focus:outline-none focus:ring-1 focus:ring-buttonBlue border-[#C8CACD80] rounded-sm"
               />
               <ErrorMessage
@@ -111,7 +112,10 @@ function AddDeveloperForm({handleClick}) {
               />
             </div>
             <div>
-              <label htmlFor="password" className="block  text-heading font-dm-sans text-sm md:text-base font-medium mb-2">
+              <label
+                htmlFor="password"
+                className="block  text-heading font-dm-sans text-sm md:text-base font-medium mb-2"
+              >
                 Password
               </label>
               <Field
@@ -128,9 +132,15 @@ function AddDeveloperForm({handleClick}) {
               />
             </div>
             <div className="w-full h-fit flex flex-row gap-x-5 ">
-                <button className="w-full cursor-pointer bg-[#5A5D63] text-heading p-4 border border-[#5A5D63] duration-300  rounded-md hover:scale-105 active:scale-95 transition" onClick={()=>{handleClick();resetForm();}}>
-                    Cancel
-                </button>
+              <button
+                className="w-full cursor-pointer bg-[#5A5D63] text-heading p-4 border border-[#5A5D63] duration-300  rounded-md hover:scale-105 active:scale-95 transition"
+                onClick={() => {
+                  setEdit(false);
+                  resetForm();
+                }}
+              >
+                Cancel
+              </button>
               <button
                 type="submit"
                 className="w-full cursor-pointer bg-buttonBlue text-white p-4 rounded-md hover:scale-105 active:scale-95 duration-300 transition"
@@ -144,6 +154,6 @@ function AddDeveloperForm({handleClick}) {
       </Formik>
     </div>
   );
-}
+};
 
-export default AddDeveloperForm;
+export default EditDeveloperForm;

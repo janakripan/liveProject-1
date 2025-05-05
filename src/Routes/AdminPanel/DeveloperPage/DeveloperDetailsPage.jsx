@@ -1,0 +1,126 @@
+import React, { useState } from "react";
+import { useParams } from "react-router";
+import { FaEdit } from "react-icons/fa";
+import { RiDeleteBin6Fill } from "react-icons/ri";
+import { developers } from "../../../constants/Developers/DevelopersConstant";
+import { projectData } from "../../../constants/Projects/ProjectConstant";
+import SharedProjectCard from "../AdminDashboard/Shared/SharedProjectCard";
+import { IoMdClose } from "react-icons/io";
+import EditDeveloperForm from "./components/EditDeveloperForm";
+
+const DeveloperDetailsPage = () => {
+  const { developerId } = useParams();
+  const [edit , setEdit] = useState(false)
+
+  const singleDeveloper = developers.find(
+    (dev) => String(dev.developer_id) === String(developerId)
+  );
+
+
+  const getDeveloperInitials = (name) => {
+    if (!name || name.trim() === "") return "NA";
+
+
+    const words = name.trim().split(" ").filter(Boolean);
+
+    if (words.length === 1) {
+      return words[0].substring(0, 2).toUpperCase();
+    } else {
+      return (words[0][0] + words[1][0]).toUpperCase();
+    }
+  };
+  const createdTime = (timestamps) => {
+    const date = new Date(timestamps * 1000);
+    return date.toLocaleDateString("en-GB");
+  };
+  const assignedProjects = projectData.filter((project) =>
+        project.developers.some((dev) =>String( dev.developer_id) === String(developerId))
+      );
+  const editData={
+    userId:singleDeveloper.email,
+    name:singleDeveloper.name,
+    role:singleDeveloper.role,
+    password:""
+  }
+     
+
+  return (
+    <div
+      className={` h-full p-5 relative  transition-all duration-300 flex flex-col w-full max-w-screen-xl  mx-auto`}
+    >
+      <div className="w-full h-full ">
+        <div className="w-full h-fit p-6 bg-[#3B3D43] drop-shadow-xl rounded-xl flex flex-row justify-between ">
+          <div className="h-full w-fit flex flex-row gap-x-4 items-center ">
+            <div className=" p-[25px] bg-[#30738D] aspect-square rounded-full flex items-center justify-center text-5xl text-heading font-nunito font-bold ">
+              {getDeveloperInitials(singleDeveloper.name)}
+            </div>
+
+            <div className=" flex flex-col gap-y-1">
+              <h1 className="text-heading font-bold font-satoshi capitalize text-3xl  ">
+                {singleDeveloper.name}
+              </h1>
+              <span className=" font-satoshi font-normal text-base text-commontext ">
+                {singleDeveloper.email}
+              </span>
+              <span className=" font-satoshi font-normal text-base text-commontext ">
+                {singleDeveloper.role}
+              </span>
+              <span className=" font-satoshi font-normal text-base text-commontext ">
+                {createdTime(singleDeveloper.created)}
+              </span>
+            </div>
+          </div>
+
+          <div className="w-fit h-full flex flex-row items-start gap-x-4 ">
+            <button
+            onClick={()=>setEdit(true)}
+             className=" cursor-pointer hover:scale-105 active:scale-95 transition-all duration-150 py-3 px-4 rounded-lg text-heading capitalize font-satoshi font-bold text-base bg-buttonBlue flex justify-center items-center gap-1 ">
+              <FaEdit /> <span>edit profile</span>
+            </button>
+
+            <button className=" cursor-pointer hover:scale-105 active:scale-95 transition-all duration-150 py-3 px-4 rounded-lg text-heading capitalize font-satoshi font-bold text-base bg-[#FF375F] flex justify-center items-center gap-1 ">
+              <RiDeleteBin6Fill />
+              <span> Delete account</span>
+            </button>
+          </div>
+        </div>
+
+
+        <div className="w-full h-fit mt-5  " >
+            <h2 className=" text-heading font-bold font-satoshi text-[26px] ">
+                Projects
+            </h2>
+           <div className="w-full h-fit mt-4 grid md:grid-cols-3 grid-cols-1 gap-4">
+           {assignedProjects.map((items)=>(
+                <SharedProjectCard key={items.project_id} items={items} />
+            ))}
+           </div>
+            
+        </div>
+      </div>
+      {edit && (
+        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
+          <div
+            className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
+          >
+            <div className="w-full flex flex-row justify-between ">
+              <h3 className="lg:text-2xl text-heading md:text-xl text-lg font-medium font-manrope capitalize ">
+                Edit Developer details
+              </h3>
+              <button
+                className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "
+                onClick={() => setEdit(false)}
+              >
+                <IoMdClose />
+              </button>
+            </div>
+            <hr className="border-Bghilight mt-1 mb-4" />
+            <EditDeveloperForm setEdit={setEdit} editData={editData} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default DeveloperDetailsPage;

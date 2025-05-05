@@ -5,7 +5,6 @@ import ProjectCard from './Components/ProjectCard';
 
 const UserDashboard = () => {
   const navigate = useNavigate();
-  const { projectId } = useParams();
   const authToken = "Alice";
 
 

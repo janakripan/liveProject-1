@@ -1,23 +1,16 @@
 import React, { useState } from "react";
-import { FaPlus } from "react-icons/fa6";
-import { ImSortAmountAsc } from "react-icons/im";
 import SearchBar from "../AdminDashboard/Shared/SearchBar";
-import DeveloperTable from "./components/DeveloperTable";
-import AddDeveloperForm from "./components/AddDeveloperForm";
-import { developers } from "../../../constants/Developers/DevelopersConstant";
+import { ImSortAmountAsc } from "react-icons/im";
+import { FaPlus } from "react-icons/fa6";
+import { projectData } from "../../../constants/Projects/ProjectConstant";
+import AssignProjectTable from "./components/AssignProjectTable";
+import AssignProjectForm from "./components/AssignProjectForm";
 import { IoMdClose } from "react-icons/io";
-import EditDeveloperForm from "./components/EditDeveloperForm";
-function DeveloperPage() {
-  const [add, setAdd] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [editData, setEditData] = useState({
-    userId: "",
-    name: "",
-    role: "",
-    password: "",
-  });
 
-  const data = developers;
+const AssignProjectPage = () => {
+  const [assign, setAssign] = useState(false);
+
+  const data = projectData;
   const [displayData, setDisplayData] = useState(data);
 
   const handleSearch = (query) => {
@@ -35,11 +28,6 @@ function DeveloperPage() {
     setDisplayData(filteredResults);
     console.log(displayData);
   };
-
-  const handleClick = () => {
-    setAdd(!add);
-  };
-
   return (
     <div
       className={` h-full p-5 relative  transition-all duration-300 flex flex-col w-full max-w-screen-xl  mx-auto`}
@@ -47,15 +35,14 @@ function DeveloperPage() {
       <div className="w-full h-fit ">
         <div className="w-full h-fit flex flex-row justify-between items-center ">
           <h1 className="font-satoshi font-bold text-xl text-heading md:text-xl  lg:text-2xl tracking-tight ">
-            Developer Management
+            Project Assign
           </h1>
 
           <button
-            onClick={handleClick}
+            onClick={() => setAssign(true)}
             className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 active:scale-95 rounded-lg hover:scale-105 transition-transform duration-300 "
           >
-            <FaPlus />{" "}
-            <span className="hidden md:block">Add New Developer</span>
+            <FaPlus /> <span className="hidden md:block">Assign Project</span>
           </button>
         </div>
 
@@ -76,64 +63,36 @@ function DeveloperPage() {
             </button>
           </div>
         </div>
-
-        {/* developer table */}
-        <div className="w-full lg:h-[63vh] overflow-y-auto no-scrollbar my-5 bg-Bgprimary rounded-lg border border-Bghilight">
-          <DeveloperTable
-            data={displayData}
-            setEdit={setEdit}
-            setEditData={setEditData}
-          />
-        </div>
+         {/* Projects table */}
+         <div className="w-full lg:h-[63vh] overflow-y-auto no-scrollbar my-5 bg-Bgprimary rounded-lg border border-Bghilight">
+          <AssignProjectTable data={displayData} />
+         </div>
       </div>
-      {add && (
+      {assign && (
         <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
           <div
             className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
           >
             <div className="w-full flex flex-row justify-between ">
               <h3 className="lg:text-2xl text-heading md:text-xl text-lg font-medium font-manrope capitalize ">
-                add new developer
+                assign project to developer
               </h3>
               <button
                 className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "
-                onClick={() => setAdd(false)}
+                onClick={() => setAssign(false)}
               >
                 <IoMdClose />
               </button>
             </div>
             <hr className="border-Bghilight mt-1 mb-4" />
-            <AddDeveloperForm
-              handleClick={() => {
-                handleClick();
-              }}
+            <AssignProjectForm setAssign={setAssign}
+             
             />
-          </div>
-        </div>
-      )}
-      {edit && (
-        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
-          <div
-            className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
-          >
-            <div className="w-full flex flex-row justify-between ">
-              <h3 className="lg:text-2xl text-heading md:text-xl text-lg font-medium font-manrope capitalize ">
-                Edit Developer details
-              </h3>
-              <button
-                className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "
-                onClick={() => setEdit(false)}
-              >
-                <IoMdClose />
-              </button>
-            </div>
-            <hr className="border-Bghilight mt-1 mb-4" />
-            <EditDeveloperForm setEdit={setEdit} editData={editData} />
           </div>
         </div>
       )}
     </div>
   );
-}
+};
 
-export default DeveloperPage;
+export default AssignProjectPage;
