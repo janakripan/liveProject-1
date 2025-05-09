@@ -1,5 +1,5 @@
 import React from 'react'
-import { FiEdit } from 'react-icons/fi';
+
 
 const AssignedDevelopersTable = ({data,singleProject}) => {
     console.log(data)
@@ -28,26 +28,26 @@ const AssignedDevelopersTable = ({data,singleProject}) => {
         }
       };
   return (
-    <div className="w-full  bg-Bghilight border border-[#4C4F55] overflow-x-auto no-scrollbar rounded-lg ">
+    <div className="w-full  bg-Bgprimary border border-[#4C4F55] overflow-x-auto no-scrollbar rounded-lg ">
           <table className="w-full table-auto border-collapse">
             <thead className="bg-Bghilight text-left">
               <tr className="h-[60px] text-heading text-left">
-                <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
+                <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
                   Developer name
                 </th>
-                <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
+                <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
                   Role
                 </th>
-                <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
+                <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
                   Project
                 </th>
-                <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
+                <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
                   created
                 </th>
-                <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
+                <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
                   last updated
                 </th>
-                <th className="text-base font-satoshi font-bold capitalize px-5 py-3">
+                <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
                   action
                 </th>
               </tr>
@@ -55,31 +55,31 @@ const AssignedDevelopersTable = ({data,singleProject}) => {
             <tbody>
               {data.map((dev) => (
                 <tr key={dev.developer_id} className=" border bg-Bgprimary text-heading border-[#4C4F55]">
-                  <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+                  <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal">
                     {dev.name}
                   </td>
-                  <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+                  <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal">
                     {dev.role}
                   </td>
-                  <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+                  <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal">
                    {singleProject.name}
                   </td>
-                  <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+                  <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal">
                     {createdTime(dev.created)}
                   </td>
-                  <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+                  <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal">
                     {updatedTime(dev.lastUpdated)}
                   </td>
-                  <td className="px-5 py-4 w-fit text-center font-satoshi text-base font-normal ">
+                  <td className="md:px-5 px-2 md:py-4 py-2  font-satoshi text-xs md:text-base font-normal text-center ">
                     <div className="w-fit h-full flex flex-row items-center gap-x-2.5">
                       <button 
                      
-                      className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#3A3D44] text-white font-sans rounded-md font-medium text-base hover:cursor-pointer ">
+                      className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#3A3D44] text-white font-sans rounded-md font-medium text-sm md:text-base hover:cursor-pointer ">
                         View
                       </button>
                       <button 
                       
-                      className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium  text-heading bg-[#FF375F] text-xl hover:cursor-pointer ">
+                      className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium whitespace-nowrap text-heading bg-[#FF375F] text-sm md:text-xl hover:cursor-pointer ">
                        un-assign
                       </button>
                      

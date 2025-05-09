@@ -5,7 +5,7 @@ import { Outlet } from 'react-router'
 function UserDashboardLayout() {
   
   return (
-    <div className='w-full h-screen bg-Bgprimary'>
+    <div className='w-full h-screen bg-Bgprimary overflow-hidden'>
     <DashboardHeader/>
 
     <div id='dashboardlayout'  >

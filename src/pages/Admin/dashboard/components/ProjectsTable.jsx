@@ -26,10 +26,18 @@ function ProjectsTable() {
       <table className="w-full table-auto border-collapse">
         <thead className="bg-Bghilight text-heading text-left">
           <tr className="h-[60px] text-left">
-            <th className="w-5/12 font-satoshi font-bold text-base capitalize px-5 py-3">Projects</th>
-            <th className="w-1/4font-satoshi font-bold text-base capitalize px-5 py-3 text-left">Status</th>
-            <th className="w-1/4font-satoshi font-bold text-base capitalize px-5 py-3 text-left">Endpoints</th>
-            <th className="w-1/8font-satoshi font-bold text-base capitalize px-5 py-3 text-left">Last Updated</th>
+            <th className="w-5/12 font-satoshi font-bold text-sm md:text-base capitalize px-5 py-3">
+              Projects
+            </th>
+            <th className="w-1/4font-satoshi font-bold text-sm md:text-base px-5 capitalize py-3 text-left">
+              Status
+            </th>
+            <th className="w-1/4font-satoshi font-bold text-sm md:text-base px-5 capitalize py-3 text-left">
+              Endpoints
+            </th>
+            <th className="w-1/8font-satoshi font-bold text-sm md:text-base px-5 capitalize py-3 text-left">
+              Last Updated
+            </th>
           </tr>
         </thead>
 
@@ -39,18 +47,16 @@ function ProjectsTable() {
               key={project.project_id}
               className="border-b border-[#4C4F55] text-heading "
             >
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+              <td className="px-5 py-4 text-left font-satoshi text-xs md:text-base font-normal ">
                 {project.name}
               </td>
-              <td className="px-5 py-4 ">
-               
-                  {project.status}
-              
+              <td className="px-5 py-4 text-left font-satoshi text-xs md:text-base font-normal">
+                {project.status}
               </td>
-              <td className="px-5 py-4 ">
+              <td className="px-5 py-4 text-left font-satoshi text-xs md:text-base font-normal ">
                 {project.modules?.length}
               </td>
-              <td className="px-5 py-4 ">
+              <td className="px-5 py-4 text-left font-satoshi text-xs md:text-base font-normal">
                 {formatDate(project.lastUpdated)}
               </td>
             </tr>

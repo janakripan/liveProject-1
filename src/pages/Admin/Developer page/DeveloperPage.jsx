@@ -7,6 +7,7 @@ import AddDeveloperForm from "./components/AddDeveloperForm";
 import { developers } from "../../../constants/Developers/DevelopersConstant";
 import { IoMdClose } from "react-icons/io";
 import EditDeveloperForm from "../../../components/Shared/EditDeveloperForm";
+import { useSidebar } from "../../../contexts/admin/SidebarContext";
 
 function DeveloperPage() {
   const [add, setAdd] = useState(false);
@@ -17,6 +18,7 @@ function DeveloperPage() {
     role: "",
     password: "",
   });
+  const { isOpen } = useSidebar();
 
   const data = developers;
   const [displayData, setDisplayData] = useState(data);
@@ -53,7 +55,7 @@ function DeveloperPage() {
 
           <button
             onClick={handleClick}
-            className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 active:scale-95 rounded-lg hover:scale-105 transition-transform duration-300 "
+            className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-xs md:text-base text-white flex flex-row items-center justify-center active:scale-95 gap-x-2.5 px-3 md:px-4 py-2 md:py-3 rounded-lg hover:scale-105 transition-transform duration-300 "
           >
             <FaPlus />{" "}
             <span className="hidden md:block">Add New Developer</span>
@@ -71,7 +73,7 @@ function DeveloperPage() {
             />
           </div>
           <div>
-            <button className="text-base cursor-pointer font-satoshi hover:scale-105 transition-all duration-300 text-heading bg-[#5A5D63] rounded-xl font-medium flex items-center justify-center gap-2.5 px-3.5 py-3 ">
+            <button className="md:text-base text-xs cursor-pointer font-satoshi hover:scale-105 transition-all duration-300 text-heading bg-[#5A5D63] rounded-xl font-medium flex items-center justify-center gap-2.5 px-3.5 py-3  ">
               <ImSortAmountAsc />
               Sort
             </button>
@@ -88,7 +90,10 @@ function DeveloperPage() {
         </div>
       </div>
       {add && (
-        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
+        <div
+          className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${isOpen?"md:pl-[290px] ":""}`}
+        >
+          {" "}
           <div
             className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
           >
@@ -97,7 +102,7 @@ function DeveloperPage() {
                 add new developer
               </h3>
               <button
-                className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "
+                className="md:text-xl text-base p-1.5 h-fit cursor-pointer bg-buttonBlue text-heading rounded-lg "
                 onClick={() => setAdd(false)}
               >
                 <IoMdClose />
@@ -113,7 +118,10 @@ function DeveloperPage() {
         </div>
       )}
       {edit && (
-        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
+        <div
+          className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${isOpen?"md:pl-[290px] ":""}`}
+        >
+          {" "}
           <div
             className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
           >
@@ -122,7 +130,7 @@ function DeveloperPage() {
                 Edit Developer details
               </h3>
               <button
-                className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "
+                className="md:text-xl text-base p-1.5 h-fit cursor-pointer bg-buttonBlue text-heading rounded-lg"
                 onClick={() => setEdit(false)}
               >
                 <IoMdClose />

@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { IoSearchOutline } from "react-icons/io5";
-import * as Yup from "yup";
+import { searchBarValidation } from "../../validations/searchBarValidation";
+
 
 function SearchBar({ onSearch, placeholder, className = "" }) {
   const [query, setQuery] = useState("");
   const [error, setError] = useState("");
 
-  const schema = Yup.string()
-    .trim()
-    .min(2, "Search term must be at least 2 characters")
-    .max(50, "Search term must be at most 50 characters")
-    .required("Search term is required");
+  
 
   const handleChange = async (e) => {
     const value = e.target.value;
@@ -26,7 +23,7 @@ function SearchBar({ onSearch, placeholder, className = "" }) {
     }
 
     try {
-      await schema.validate(value);
+      await searchBarValidation.validate(value);
       setError("");
       if (onSearch) {
         onSearch(value);
@@ -56,7 +53,7 @@ function SearchBar({ onSearch, placeholder, className = "" }) {
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={placeholder}
-          className={`w-full h-[46px] px-4 text-heading placeholder:text-commontext pl-8 pr-10 border border-[#AEAAAB] placeholder:font-medium placeholder:font-satoshi  rounded-lg focus:outline-none focus:ring-1 focus:ring-[#025964] transition  ${className}`}
+          className={`w-full h-[46px] px-4 text-heading placeholder:text-commontext pl-8 md:pr-10 border border-[#AEAAAB] placeholder:font-medium placeholder:font-satoshi text-sm md:text-base  rounded-lg focus:outline-none focus:ring-1 focus:ring-[#025964] transition  ${className}`}
         />
         {query && (
           <button
@@ -66,7 +63,7 @@ function SearchBar({ onSearch, placeholder, className = "" }) {
             <IoClose size={18} />
           </button>
         )}
-        <div className="absolute left-2 top-1/2 transform -translate-y-1/2  text-2xl text-[#797677]">
+        <div className="absolute left-2 top-1/2 transform -translate-y-1/2 text-base md:text-2xl text-[#797677]">
           <IoSearchOutline />
         </div>
       </div>

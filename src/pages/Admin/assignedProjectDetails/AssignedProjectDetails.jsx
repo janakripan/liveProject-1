@@ -5,11 +5,13 @@ import { FaPlus } from "react-icons/fa6";
 import AssignedDevelopersTable from "./components/AssignedDevelopersTable";
 import { IoMdClose } from "react-icons/io";
 import AssignProjectForm from "../../../pages/Admin/Assign project/components/AssignProjectForm";
+import { useSidebar } from "../../../contexts/admin/SidebarContext";
 
 const AssignedProjectDetails = () => {
 
   const { projectId } = useParams();
   const [assign, setAssign] = useState(false);
+  const {isOpen} = useSidebar()
 
   const singleProject = projectData.find(
     (pro) => String(pro.project_id) === projectId
@@ -74,27 +76,27 @@ const AssignedProjectDetails = () => {
 
           <button
             onClick={()=>setAssign(true)}
-            className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 active:scale-95 rounded-lg hover:scale-105 transition-transform duration-300 "
+            className="  bg-buttonBlue cursor-pointer font-satoshi font-bold text-xs md:text-base text-white flex flex-row items-center justify-center active:scale-95 gap-x-2.5 px-3 md:px-4 py-2 md:py-3 rounded-lg hover:scale-105 transition-transform duration-300  "
           >
             <FaPlus /> <span className="hidden md:block">Assign Project</span>
           </button>
         </div>
 
-        <div className="w-full mt-5 h-fit p-6 bg-[#3B3D43] drop-shadow-xl rounded-xl flex flex-row justify-between ">
+        <div className="w-full mt-5 h-fit p-6 bg-[#3B3D43] drop-shadow-xl rounded-xl flex md:flex-row flex-col  gap-4 justify-between ">
           <div className="flex flex-col gap-y-4">
-            <h3 className="text-heading font-satoshi font-bold text-2xl">
+            <h3 className="text-heading font-satoshi font-bold md:text-xl text-lg lg:text-2xl">
               {singleProject.name}
             </h3>
             <div className="flex flex-row gap-2 items-center">
-              <span className="text-commontext text-base font-satoshi font-normal ">
+              <span className="text-commontext text-sm md:text-base font-satoshi font-normal ">
                 Status:
               </span>
-              <span className=" bg-[#30D15833] text-[#30D158] text-sm px-5 py-2.5 rounded-full ">
+              <span className=" bg-[#30D15833] text-[#30D158] text-xs md:text-sm px-3 md:px-5 py-1.5 md:py-2.5 rounded-full ">
                 {singleProject.status}
               </span>
             </div>
             <div className="flex flex-row gap-2 items-center">
-              <span className="text-commontext text-base font-satoshi font-normal ">
+              <span className="text-commontext text-sm md:text-base font-satoshi font-normal ">
                 Developers:
               </span>
               <div className="w-fit h-fit flex flex-row ">
@@ -117,19 +119,19 @@ const AssignedProjectDetails = () => {
           </div>
           <div className=" flex flex-col gap-y-4  ">
             <div className="flex flex-row gap-x-2">
-              <span className="capitalize text-base text-commontext font-satoshi font-normal ">
+              <span className="capitalize text-sm md:text-base text-commontext font-satoshi font-normal ">
                 created:
               </span>
-              <span className="text-heading font-normal text-base font-satoshi">
+              <span className="text-heading font-normal text-sm md:text-base font-satoshi">
                 {createdTime(singleProject.created)}
               </span>
             </div>
 
             <div className="flex flex-row gap-x-2">
-              <span className="capitalize text-base text-commontext font-satoshi font-normal ">
+              <span className="capitalize text-sm md:text-base text-commontext font-satoshi font-normal ">
                 last updated :
               </span>
-              <span className="text-heading font-normal text-base font-satoshi">
+              <span className="text-heading font-normal text-sm md:text-base font-satoshi">
                 {updatedTime(singleProject.lastUpdated)}
               </span>
             </div>
@@ -137,7 +139,7 @@ const AssignedProjectDetails = () => {
         </div>
 
         <div className=" w-full h-fit mt-7 ">
-          <h2 className="text-heading text-3xl font-bold font-satoshi">
+          <h2 className="text-heading md:text-2xl text-xl lg:text-3xl font-bold font-satoshi">
             Assigned Developers
           </h2>
 
@@ -148,8 +150,7 @@ const AssignedProjectDetails = () => {
         </div>
       </div>
       {assign && (
-        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
-          <div
+        <div className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 p-8 ${isOpen?"pl-[290px] ":""}`}>          <div
             className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
           >
             <div className="w-full flex flex-row justify-between ">

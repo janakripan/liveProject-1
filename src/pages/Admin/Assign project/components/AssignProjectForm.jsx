@@ -44,7 +44,7 @@ const AssignProjectForm = ({ setAssign, projectName }) => {
                 as="select"
                 id="developer"
                 name="developer"
-                className="w-full py-4 px-5 border placeholder:text-[#9EA3A7] placeholder:font-dm-sans placeholder:font-normal placeholder:text-base text-heading bg-Bgprimary focus:outline-none focus:ring-1 focus:ring-buttonBlue border-[#C8CACD80] rounded-sm"
+                className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm bg-Bgprimary"
               >
                 <option disabled className="text-[#9EA3A7]" value="">
                   Select Developer
@@ -73,7 +73,7 @@ const AssignProjectForm = ({ setAssign, projectName }) => {
                 as="select"
                 id="project"
                 name="project"
-                className="w-full py-4 px-5 border placeholder:text-[#9EA3A7] placeholder:font-dm-sans placeholder:font-normal placeholder:text-base  text-heading bg-Bgprimary focus:outline-none focus:ring-1 focus:ring-buttonBlue border-[#C8CACD80] rounded-sm"
+                className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm bg-Bgprimary"
               >
                 <option disabled className="text-[#9EA3A7]" value="">
                   Select project
@@ -103,7 +103,7 @@ const AssignProjectForm = ({ setAssign, projectName }) => {
                   id="updatedDate"
                   name="updatedDate"
                   readOnly
-                  className="w-full py-4 px-5 border text-commontext bg-Bgprimary focus:outline-0 placeholder:text-[#9EA3A7] placeholder:font-dm-sans placeholder:font-normal placeholder:text-base border-[#C8CACD80]/50 rounded-sm"
+                  className="w-full  md:py-4 py-2 px-2.5 md:px-5 border text-commontext bg-Bgprimary focus:outline-0 placeholder:text-[#9EA3A7] placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#C8CACD80]/50 rounded-sm"
                 />
                 <img
                   src={calenderIcon}
@@ -120,7 +120,7 @@ const AssignProjectForm = ({ setAssign, projectName }) => {
 
             <div className="w-full h-fit flex flex-row gap-x-5 ">
               <button
-                className="w-full cursor-pointer bg-[#5A5D63] text-heading p-4 border border-[#5A5D63] duration-300  rounded-md hover:scale-105 active:scale-95 transition"
+                className="w-full cursor-pointer bg-[#5A5D63] text-heading md:p-4 p-2 border border-[#5A5D63] duration-300 text-sm md:text-base rounded-md hover:scale-105 active:scale-95 transition"
                 onClick={() => {
                   resetForm();
                   setAssign(false);
@@ -130,7 +130,7 @@ const AssignProjectForm = ({ setAssign, projectName }) => {
               </button>
               <button
                 type="submit"
-                className="w-full cursor-pointer bg-buttonBlue text-white p-4 rounded-md hover:scale-105 active:scale-95 duration-300 transition"
+                className="w-full cursor-pointer bg-buttonBlue text-heading p-2  md:p-4 text-sm md:text-base rounded-md hover:scale-105 active:scale-95 duration-300 transition"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Assigning..." : "Assign"}

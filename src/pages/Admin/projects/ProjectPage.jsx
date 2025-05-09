@@ -7,19 +7,20 @@ import AddProjectForm from "./components/AddProjectForm";
 import { IoMdClose } from "react-icons/io";
 import EditProjectForm from "./components/EditProjectForm";
 import SearchBar from "../../../components/Shared/SearchBar";
+import { useSidebar } from "../../../contexts/admin/SidebarContext";
 
 
 
 function ProjectPage() {
-  const [searchQuery, setSearchQuery] = useState("");
   const [displayData, setDisplayData] = useState(projectData);
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editId , setEditId] = useState("");
+  const {isOpen} = useSidebar()
   
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
+    
 
     if (!query.trim()) {
       setDisplayData(projectData || []);
@@ -52,7 +53,7 @@ function ProjectPage() {
 
           <button
             onClick={handleClick}
-            className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 rounded-lg hover:scale-105 transition-transform duration-300 "
+            className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-xs md:text-base text-white flex flex-row items-center justify-center active:scale-95 gap-x-2.5 px-3 md:px-4 py-2 md:py-3 rounded-lg hover:scale-105 transition-transform duration-300 "
           >
             <FaPlus />
             <span className="hidden md:block"> Add New Project</span>
@@ -70,7 +71,7 @@ function ProjectPage() {
             />
           </div>
           <div>
-            <button className="text-base cursor-pointer font-satoshi hover:scale-105 transition-all duration-300 text-heading bg-[#5A5D63] rounded-xl font-medium flex items-center justify-center gap-2.5 px-3.5 py-3 ">
+            <button className="md:text-base text-xs cursor-pointer font-satoshi hover:scale-105 transition-all duration-300 text-heading bg-[#5A5D63] rounded-xl font-medium flex items-center justify-center gap-2.5 px-3.5 py-3 ">
               <ImSortAmountAsc />
               Sort
             </button>
@@ -82,17 +83,18 @@ function ProjectPage() {
           <ProjectTable data={displayData} setEditId={setEditId} editId={editId} setEdit={()=>setEdit(true)} />
         </div>
       </div>
+      {/* add project popup */}
       {add && (
-        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
+        <div className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${isOpen?"md:pl-[290px] ":""}`}>
           <div
             className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
           >
-            <div className="w-full flex flex-row justify-between ">
-              <h3 className="lg:text-2xl md:text-xl text-heading text-lg font-medium font-manrope capitalize ">
+            <div className="w-full flex flex-row justify-between  items-center ">
+              <h3 className="lg:text-2xl md:text-xl text-lg text-heading font-medium font-manrope capitalize ">
                 add new project
               </h3>
               <button
-                className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "
+                className="md:text-xl text-base p-1.5 h-fit cursor-pointer bg-buttonBlue text-heading rounded-lg "
                 onClick={() => setAdd(false)}
               >
                 <IoMdClose />
@@ -105,16 +107,16 @@ function ProjectPage() {
       )}
       {/* Edit project popup */}
       {edit && (
-        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
+        <div className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${isOpen?"md:pl-[290px] ":""}`}>
           <div
             className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
           >
-            <div className="w-full flex flex-row justify-between ">
+            <div className="w-full flex flex-row items-center justify-between ">
               <h3 className="lg:text-2xl md:text-xl text-heading text-lg font-medium font-manrope capitalize ">
                 edit project
               </h3>
               <button
-                className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "
+                className="md:text-xl text-base p-1.5 h-fit cursor-pointer bg-buttonBlue text-heading rounded-lg  "
                 onClick={() => setEdit(false)}
               >
                 <IoMdClose />

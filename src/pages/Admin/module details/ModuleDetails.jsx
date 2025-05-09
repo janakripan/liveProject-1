@@ -15,17 +15,17 @@ const ModuleDetails = () => {
   const project = projectData.find(
     (project) => String(project.project_id) === String(projectId)
   );
-  const module = project?.modules.find(module => 
-    String(module.module_id) === String(moduleId))
+  const module = project?.modules.find(
+    (module) => String(module.module_id) === String(moduleId)
+  );
   const [displayData, setDisplayData] = useState(module?.sub_modules || []);
-  
-   useEffect(() => {
-      const updatedModule = project?.modules.find(
-        (m) => String(m.module_id) === String(moduleId)
-      );
-      setDisplayData(updatedModule || []);
-    }, [moduleId]);
-  
+
+  useEffect(() => {
+    const updatedModule = project?.modules.find(
+      (m) => String(m.module_id) === String(moduleId)
+    );
+    setDisplayData(updatedModule || []);
+  }, [moduleId]);
 
   const handleChange = (e) => {
     const selectedId = e.target.value;
@@ -36,8 +36,6 @@ const ModuleDetails = () => {
   };
 
   const handleSearch = (query) => {
-   
-
     if (!query.trim()) {
       setDisplayData(project?.modules || []);
 
@@ -51,7 +49,7 @@ const ModuleDetails = () => {
     );
     setDisplayData(filteredResults);
   };
-  console.log(displayData)
+  console.log(displayData);
 
   return (
     <div
@@ -59,11 +57,11 @@ const ModuleDetails = () => {
     >
       <div className="w-full h-full">
         <div className="w-full h-fit flex flex-row justify-between items-center  ">
-          <div className="flex flex-col md:flex-row items-center gap-2 ">
-            <span className="font-satoshi text-[#40CBE0] font-medium text-base ">
-              Module
+          <div className="flex flex-col md:flex-row md:items-center items-start md:gap-x-2 ">
+            <span className="font-satoshi text-[#40CBE0] font-medium text-xs md:text-base ">
+              Project
             </span>
-            <div className="flex flex-row gap-2 items-center">
+            <div className="flex flex-row md:gap-2 items-center">
               <span
                 className={`text-xs text-[#5A5A5A] transition-all duration-200 ${
                   selectOpen ? "rotate-90" : "rotate-0"
@@ -81,7 +79,7 @@ const ModuleDetails = () => {
                   onFocus={() => setSelectOpen(true)}
                   onBlur={() => setSelectOpen(false)}
                   value={moduleId}
-                  className=" text-heading border-0 appearance-none transition-all  font-satoshi font-bold text-base capitalize bg-Bgprimary focus:outline-0  p-2 rounded"
+                  className=" text-heading border-0 appearance-none transition-all  font-satoshi font-bold md:text-base text-xs capitalize bg-Bgprimary focus:outline-0  p-2 rounded-md"
                 >
                   {project.modules.map((project) => (
                     <option key={project.module_id} value={project.module_id}>
@@ -93,9 +91,14 @@ const ModuleDetails = () => {
             </div>
           </div>
 
-          <button 
-          onClick={()=>navigate(`/admin/project/${projectId}/modules/${moduleId}/add-submodule`)}
-          className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 rounded-lg hover:scale-105 transition-transform duration-300 ">
+          <button
+            onClick={() =>
+              navigate(
+                `/admin/project/${projectId}/modules/${moduleId}/add-submodule`
+              )
+            }
+            className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-xs md:text-base text-white flex flex-row items-center justify-center active:scale-95 gap-x-2.5 px-3 md:px-4 py-2 md:py-3 rounded-lg hover:scale-105 transition-transform duration-300 "
+          >
             <FaPlus />
             <span className="hidden md:block"> Add New Sub Module</span>
           </button>
@@ -112,7 +115,7 @@ const ModuleDetails = () => {
             />
           </div>
           <div>
-            <button className="text-base cursor-pointer font-satoshi hover:scale-105 transition-all duration-300 text-heading bg-[#5A5D63] rounded-xl font-medium flex items-center justify-center gap-2.5 px-3.5 py-3 ">
+            <button className="md:text-base text-xs cursor-pointer font-satoshi hover:scale-105 transition-all duration-300 text-heading bg-[#5A5D63] rounded-xl font-medium flex items-center justify-center gap-2.5 px-3.5 py-3">
               <ImSortAmountAsc />
               Sort
             </button>

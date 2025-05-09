@@ -38,19 +38,19 @@ function DeveloperTable({ data,setEdit,setEditData }) {
       <table className="w-full table-auto border-collapse">
         <thead className="bg-Bghilight text-left">
           <tr className="h-[60px] text-heading text-left">
-            <th className="text-base w-1/4 font-satoshi font-bold capitalize px-5 py-3">
+            <th className=" w-1/4 text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
               User ID
             </th>
-            <th className="text-base w-1/4 font-satoshi font-bold capitalize px-5 py-3">
+            <th className=" w-1/4 text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
               User name
             </th>
-            <th className="text-base w-1/6 font-satoshi font-bold capitalize px-5 py-3">
+            <th className=" w-1/6 text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
               role
             </th>
-            <th className="text-base w-1/6 font-satoshi font-bold capitalize px-5 py-3">
+            <th className=" w-1/6 text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
               created
             </th>
-            <th className="text-base w-1/6 font-satoshi font-bold capitalize px-5 py-3">
+            <th className=" w-1/6 text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
               Action
             </th>
           </tr>
@@ -61,23 +61,23 @@ function DeveloperTable({ data,setEdit,setEditData }) {
               key={data.developer_id}
               className=" border border-Bghilight text-heading"
             >
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 {data.email}
               </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 {data.name}
               </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 {data.role}
               </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 {createdTime(data.created)}
               </td>
-              <td className="px-5 py-4 text-left font-satoshi text-base font-normal ">
+              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 <div className="w-full h-full flex flex-row items-center gap-x-2.5">
                   <button
                     onClick={() => handleViewClick(data.developer_id)}
-                    className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#333333] text-white font-sans rounded-md font-medium text-base hover:cursor-pointer "
+                    className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#3A3D44] text-white font-sans rounded-md font-medium text-xs md:text-base hover:cursor-pointer"
                   >
                     View
                   </button>
@@ -86,10 +86,10 @@ function DeveloperTable({ data,setEdit,setEditData }) {
                     name: data.name,
                     role: data.role,
                     password: "",})}}
-                  className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-xl hover:cursor-pointer ">
+                  className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-sm md:text-xl hover:cursor-pointer ">
                     <FiEdit />
                   </button>
-                  <button className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#DC2626] text-[#DC2626] text-xl hover:cursor-pointer ">
+                  <button className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#DC2626] text-[#DC2626] text-sm md:text-xl hover:cursor-pointer  ">
                     <RiDeleteBin5Line />
                   </button>
                 </div>

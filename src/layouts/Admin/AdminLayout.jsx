@@ -7,7 +7,7 @@ function AdminLayout() {
   const { isOpen } = useSidebar();
   return (
     <div className={`w-full flex flex-col bg-Bgprimary  h-screen transition-all duration-300 overflow-y-auto relative
-  ${isOpen?"pl-[280px]" : "pl-[44px] md:pl-[80px] "}`}>
+  ${isOpen?" pl-11 md:pl-[280px]" : "pl-[44px] md:pl-[80px] "}`}>
       
     <AdminSidebar/>
 

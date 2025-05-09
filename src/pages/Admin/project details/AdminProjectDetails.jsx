@@ -9,6 +9,7 @@ import { IoMdClose } from "react-icons/io";
 import AddModuleForm from "./components/AddModuleForm";
 import EditModuleForm from "../../../components/Shared/EditModuleForm";
 import { projectData } from "../../../constants/Projects/ProjectConstant";
+import { useSidebar } from "../../../contexts/admin/SidebarContext";
 
 
 
@@ -20,6 +21,7 @@ const AdminProjectDetails = () => {
     const [edit , setEdit] = useState(false)
     const [editId , setEditId] = useState(null)
     const [editModuleId , setEditModuleId] = useState(null)
+    const {isOpen } = useSidebar()
 
 
       
@@ -83,11 +85,11 @@ const AdminProjectDetails = () => {
     >
       <div className="w-full h-full">
         <div className="w-full h-fit flex flex-row justify-between items-center  ">
-          <div className="flex flex-col md:flex-row items-center gap-2 ">
-            <span className="font-satoshi text-[#40CBE0] font-medium text-base ">
+          <div className="flex flex-col md:flex-row md:items-center items-start md:gap-x-2 ">
+            <span className="font-satoshi text-[#40CBE0] font-medium text-xs md:text-base ">
               Project
             </span>
-           <div className="flex flex-row gap-2 items-center">
+           <div className="flex flex-row md:gap-2 items-center">
            <span className={`text-xs text-[#5A5A5A] transition-all duration-200 ${
                 selectOpen ?"rotate-90" : "rotate-0"
             } `}>
@@ -100,7 +102,7 @@ const AdminProjectDetails = () => {
                 onFocus={() => setSelectOpen(true)}
                 onBlur={() => setSelectOpen(false)}
                 value={projectId}
-                className=" text-heading border-0 appearance-none transition-all  font-satoshi font-bold text-base capitalize bg-Bgprimary focus:outline-0  p-2 rounded"
+                className=" text-heading border-0 appearance-none transition-all  font-satoshi font-bold md:text-base text-xs capitalize bg-Bgprimary focus:outline-0  p-2 rounded-md"
               >
                 {projectData.map((project) => (
                   <option key={project.project_id} value={project.project_id}>
@@ -115,13 +117,13 @@ const AdminProjectDetails = () => {
           <div className=" flex flex-row items-center gap-2 ">
           <button
             onClick={() => navigate(`/admin/project/${projectId}/preview`)}
-           className="font-satoshi text-base cursor-pointer font-semibold text-heading bg-[#30D158] px-4 py-3 rounded-lg hover:scale-105 active:scale-95 transition-transform duration-300 ">
+           className="font-satoshi  text-xs md:text-base cursor-pointer font-semibold text-heading bg-[#30D158] px-2 md:px-4 py-1.5 md:py-3 rounded-lg hover:scale-105 active:scale-95 transition-transform duration-300 ">
               Preview
             </button>
 
             <button 
           onClick={() =>setAdd(true)}
-          className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-base text-white flex flex-row items-center justify-center active:scale-95 gap-x-2.5 px-4 py-3 rounded-lg hover:scale-105 transition-transform duration-300 ">
+          className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-xs md:text-base text-white flex flex-row items-center justify-center active:scale-95 gap-x-2.5 px-3 md:px-4 py-2 md:py-3 rounded-lg hover:scale-105 transition-transform duration-300 ">
             <FaPlus />
             <span className="hidden md:block"> Add New Module</span>
           </button>
@@ -141,7 +143,7 @@ const AdminProjectDetails = () => {
             />
           </div>
           <div>
-            <button className="text-base cursor-pointer font-satoshi hover:scale-105 transition-all duration-300 text-heading bg-[#5A5D63] rounded-xl font-medium flex items-center justify-center gap-2.5 px-3.5 py-3 ">
+            <button className="md:text-base text-xs cursor-pointer font-satoshi hover:scale-105 transition-all duration-300 text-heading bg-[#5A5D63] rounded-xl font-medium flex items-center justify-center gap-2.5 px-3.5 py-3 ">
               <ImSortAmountAsc />
               Sort
             </button>
@@ -150,13 +152,13 @@ const AdminProjectDetails = () => {
 
         {/* module details table */}
         <div className="w-full max-h-[75vh] h-fit  lg:max-h-[63vh] overflow-y-auto my-5 no-scrollbar rounded-lg border border-[#4C4F55]">
-          <ProjectModulesTable displayData={displayData} setEditModuleId={setEditModuleId} setEditId={setEditId} editId={editId} setEdit={()=>setEdit(true)} />
+          <ProjectModulesTable displayData={displayData} setEditModuleId={setEditModuleId} setEditId={setEditId}  setEdit={()=>setEdit(true)} />
 
         </div>
 
       </div>
       {add && (
-        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
+        <div className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${isOpen?"md:pl-[290px] ":""}`}>
           <div
             className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
           >
@@ -165,7 +167,7 @@ const AdminProjectDetails = () => {
                 add new Module
               </h3>
               <button
-                className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "
+                className="md:text-xl text-base p-1.5 h-fit cursor-pointer bg-buttonBlue text-heading rounded-lg "
                 onClick={() => setAdd(false)}
               >
                 <IoMdClose />
@@ -178,13 +180,13 @@ const AdminProjectDetails = () => {
       )}
        {/* Edit project popup */}
        {edit && (
-        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
+        <div className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 p-8 ${isOpen?"pl-[290px] ":""}`}>
           <div
             className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
           >
             <div className="w-full flex flex-row justify-between ">
               <h3 className="lg:text-2xl md:text-xl text-heading text-lg font-medium font-manrope capitalize ">
-                edit project
+                edit module
               </h3>
               <button
                 className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "

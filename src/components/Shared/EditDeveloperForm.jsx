@@ -55,7 +55,7 @@ const EditDeveloperForm = ({setEdit,editData}) => {
                 name="userId"
                 placeholder="Enter Email ID"
                 disabled
-                className="w-full py-4 px-5 border placeholder:text-[#9EA3A7] placeholder:font-dm-sans placeholder:font-normal placeholder:text-base text-heading focus:outline-none focus:ring-1 focus:ring-buttonBlue border-[#C8CACD80] rounded-sm"
+                className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm"
               />
               <ErrorMessage
                 name="userId"
@@ -76,7 +76,7 @@ const EditDeveloperForm = ({setEdit,editData}) => {
                 id="name"
                 name="name"
                 placeholder="Enter Name"
-                className="w-full py-4 px-5 border placeholder:text-[#9EA3A7] placeholder:font-dm-sans placeholder:font-normal placeholder:text-base text-heading focus:outline-none focus:ring-1 focus:ring-buttonBlue border-[#C8CACD80] rounded-sm"
+                className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm"
               />
               <ErrorMessage
                 name="name"
@@ -96,7 +96,7 @@ const EditDeveloperForm = ({setEdit,editData}) => {
                 as="select"
                 id="role"
                 name="role"
-                className="w-full py-4 px-5 border placeholder:text-[#9EA3A7] placeholder:font-dm-sans placeholder:font-normal placeholder:text-base text-heading bg-Bgprimary focus:outline-none focus:ring-1 focus:ring-buttonBlue border-[#C8CACD80] rounded-sm"
+                className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm bg-Bgprimary"
               >
                 <option disabled className="text-[#9EA3A7]" value="">
                   Select Role
@@ -123,7 +123,7 @@ const EditDeveloperForm = ({setEdit,editData}) => {
                 id="password"
                 name="password"
                 placeholder="Enter Password"
-                className="w-full py-4 px-5 border placeholder:text-[#9EA3A7] placeholder:font-dm-sans placeholder:font-normal placeholder:text-base text-heading focus:outline-none focus:ring-1 focus:ring-buttonBlue border-[#C8CACD80] rounded-sm"
+                className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm"
               />
               <ErrorMessage
                 name="password"
@@ -133,7 +133,8 @@ const EditDeveloperForm = ({setEdit,editData}) => {
             </div>
             <div className="w-full h-fit flex flex-row gap-x-5 ">
               <button
-                className="w-full cursor-pointer bg-[#5A5D63] text-heading p-4 border border-[#5A5D63] duration-300  rounded-md hover:scale-105 active:scale-95 transition"
+              type="button"
+                className="w-full cursor-pointer bg-[#5A5D63] text-heading md:p-4 p-2 border border-[#5A5D63] duration-300 text-sm md:text-base rounded-md hover:scale-105 active:scale-95 transition"
                 onClick={() => {
                   setEdit(false);
                   resetForm();
@@ -143,7 +144,7 @@ const EditDeveloperForm = ({setEdit,editData}) => {
               </button>
               <button
                 type="submit"
-                className="w-full cursor-pointer bg-buttonBlue text-white p-4 rounded-md hover:scale-105 active:scale-95 duration-300 transition"
+                className="w-full cursor-pointer bg-buttonBlue text-heading p-2  md:p-4 text-sm md:text-base rounded-md hover:scale-105 active:scale-95 duration-300 transition"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Adding..." : "Add"}

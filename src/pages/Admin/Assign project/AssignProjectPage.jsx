@@ -6,9 +6,11 @@ import { projectData } from "../../../constants/Projects/ProjectConstant";
 import AssignProjectTable from "./components/AssignProjectTable";
 import AssignProjectForm from "./components/AssignProjectForm";
 import { IoMdClose } from "react-icons/io";
+import { useSidebar } from "../../../contexts/admin/SidebarContext";
 
 const AssignProjectPage = () => {
   const [assign, setAssign] = useState(false);
+  const {isOpen} = useSidebar()
 
   const data = projectData;
   const [displayData, setDisplayData] = useState(data);
@@ -40,7 +42,7 @@ const AssignProjectPage = () => {
 
           <button
             onClick={() => setAssign(true)}
-            className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-base text-white flex flex-row items-center justify-center gap-x-2.5 px-4 py-3 active:scale-95 rounded-lg hover:scale-105 transition-transform duration-300 "
+            className="  bg-buttonBlue cursor-pointer font-satoshi font-bold text-xs md:text-base text-white flex flex-row items-center justify-center active:scale-95 gap-x-2.5 px-3 md:px-4 py-2 md:py-3 rounded-lg hover:scale-105 transition-transform duration-300"
           >
             <FaPlus /> <span className="hidden md:block">Assign Project</span>
           </button>
@@ -57,7 +59,7 @@ const AssignProjectPage = () => {
             />
           </div>
           <div>
-            <button className="text-base cursor-pointer font-satoshi hover:scale-105 transition-all duration-300 text-heading bg-[#5A5D63] rounded-xl font-medium flex items-center justify-center gap-2.5 px-3.5 py-3 ">
+            <button className="md:text-base text-xs cursor-pointer font-satoshi hover:scale-105 transition-all duration-300 text-heading bg-[#5A5D63] rounded-xl font-medium flex items-center justify-center gap-2.5 px-3.5 py-3  ">
               <ImSortAmountAsc />
               Sort
             </button>
@@ -69,16 +71,16 @@ const AssignProjectPage = () => {
          </div>
       </div>
       {assign && (
-        <div className="w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  p-8 ">
+        <div className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${isOpen?"md:pl-[290px] ":""}`}>
           <div
             className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
           >
-            <div className="w-full flex flex-row justify-between ">
+            <div className="w-full flex flex-row justify-between gap-2 ">
               <h3 className="lg:text-2xl text-heading md:text-xl text-lg font-medium font-manrope capitalize ">
                 assign project to developer
               </h3>
               <button
-                className="text-xl p-1.5 cursor-pointer bg-buttonBlue text-heading rounded-lg "
+                className="md:text-xl text-base p-1.5 h-fit cursor-pointer bg-buttonBlue text-heading rounded-lg "
                 onClick={() => setAssign(false)}
               >
                 <IoMdClose />

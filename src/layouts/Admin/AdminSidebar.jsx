@@ -13,7 +13,7 @@ function AdminSidebar() {
   const { isOpen, setIsOpen } = useSidebar();
   return (
     <div
-      className={`h-screen z-20  fixed  top-0 left-0 bg-Bgsecondary flex flex-col justify-between transition-all duration-300 ${
+      className={`h-screen z-20  fixed overflow-hidden top-0 left-0 bg-Bgsecondary flex flex-col justify-between transition-all duration-300 ${
         isOpen ? "w-[280px]" : "w-[60px] md:w-[80px] "
       } `}
     >
