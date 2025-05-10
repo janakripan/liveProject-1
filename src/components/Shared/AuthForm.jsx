@@ -1,34 +1,62 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { IoEyeOutline,IoEyeOffOutline  } from "react-icons/io5";
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa";
 import { AuthSchema } from "../../validations/authValidation";
-function AuthForm({ onToggle}) {
+import { useMutation } from "@tanstack/react-query";
+import { login } from "../../queries/login";
+import { useNavigate } from "react-router";
 
-    const [showPassword, setShowPassword] = useState(false);
+function AuthForm() {
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate()
 
-    const initialValues = {
-        email: "",
-        password: "",
-        confirmPassword: "",
-        rememberMe: false,
-    }
-    const handleSubmit = (values) => {
-        console.log("Form Data:", values);
-      };
+
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: (response, variable) => {
+      const data = response.data[0]
+      const storage = variable.rememberMe? localStorage : sessionStorage ;
+      storage.setItem("userData",data)
+      storage.setItem("token", data.Role);
+      console.log(data)
+
+     
+      if (data.Role === "User") {
+        navigate("/user");
+      } else if (data.Role === "admin" || data.Role === "manager") {
+        navigate("/admin");
+      } else {
+        console.warn("Unknown role:", data.Role);
+        navigate("/");
+      }
+    },
+    onError: (error) => {
+      console.error("Login failed:", error.response?.data || error.message);
+    },
+  });
+
+  const initialValues = {
+    email: "",
+    password: "",
+    rememberMe: false,
+  };
+  const handleSubmit = (values) => {
+    mutation.mutate(values);
+  };
   return (
-    <div className='w-full h-full  '>
-        <Formik
+    <div className="w-full h-full  ">
+      <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={AuthSchema}
-        >
-        {({
-         isSubmitting,
-        })=>(
-        <Form className='w-full h-fit flex flex-col gap-y-2'>
-           <div>
-              <label className="block text-xl font-semibold font-open my-2 text-gray-900">Email</label>
+      >
+        {() => (
+          <Form className="w-full h-fit flex flex-col gap-y-2">
+            <div>
+              <label className="block text-xl font-semibold font-open my-2 text-gray-900">
+                Email
+              </label>
               <Field
                 type="email"
                 name="email"
@@ -42,7 +70,9 @@ function AuthForm({ onToggle}) {
               />
             </div>
             <div className="relative">
-              <label className="block text-xl font-semibold font-open my-2 text-gray-900">Password</label>
+              <label className="block text-xl font-semibold font-open my-2 text-gray-900">
+                Password
+              </label>
               <div className="relative">
                 <Field
                   type={showPassword ? "text" : "password"}
@@ -65,9 +95,6 @@ function AuthForm({ onToggle}) {
               />
             </div>
 
-            
-            
-
             {/* Remember Me Checkbox */}
             <div className="flex items-center mt-4">
               <Field
@@ -75,29 +102,25 @@ function AuthForm({ onToggle}) {
                 name="rememberMe"
                 className="mr-2 h-4 w-4 accent-[#232321]"
               />
-              <label className="text-sm font-open  font-semibold">Remember me</label>
+              <label className="text-sm font-open  font-semibold">
+                Remember me
+              </label>
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={isSubmitting}
+              disabled={mutation.isPending}
               className="w-full bg-[#3399FF] mt-8 h-12 text-white text-sm py-2 font-rubik rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-5 
               disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Logging in" : "Email Login"}{" "} <FaArrowRight/>
+              {mutation.isPending ? "Logging in..." : "Login"} <FaArrowRight />
             </button>
-
-
-        </Form>
-       )}
-        </Formik>
-
-        
-
-      
+          </Form>
+        )}
+      </Formik>
     </div>
-  )
+  );
 }
 
-export default AuthForm
+export default AuthForm;
