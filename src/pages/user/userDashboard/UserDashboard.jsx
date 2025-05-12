@@ -1,11 +1,14 @@
 import React from 'react'
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 import { projectData } from '../../../constants/Projects/ProjectConstant';
 import ProjectCard from './Components/ProjectCard';
+import { useToken } from '../../../contexts/auth/UserDataContext';
 
 const UserDashboard = () => {
   const navigate = useNavigate();
-  const authToken = "Alice";
+  const { userToken} = useToken()
+  const authToken = userToken?.FullName;
+ 
 
 
   const userProjects = projectData.filter((project) =>

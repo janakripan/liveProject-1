@@ -12,7 +12,7 @@ const UserProjectDetails = () => {
   const project = projectData.find(
     (project) => String(project.project_id) === String(projectId)
   );
-  console.log(project)
+  
 
 
   if (!project.modules){return(<div className="w-full h-screen flex flex-col items-center justify-center">

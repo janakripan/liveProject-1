@@ -3,6 +3,8 @@ import { SidebarProvider } from "./contexts/admin/SidebarContext.jsx";
 import { BrowserRouter, Route, Routes } from "react-router";
 import loader from "./assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg";
 import PrivateRoute from "./utils/PrivateRoute.jsx";
+import AutoLogin from "./utils/AutoLogin.jsx";
+import { UserDataProvider } from "./contexts/auth/UserDataContext.jsx";
 
 const AssignedProjectDetails = lazy(() =>
   import("./pages/Admin/assignedProjectDetails/AssignedProjectDetails.jsx")
@@ -54,79 +56,89 @@ const Account = lazy(() => import("./pages/Admin/Account/Account.jsx"));
 export default function App() {
   return (
     <>
-      <SidebarProvider>
-        <BrowserRouter>
-          <Suspense
-            fallback={
-              <div className="text-center w-full h-screen bg-Bgprimary flex items-center justify-center ">
-                <img
-                  src={loader}
-                  alt="loading animation"
-                  className="w-20 h-20"
-                />
-              </div>
-            }
-          >
-            <Routes>
-              <Route path="/" element={<AuthLayout />}>
-                <Route index element={<LoginPage />} />
-              </Route>
-              <Route element={<PrivateRoute allowedRoles={["User"]} />}>
-                <Route path="user" element={<UserDashboardLayout />}>
-                  <Route index element={<UserDashboard />} />
-                  <Route
-                    path="/user/:projectId"
-                    element={<UserProjectDetails />}
+      <BrowserRouter>
+        <UserDataProvider>
+          <SidebarProvider>
+            <Suspense
+              fallback={
+                <div className="text-center w-full h-screen bg-Bgprimary flex items-center justify-center ">
+                  <img
+                    src={loader}
+                    alt="loading animation"
+                    className="w-20 h-20"
                   />
+                </div>
+              }
+            >
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <>
+                      <AutoLogin />
+                      <AuthLayout />
+                    </>
+                  }
+                >
+                  <Route index element={<LoginPage />} />
                 </Route>
-              </Route>
-
-              <Route
-                element={<PrivateRoute allowedRoles={["Admin", "Manager"]} />}
-              >
-                <Route path="admin" element={<AdminLayout />}>
-                  <Route index element={<AdminDashboard />} />
-                  <Route path="project" element={<ProjectPage />} />
-                  <Route
-                    path="project/:projectId"
-                    element={<AdminProjectDetails />}
-                  />
-                  <Route
-                    path="project/:projectId/modules/:moduleId"
-                    element={<ModuleDetails />}
-                  />
-                  <Route
-                    path="project/:projectId/modules/:moduleId/add-submodule"
-                    element={<AddSubModule />}
-                  />
-                  <Route
-                    path="project/:projectId/preview"
-                    element={<SubModulePreview />}
-                  />
-                  <Route
-                    path="project/:projectId/preview/module/:moduleId/submodule/:subModuleId/edit"
-                    element={<EditSubModule />}
-                  />
-
-                  <Route path="developer" element={<DeveloperPage />} />
-                  <Route
-                    path="developer/:developerId"
-                    element={<DeveloperDetailsPage />}
-                  />
-
-                  <Route path="assign" element={<AssignProjectPage />} />
-                  <Route
-                    path="assign/:projectId"
-                    element={<AssignedProjectDetails />}
-                  />
-
-                  <Route path="account" element={<Account />} />
+                <Route element={<PrivateRoute allowedRoles={["User"]} />}>
+                  <Route path="user" element={<UserDashboardLayout />}>
+                    <Route index element={<UserDashboard />} />
+                    <Route
+                      path="/user/:projectId"
+                      element={<UserProjectDetails />}
+                    />
+                  </Route>
                 </Route>
-              </Route>
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </SidebarProvider>
+
+                <Route
+                  element={<PrivateRoute allowedRoles={["Admin", "Manager"]} />}
+                >
+                  <Route path="admin" element={<AdminLayout />}>
+                    <Route index element={<AdminDashboard />} />
+                    <Route path="project" element={<ProjectPage />} />
+                    <Route
+                      path="project/:projectId"
+                      element={<AdminProjectDetails />}
+                    />
+                    <Route
+                      path="project/:projectId/modules/:moduleId"
+                      element={<ModuleDetails />}
+                    />
+                    <Route
+                      path="project/:projectId/modules/:moduleId/add-submodule"
+                      element={<AddSubModule />}
+                    />
+                    <Route
+                      path="project/:projectId/preview"
+                      element={<SubModulePreview />}
+                    />
+                    <Route
+                      path="project/:projectId/preview/module/:moduleId/submodule/:subModuleId/edit"
+                      element={<EditSubModule />}
+                    />
+
+                    <Route path="developer" element={<DeveloperPage />} />
+                    <Route
+                      path="developer/:developerId"
+                      element={<DeveloperDetailsPage />}
+                    />
+
+                    <Route path="assign" element={<AssignProjectPage />} />
+                    <Route
+                      path="assign/:projectId"
+                      element={<AssignedProjectDetails />}
+                    />
+
+                    <Route path="account" element={<Account />} />
+                  </Route>
+                </Route>
+              </Routes>
+            </Suspense>
+          </SidebarProvider>
+        </UserDataProvider>
+      </BrowserRouter>
     </>
   );
 }

@@ -896,6 +896,14 @@ export const projectData = [
         permissions: ["read", "write"],
         created: 1742169600,
       },
+      {
+        "developer_id": 16,
+        "name": "Nimna kp",
+        "email":"nimnakp@gmail.com",
+        "role":  "User",
+        "permissions": ["read", "write"],
+        "created" :1742169600,
+      },
     ],
   },
   {
@@ -1174,6 +1182,14 @@ export const projectData = [
         role: "Developer",
         permissions: ["read", "write"],
         created: 1742169600,
+      },
+      {
+        "developer_id": 16,
+        "name": "Nimna kp",
+        "email":"nimnakp@gmail.com",
+        "role":  "User",
+        "permissions": ["read", "write"],
+        "created" :1742169600,
       },
       {
         developer_id: 7,

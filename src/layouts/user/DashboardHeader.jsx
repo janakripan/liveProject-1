@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../../assets/zudoku-logo-full-light 1 (1).svg";
 import { useLocation, useNavigate, useParams } from "react-router";
 import { projectData } from "../../constants/Projects/ProjectConstant";
 import { IoNotifications } from "react-icons/io5";
+import { useToken } from "../../contexts/auth/UserDataContext";
+import { LuLogOut } from "react-icons/lu";
 
 const DashboardHeader = () => {
+  const [isOpen, setIsOpen] = useState(false)
   const location = useLocation();
   const navigate = useNavigate();
   const { projectId } = useParams();
-  const authToken = "Alice";
+ const {userToken,logout} = useToken()
+
+
+  
+  const authToken = userToken?.FullName;
+ 
 
   const userProjects = projectData.filter((project) =>
     project.developers.some((dev) => dev.name === authToken)
@@ -23,9 +31,12 @@ const DashboardHeader = () => {
     }
   };
 
+  
+  
+
   return (
     <div className="w-full h-fit bg-Bgsecondary box-border ">
-      <div className="w-full max-w-screen-xl mx-auto flex flex-row items-center px-5 py-0 justify-between box-border  ">
+      <div className="w-full max-w-screen-xl mx-auto flex flex-row items-center px-5 py-0 justify-between box-border relative ">
         <div
           className={`w-fit h-fit  flex flex-row  ${
             location.pathname.endsWith("user") ? "items-end" : "items-center"
@@ -58,14 +69,32 @@ const DashboardHeader = () => {
           <div className="text-heading text-2xl ">
             <IoNotifications/>
           </div>
-          <div className=" w-6 aspect-square rounded-full flex items-center justify-center text-heading text-[10px] font-bold  bg-buttonBlue ">
+          <button
+          type="buton"
+          onClick={()=>setIsOpen(!isOpen)}
+           className=" cursor-pointer w-6 aspect-square rounded-full flex items-center justify-center text-heading text-[10px] font-bold  bg-buttonBlue ">
             {
               authToken?.slice(0, 2).toUpperCase()
             }
 
-          </div>
+          </button>
 
         </div>
+        {isOpen&&(
+          <div
+          className={`w-fit h-fit bg-Bghilight  p-1 rounded-lg absolute top-15 right-0 transition-all duration-300`}
+          >
+            <button
+            onClick={logout}
+            className="w-fit h-fit px-5 py-3 gap-2 cursor-pointer flex flex-row items-center hover:bg-Bgprimary transition-all duration-300 rounded-md text-heading hover:text-buttonBlue"
+            >
+              <span className=" text-md font-satoshi font-medium  transition-all duration-300 ">Log Out</span>
+              <span className="text-md font-satoshi font-medium  transition-all duration-300 "> <LuLogOut/> </span>
+
+            </button>
+
+          </div>
+        )}
       </div>
     </div>
   );

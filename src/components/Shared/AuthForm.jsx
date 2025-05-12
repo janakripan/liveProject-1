@@ -6,10 +6,12 @@ import { AuthSchema } from "../../validations/authValidation";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../queries/login";
 import { useNavigate } from "react-router";
+import { useToken } from "../../contexts/auth/UserDataContext";
 
 function AuthForm() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate()
+  const {setUserToken} = useToken()
 
 
   const mutation = useMutation({
@@ -17,9 +19,11 @@ function AuthForm() {
     onSuccess: (response, variable) => {
       const data = response.data[0]
       const storage = variable.rememberMe? localStorage : sessionStorage ;
-      storage.setItem("userData",data)
+      storage.setItem("userData", JSON.stringify(data));
       storage.setItem("token", data.Role);
-      console.log(data)
+      
+
+      setUserToken(data)
 
      
       if (data.Role === "User") {
