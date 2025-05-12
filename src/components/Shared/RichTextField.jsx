@@ -13,9 +13,9 @@ import { ImBold, ImItalic } from "react-icons/im";
 import { FaCode, FaStrikethrough, FaUnderline } from "react-icons/fa6";
 import { LuList, LuListOrdered } from "react-icons/lu";
 import { ColorPickerDropdown } from "./ColorPickerDropdown ";
-import FontSize from "../../utils/Fontsize";
 import { CgArrowsBreakeV } from "react-icons/cg";
 import { FaLink } from "react-icons/fa6";
+import FontSize from "../../utils/FontSize";
 
 const MenuBar = React.memo(({ editor }) => {
   const [, setEditorState] = useState(0);

@@ -7,22 +7,17 @@ import { useToken } from "../../contexts/auth/UserDataContext";
 import { LuLogOut } from "react-icons/lu";
 
 const DashboardHeader = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const { projectId } = useParams();
- const {userToken,logout} = useToken()
+  const { userToken, logout } = useToken();
 
-
-  
   const authToken = userToken?.FullName;
- 
 
   const userProjects = projectData.filter((project) =>
     project.developers.some((dev) => dev.name === authToken)
   );
-
-
 
   const handleChange = (e) => {
     const selectedId = e.target.value;
@@ -31,8 +26,17 @@ const DashboardHeader = () => {
     }
   };
 
-  
-  
+  const getDeveloperInitials = (name) => {
+    if (!name || name.trim() === "") return "NA";
+
+    const words = name.trim().split(" ").filter(Boolean);
+
+    if (words.length === 1) {
+      return words[0].substring(0, 2).toUpperCase();
+    } else {
+      return (words[0][0] + words[1][0]).toUpperCase();
+    }
+  };
 
   return (
     <div className="w-full h-fit bg-Bgsecondary box-border ">
@@ -67,32 +71,32 @@ const DashboardHeader = () => {
         </div>
         <div className="w-fit h-fit  flex flex-row items-center justify-between gap-x-6">
           <div className="text-heading text-2xl ">
-            <IoNotifications/>
+            <IoNotifications />
           </div>
           <button
-          type="buton"
-          onClick={()=>setIsOpen(!isOpen)}
-           className=" cursor-pointer w-6 aspect-square rounded-full flex items-center justify-center text-heading text-[10px] font-bold  bg-buttonBlue ">
-            {
-              authToken?.slice(0, 2).toUpperCase()
-            }
-
+            type="buton"
+            onClick={() => setIsOpen(!isOpen)}
+            className=" cursor-pointer w-6 aspect-square rounded-full flex items-center justify-center text-heading text-[10px] font-bold  bg-buttonBlue "
+          >
+            {getDeveloperInitials(authToken)}
           </button>
-
         </div>
-        {isOpen&&(
+        {isOpen && (
           <div
-          className={`w-fit h-fit bg-Bghilight  p-1 rounded-lg absolute top-15 right-0 transition-all duration-300`}
+            className={`w-fit h-fit bg-Bghilight  p-1 rounded-lg absolute top-15 right-0 transition-all duration-300`}
           >
             <button
-            onClick={logout}
-            className="w-fit h-fit px-5 py-3 gap-2 cursor-pointer flex flex-row items-center hover:bg-Bgprimary transition-all duration-300 rounded-md text-heading hover:text-buttonBlue"
+              onClick={logout}
+              className="w-fit h-fit px-5 py-3 gap-2 cursor-pointer flex flex-row items-center hover:bg-Bgprimary transition-all duration-300 rounded-md text-heading hover:text-buttonBlue"
             >
-              <span className=" text-md font-satoshi font-medium  transition-all duration-300 ">Log Out</span>
-              <span className="text-md font-satoshi font-medium  transition-all duration-300 "> <LuLogOut/> </span>
-
+              <span className=" text-md font-satoshi font-medium  transition-all duration-300 ">
+                Log Out
+              </span>
+              <span className="text-md font-satoshi font-medium  transition-all duration-300 ">
+                {" "}
+                <LuLogOut />{" "}
+              </span>
             </button>
-
           </div>
         )}
       </div>

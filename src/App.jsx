@@ -92,9 +92,7 @@ export default function App() {
                   </Route>
                 </Route>
 
-                <Route
-                  element={<PrivateRoute allowedRoles={["Admin", "Manager"]} />}
-                >
+                {/* <Route element={<PrivateRoute allowedRoles={["Admin", "Manager"]} />}> */}
                   <Route path="admin" element={<AdminLayout />}>
                     <Route index element={<AdminDashboard />} />
                     <Route path="project" element={<ProjectPage />} />
@@ -133,7 +131,7 @@ export default function App() {
 
                     <Route path="account" element={<Account />} />
                   </Route>
-                </Route>
+                {/* </Route> */}
               </Routes>
             </Suspense>
           </SidebarProvider>

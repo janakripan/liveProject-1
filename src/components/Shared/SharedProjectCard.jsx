@@ -20,6 +20,17 @@ const SharedProjectCard = ({ items,onClick }) => {
     "bg-teal-500",
   ];
  
+  const getDeveloperInitials = (name) => {
+    if (!name || name.trim() === "") return "NA";
+
+    const words = name.trim().split(" ").filter(Boolean);
+
+    if (words.length === 1) {
+      return words[0].substring(0, 2).toUpperCase();
+    } else {
+      return (words[0][0] + words[1][0]).toUpperCase();
+    }
+  };
 
   return (
     <div onClick={onClick} className=" cursor-pointer w-full h-fit p-5 bg-Bgsecondary rounded-xl  ">
@@ -47,7 +58,7 @@ const SharedProjectCard = ({ items,onClick }) => {
                     index !== 0 ? "-ml-4" : ""
                   } `}
                 >
-                  {dev.name.slice(0, 2).toUpperCase()}
+                  {getDeveloperInitials(dev.name)}
                 </div>
               );
             })}
