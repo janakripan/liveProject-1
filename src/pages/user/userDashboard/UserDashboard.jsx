@@ -1,8 +1,8 @@
 import React from 'react'
 import { useNavigate } from 'react-router';
 import { projectData } from '../../../constants/Projects/ProjectConstant';
-import ProjectCard from './Components/ProjectCard';
 import { useToken } from '../../../contexts/auth/UserDataContext';
+import SharedProjectCard from '../../../components/Shared/SharedProjectCard';
 
 const UserDashboard = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const UserDashboard = () => {
         </h1>
       <div className='w-full h-fit p-2  grid md:grid-cols-3 grid-cols-1 gap-4 '>
         {userProjects.map((items)=>(
-          <ProjectCard key={items.project_id} items={items} onClick={()=>handleclick(items.project_id)} />
+          <SharedProjectCard key={items.project_id} items={items} onClick={()=>handleclick(items.project_id)} />
         ))}
 
 
