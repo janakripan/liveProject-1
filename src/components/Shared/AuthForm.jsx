@@ -3,52 +3,70 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { FaArrowRight } from "react-icons/fa";
 import { AuthSchema } from "../../validations/authValidation";
-import { useMutation } from "@tanstack/react-query";
-import { login } from "../../queries/login";
 import { useNavigate } from "react-router";
 import { useToken } from "../../contexts/auth/UserDataContext";
+import {  useUserLogin } from "../../api/admin/hooks";
 
 function AuthForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [credError, SetCredError] = useState("")
   const navigate = useNavigate()
   const {setUserToken} = useToken()
+  const {mutate: handleLogin, isLoading,} = useUserLogin()
 
 
-  const mutation = useMutation({
-    mutationFn: login,
-    onSuccess: (response, variable) => {
-      const data = response.data[0]
-      const storage = variable.rememberMe? localStorage : sessionStorage ;
-      storage.setItem("userData", JSON.stringify(data));
-      storage.setItem("token", data.Role);
-      
 
-      setUserToken(data)
-
-     
-      if (data.Role === "User") {
-        navigate("/user");
-      } else if (data.Role === "admin" || data.Role === "manager") {
-        navigate("/admin");
-      } else {
-        console.warn("Unknown role:", data.Role);
-        navigate("/");
-      }
-    },
-    onError: (error) => {
-      console.error("Login failed:", error.response?.data || error.message);
-      SetCredError(error.response?.data.message )
-    },
-  });
 
   const initialValues = {
     email: "",
     password: "",
     rememberMe: false,
   };
-  const handleSubmit = (values) => {
-    mutation.mutate(values);
+  const handleSubmit = (values,{setSubmitting}) => {
+    handleLogin(values,{
+      onSuccess:(data,variable)=>{
+        
+        const userData = data.data[0]
+        console.log(userData.Role)
+      const storage = variable.rememberMe? localStorage : sessionStorage ;
+      storage.setItem("userData", JSON.stringify(userData));
+      storage.setItem("token", userData.Role);
+
+       setUserToken(userData)
+
+     
+      if (userData.Role === "User") {
+        navigate("/user");
+      } else if (userData.Role === "admin" || userData.Role === "manager") {
+        navigate("/admin");
+      } else {
+        console.warn("Unknown role:", userData.Role);
+        navigate("/");
+      }
+      },
+      onError: (error) =>{
+        if(error.response){
+          if(error.response.status===401){
+            SetCredError("invalid username or password")
+          }else{
+            SetCredError(
+              error.response.data.message || "login failed . please try again"
+            )
+          }
+        }else if(error.request){
+          // The request was made but no response was received
+          SetCredError("Network error. Please check your connection.")
+        }else{
+          // Something happened in setting up the request that triggered an Error
+          SetCredError("An error occurred. Please try again later.");
+        }
+         setSubmitting(false);
+      },
+      onSettled: () =>{
+        setSubmitting(false)
+      }
+    })
+   
   };
 
 
@@ -61,7 +79,7 @@ function AuthForm() {
         validationSchema={AuthSchema}
       >
         
-        {({  handleChange, handleBlur}) => (
+        {({  handleChange, handleBlur,isSubmitting}) => (
           <Form className="w-full h-fit flex flex-col gap-y-2">
           
             <div>
@@ -132,11 +150,11 @@ function AuthForm() {
             {/* Submit Button */}
             <button
               type="submit"
-              disabled={mutation.isPending}
+              disabled={isSubmitting || isLoading}
               className="w-full bg-[#3399FF] mt-8 h-12 text-white text-sm py-2 font-rubik rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-5 
               disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              {mutation.isPending ? "Logging in..." : "Login"} <FaArrowRight />
+              {isSubmitting || isLoading ? "Logging in..." : "Login"} <FaArrowRight />
             </button>
             {credError&&(<p className="text-xs text-red-500  ">{credError}</p>)}
           </Form>

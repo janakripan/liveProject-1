@@ -1,7 +1,7 @@
 import { createContext,  useContext,  useEffect,  useState } from "react";
 import { useNavigate } from "react-router";
-import { logout as logoutApi } from "../../queries/logout";
-import { useMutation } from "@tanstack/react-query";
+import { useUserLogout } from "../../api/admin/hooks";
+
 
 
 const UserDataContext = createContext()
@@ -10,19 +10,20 @@ export const UserDataProvider = ({children}) =>{
     
     const [userToken , setUserToken] = useState(null)
     const navigate = useNavigate()
+    const {mutate:handleLogout} = useUserLogout()
         
      useEffect(() => {
-    const userData = localStorage.getItem("userData");
+    const userData = localStorage.getItem("userData") || sessionStorage.getItem("userData");
     if (userData) {
       setUserToken(JSON.parse(userData));
     }
   }, []);
   
 
-   const logoutMutation = useMutation({
-    mutationFn: logoutApi,
+   const logout = () => {
+  handleLogout(undefined, {
     onSuccess: (response) => {
-      console.log(response)
+      console.log(response);
       localStorage.clear();
       sessionStorage.clear();
       setUserToken(null);
@@ -32,10 +33,9 @@ export const UserDataProvider = ({children}) =>{
       console.error("Logout failed:", error.response?.data || error.message);
     },
   });
+};
 
-  const logout = () =>{
-    logoutMutation.mutate()
-  }
+
 
     
     return(
