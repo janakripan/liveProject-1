@@ -10,6 +10,7 @@ import { useToken } from "../../contexts/auth/UserDataContext";
 
 function AuthForm() {
   const [showPassword, setShowPassword] = useState(false);
+  const [credError, SetCredError] = useState("")
   const navigate = useNavigate()
   const {setUserToken} = useToken()
 
@@ -37,6 +38,7 @@ function AuthForm() {
     },
     onError: (error) => {
       console.error("Login failed:", error.response?.data || error.message);
+      SetCredError(error.response?.data.message )
     },
   });
 
@@ -48,6 +50,9 @@ function AuthForm() {
   const handleSubmit = (values) => {
     mutation.mutate(values);
   };
+
+
+  
   return (
     <div className="w-full h-full  ">
       <Formik
@@ -55,8 +60,10 @@ function AuthForm() {
         onSubmit={handleSubmit}
         validationSchema={AuthSchema}
       >
-        {() => (
+        
+        {({  handleChange, handleBlur}) => (
           <Form className="w-full h-fit flex flex-col gap-y-2">
+          
             <div>
               <label className="block text-xl font-semibold font-open my-2 text-gray-900">
                 Email
@@ -65,6 +72,12 @@ function AuthForm() {
                 type="email"
                 name="email"
                 placeholder="Enter your Email"
+                autoComplete="username"
+                 onChange={(e) => {
+                  handleChange(e);
+                  SetCredError(""); 
+                }}
+                onBlur={handleBlur}
                 className="w-full p-2 px-4 min-h-12 border bg-[#F4F9FC] placeholder:font-inter placeholder:tracking-tight placeholder:text-base border-[#BAE4FF] rounded-lg outline-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
               />
               <ErrorMessage
@@ -82,6 +95,11 @@ function AuthForm() {
                   type={showPassword ? "text" : "password"}
                   name="password"
                   placeholder="Enter your password"
+                  autoComplete="current-password"
+                  onChange={(e) => {
+                  handleChange(e);
+                  SetCredError(""); 
+                }}
                   className="w-full p-2 px-4 border  min-h-12 bg-[#F4F9FC] border-[#BAE4FF] placeholder:tracking-tight placeholder:font-inter placeholder:text-base rounded-lg outline-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
                 <button
@@ -120,6 +138,7 @@ function AuthForm() {
             >
               {mutation.isPending ? "Logging in..." : "Login"} <FaArrowRight />
             </button>
+            {credError&&(<p className="text-xs text-red-500  ">{credError}</p>)}
           </Form>
         )}
       </Formik>

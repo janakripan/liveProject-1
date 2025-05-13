@@ -17,15 +17,7 @@ function LoginPage() {
           <AuthForm />
 
         </div>
-        <p className="text-center text-base mt-4 font-open font-normal">
-        Don't have an account?{" "}
-        <button
-         
-          className="text-black font-semibold hover:underline"
-        >
-          Request
-        </button>
-      </p>
+        
 
 
 

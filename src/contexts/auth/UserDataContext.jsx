@@ -1,5 +1,7 @@
 import { createContext,  useContext,  useEffect,  useState } from "react";
 import { useNavigate } from "react-router";
+import { logout as logoutApi } from "../../queries/logout";
+import { useMutation } from "@tanstack/react-query";
 
 
 const UserDataContext = createContext()
@@ -17,13 +19,23 @@ export const UserDataProvider = ({children}) =>{
   }, []);
   
 
-  const logout = () => {
-    localStorage.removeItem("userData");
-    localStorage.removeItem("token");
-    sessionStorage.clear(); // optional if you're using sessionStorage too
-    setUserToken(null);
-    navigate("/"); // or redirect to /login
-  };
+   const logoutMutation = useMutation({
+    mutationFn: logoutApi,
+    onSuccess: (response) => {
+      console.log(response)
+      localStorage.clear();
+      sessionStorage.clear();
+      setUserToken(null);
+      navigate("/");
+    },
+    onError: (error) => {
+      console.error("Logout failed:", error.response?.data || error.message);
+    },
+  });
+
+  const logout = () =>{
+    logoutMutation.mutate()
+  }
 
     
     return(
