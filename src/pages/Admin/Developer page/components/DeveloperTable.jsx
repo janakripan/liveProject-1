@@ -3,9 +3,9 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useNavigate } from "react-router";
 
-function DeveloperTable({ data,setEdit,setEditData }) {
+function DeveloperTable({ data, setEdit, setEditData }) {
   const navigate = useNavigate();
-
+console.log(data)
   const handleViewClick = (developerId) => {
     navigate(`/admin/developer/${developerId}`);
   };
@@ -58,17 +58,17 @@ function DeveloperTable({ data,setEdit,setEditData }) {
         <tbody>
           {data.map((data) => (
             <tr
-              key={data.developer_id}
+              key={data.userID}
               className=" border border-Bghilight text-heading"
             >
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
-                {data.email}
+                {data.userID}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
-                {data.name}
+                {data.developerName}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
-                {data.role}
+                {data.developerRole}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 {createdTime(data.created)}
@@ -76,17 +76,23 @@ function DeveloperTable({ data,setEdit,setEditData }) {
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 <div className="w-full h-full flex flex-row items-center gap-x-2.5">
                   <button
-                    onClick={() => handleViewClick(data.developer_id)}
+                    onClick={() => handleViewClick(data.userID)}
                     className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#3A3D44] text-white font-sans rounded-md font-medium text-xs md:text-base hover:cursor-pointer"
                   >
                     View
                   </button>
-                  <button 
-                  onClick={()=>{setEdit(true);setEditData({userId: data.email,
-                    name: data.name,
-                    role: data.role,
-                    password: "",})}}
-                  className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-sm md:text-xl hover:cursor-pointer ">
+                  <button
+                    onClick={() => {
+                      setEdit(true);
+                      setEditData({
+                        userID: data.userID,
+                        developerName: data.developerName,
+                        developerRole: data.developerRole,
+                        password: data.password,
+                      });
+                    }}
+                    className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-sm md:text-xl hover:cursor-pointer "
+                  >
                     <FiEdit />
                   </button>
                   <button className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#DC2626] text-[#DC2626] text-sm md:text-xl hover:cursor-pointer  ">

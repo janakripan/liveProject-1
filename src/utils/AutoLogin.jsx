@@ -8,11 +8,12 @@ function AutoLogin() {
 
   useEffect(() => {
     const userData = localStorage.getItem("userData");
-    const role = localStorage.getItem("token");
+    // const role = localStorage.getItem("token");
+    const role = "Admin"
 
     if (userData && role) {
       if (role === "User") navigate("/user");
-      else if (role === "admin" || role === "manager") navigate("/admin");
+      else if (role === "Admin" || role === "Manager") navigate("/admin");
       else navigate("/");
     } else {
       setChecking(false);

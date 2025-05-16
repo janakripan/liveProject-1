@@ -39,7 +39,7 @@ const DashboardHeader = () => {
   };
 
   return (
-    <div className="w-full h-fit bg-Bgsecondary box-border ">
+    <div className="w-full h-fit bg-Bgsecondary box-border z-50 ">
       <div className="w-full max-w-screen-xl mx-auto flex flex-row items-center px-5 py-0 justify-between box-border relative ">
         <div
           className={`w-fit h-fit  flex flex-row  ${
@@ -87,7 +87,7 @@ const DashboardHeader = () => {
           >
             <button
               onClick={logout}
-              className="w-fit h-fit px-5 py-3 gap-2 cursor-pointer flex flex-row items-center hover:bg-Bgprimary transition-all duration-300 rounded-md text-heading hover:text-buttonBlue"
+              className="w-fit h-fit px-5 py-3 gap-2 cursor-pointer flex flex-row items-center hover:bg-Bgprimary transition-all duration-300 rounded-md text-heading hover:text-buttonBlue "
             >
               <span className=" text-md font-satoshi font-medium  transition-all duration-300 ">
                 Log Out

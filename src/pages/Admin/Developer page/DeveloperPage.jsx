@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { ImSortAmountAsc } from "react-icons/im";
 import SearchBar from "../../../components/Shared/SearchBar";
 import DeveloperTable from "./components/DeveloperTable";
 import AddDeveloperForm from "./components/AddDeveloperForm";
-import { developers } from "../../../constants/Developers/DevelopersConstant";
 import { IoMdClose } from "react-icons/io";
 import EditDeveloperForm from "../../../components/Shared/EditDeveloperForm";
 import { useSidebar } from "../../../contexts/admin/SidebarContext";
+import { useDevelopers } from "../../../contexts/admin/DevApiContext";
+import loader from "../../../assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg";
 
 function DeveloperPage() {
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
+  const { developers, isLoading, error } = useDevelopers();
   const [editData, setEditData] = useState({
     userId: "",
     name: "",
@@ -20,17 +22,22 @@ function DeveloperPage() {
   });
   const { isOpen } = useSidebar();
 
-  const data = developers;
-  const [displayData, setDisplayData] = useState(data);
+  console.log(developers)
+
+  const [displayData, setDisplayData] = useState(developers);
+
+  useEffect(()=>{
+    setDisplayData(developers)
+  },[developers])
 
   const handleSearch = (query) => {
     if (!query.trim()) {
-      setDisplayData(data || []);
+      setDisplayData(developers || []);
 
       return;
     }
     const lowerCaseQuery = query.toLowerCase();
-    const filteredResults = data.filter((item) =>
+    const filteredResults = developers.filter((item) =>
       Object.values(item).some((value) =>
         String(value).toLowerCase().includes(lowerCaseQuery)
       )
@@ -43,6 +50,22 @@ function DeveloperPage() {
     setAdd(!add);
   };
 
+  if (isLoading)
+    return (
+      <div className="w-full h-screen bg-Bgprimary flex flex-row items-center justify-center">
+        {" "}
+        <img src={loader} alt="loading animation" className="w-20 h-20" />{" "}
+      </div>
+    );
+  if (error)
+    return (
+      <div className="w-full h-screen flex flex-row bg-Bgprimary items-center justify-center">
+        {" "}
+        <p className="font-bold text-xl font-satoshi text-white">
+          Error fetching developers
+        </p>
+      </div>
+    );
   return (
     <div
       className={` h-full p-5 relative  transition-all duration-300 flex flex-col w-full max-w-screen-xl  mx-auto`}
@@ -91,7 +114,9 @@ function DeveloperPage() {
       </div>
       {add && (
         <div
-          className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${isOpen?"md:pl-[290px] ":""}`}
+          className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${
+            isOpen ? "md:pl-[290px] " : ""
+          }`}
         >
           {" "}
           <div
@@ -119,7 +144,9 @@ function DeveloperPage() {
       )}
       {edit && (
         <div
-          className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${isOpen?"md:pl-[290px] ":""}`}
+          className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${
+            isOpen ? "md:pl-[290px] " : ""
+          }`}
         >
           {" "}
           <div

@@ -1,35 +1,22 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
-import * as Yup from "yup";
+import { editDeveloperValidation } from "../../validations/editDeveloperValidation";
+
 
 const EditDeveloperForm = ({setEdit,editData}) => {
     console.log(editData)
   const initialValues = {
-    userId: "",
-    name: "",
-    role: "",
+    userID: "",
+    developerName: "",
+    developerRole: "",
     password: "",
   };
 
-  const validationSchema = Yup.object({
-    userId: Yup.string()
-      .email("Invalid email format") // Email validation
-      .required("Email is required"),
-    name: Yup.string()
-      .required("Name is required")
-      .min(3, "Name must be at least 3 characters")
-      .max(50, "Name can't exceed 50 characters"),
-    role: Yup.string().required("Role is required"),
-    password: Yup.string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters")
-      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-      .matches(/[0-9]/, "Password must contain at least one number"),
-  });
+  
 
   const handleSubmit = (values, { resetForm }) => {
     console.log("Form Submitted:", values);
-    resetForm(); // Clear the form after submission
+    resetForm(); 
     alert("Form Submitted Successfully!");
   };
 
@@ -37,28 +24,28 @@ const EditDeveloperForm = ({setEdit,editData}) => {
     <div className="w-full h-fit ">
       <Formik
         initialValues={editData || initialValues}
-        validationSchema={validationSchema}
+        validationSchema={editDeveloperValidation}
         onSubmit={handleSubmit}
       >
         {({ isSubmitting, resetForm }) => (
           <Form className="flex flex-col gap-y-6">
             <div>
               <label
-                htmlFor="userId"
+                htmlFor="userID"
                 className="block font-dm-sans  text-commontext text-sm md:text-base font-medium mb-2"
               >
                 User ID
               </label>
               <Field
                 type="email"
-                id="userId"
-                name="userId"
+                id="userID"
+                name="userID"
                 placeholder="Enter Email ID"
                 disabled
                 className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm"
               />
               <ErrorMessage
-                name="userId"
+                name="userID"
                 component="div"
                 className="text-red-500 text-sm"
               />
@@ -66,20 +53,20 @@ const EditDeveloperForm = ({setEdit,editData}) => {
 
             <div>
               <label
-                htmlFor="name"
+                htmlFor="developerName"
                 className="block font-dm-sans text-sm md:text-base text-heading font-medium mb-2"
               >
                 User Name
               </label>
               <Field
                 type="text"
-                id="name"
-                name="name"
+                id="developerName"
+                name="developerName"
                 placeholder="Enter Name"
                 className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm"
               />
               <ErrorMessage
-                name="name"
+                name="developerName"
                 component="div"
                 className="text-red-500 text-sm"
               />
@@ -87,15 +74,15 @@ const EditDeveloperForm = ({setEdit,editData}) => {
 
             <div>
               <label
-                htmlFor="role"
+                htmlFor="developerRole"
                 className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2"
               >
                 Role
               </label>
               <Field
                 as="select"
-                id="role"
-                name="role"
+                id="developerRole"
+                name="developerRole"
                 className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm bg-Bgprimary"
               >
                 <option disabled className="text-[#9EA3A7]" value="">
@@ -106,7 +93,7 @@ const EditDeveloperForm = ({setEdit,editData}) => {
                 <option value="manager">Manager</option>
               </Field>
               <ErrorMessage
-                name="role"
+                name="developerRole"
                 component="div"
                 className="text-red-500 text-sm"
               />

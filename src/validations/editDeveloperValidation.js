@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 
- 
-export const addDeveloperValidation = Yup.object({
+export const editDeveloperValidation= Yup.object({
     userID: Yup.string()
       .email("Invalid email format") // Email validation
       .required("Email is required"),

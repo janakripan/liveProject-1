@@ -1,6 +1,5 @@
-import { useMutation } from "@tanstack/react-query";
-import {  userLogin, userLogout } from "./services";
-
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getDevelopers, postDevelopers, userLogin, userLogout } from "./services";
 
 export const useUserLogin = () =>
   useMutation({
@@ -8,8 +7,22 @@ export const useUserLogin = () =>
     mutationFn: userLogin,
   });
 
-  export const useUserLogout = () =>
-    useMutation({
-        mutationFn: userLogout,
-        mutationKey:["userLogout"]
-    })
+export const useUserLogout = () =>
+  useMutation({
+    mutationFn: userLogout,
+    mutationKey: ["userLogout"],
+  });
+
+
+export const useGetDevelopers = () =>
+  useQuery({
+    queryFn:getDevelopers,
+    queryKey: ["getDevelopers"]
+  })
+
+export const usePostDevelopers = () =>
+  useMutation({
+    mutationFn:postDevelopers,
+    mutationKey:["postDevelopers"],
+    
+  })

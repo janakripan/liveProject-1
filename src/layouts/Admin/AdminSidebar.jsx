@@ -6,11 +6,13 @@ import { sidebarNavlist } from "../../constants/Admin/sibarNavlist";
 import { NavLink, useLocation } from "react-router";
 import { MdPersonOutline } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
+import { useToken } from "../../contexts/auth/UserDataContext";
 
 function AdminSidebar() {
   const location = useLocation();
 
   const { isOpen, setIsOpen } = useSidebar();
+  const {logout} = useToken()
   return (
     <div
       className={`h-screen z-20  fixed overflow-hidden top-0 left-0 bg-Bgsecondary flex flex-col justify-between transition-all duration-300 ${
@@ -100,7 +102,7 @@ function AdminSidebar() {
           </ul>
         </div>
       </div>
-      {/* account and login buttons */}
+      {/* account and logout buttons */}
       <div className="w-full  h-fit px-3 mb-6">
         <div>
           <NavLink
@@ -126,6 +128,7 @@ function AdminSidebar() {
             </span>
           </NavLink>
           <button
+          onClick={logout}
             className={`cursor-pointer w-full h-[40px] md:h-[54px] flex flex-row items-center group gap-x-1.5 pl-2 md:pl-4 transition-all duration-300 text-commontext font-medium hover:text-buttonBlue group  hover:scale-105"`}
           >
             <div className="group-hover:scale-105">

@@ -5,6 +5,7 @@ import loader from "./assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg"
 import PrivateRoute from "./utils/PrivateRoute.jsx";
 import AutoLogin from "./utils/AutoLogin.jsx";
 import { UserDataProvider } from "./contexts/auth/UserDataContext.jsx";
+import { DeveloperProvider } from "./contexts/admin/DevApiContext.jsx";
 
 const AssignedProjectDetails = lazy(() =>
   import("./pages/Admin/assignedProjectDetails/AssignedProjectDetails.jsx")
@@ -57,6 +58,7 @@ export default function App() {
   return (
     <>
       <BrowserRouter>
+      <DeveloperProvider>
         <UserDataProvider>
           <SidebarProvider>
             <Suspense
@@ -136,6 +138,7 @@ export default function App() {
             </Suspense>
           </SidebarProvider>
         </UserDataProvider>
+        </DeveloperProvider>
       </BrowserRouter>
     </>
   );

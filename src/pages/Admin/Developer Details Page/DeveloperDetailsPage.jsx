@@ -2,21 +2,24 @@ import React, { useState } from "react";
 import { useParams } from "react-router";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { developers } from "../../../constants/Developers/DevelopersConstant";
 import { projectData } from "../../../constants/Projects/ProjectConstant";
 import SharedProjectCard from "../../../components/Shared/SharedProjectCard";
 import { IoMdClose } from "react-icons/io";
 import EditDeveloperForm from "../../../components/Shared/EditDeveloperForm";
 import { useSidebar } from "../../../contexts/admin/SidebarContext";
+import { useDevelopers } from "../../../contexts/admin/DevApiContext";
+import loader from '../../../assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg'
 
 const DeveloperDetailsPage = () => {
   const { developerId } = useParams();
   const [edit, setEdit] = useState(false);
   const { isOpen } = useSidebar();
+   const { developers, isLoading, error } = useDevelopers();
 
   const singleDeveloper = developers.find(
-    (dev) => String(dev.developer_id) === String(developerId)
+    (dev) => String(dev.userID) === String(developerId)
   );
+  console.log(singleDeveloper)
 
   const getDeveloperInitials = (name) => {
     if (!name || name.trim() === "") return "NA";
@@ -35,15 +38,35 @@ const DeveloperDetailsPage = () => {
   };
   const assignedProjects = projectData.filter((project) =>
     project.developers.some(
-      (dev) => String(dev.developer_id) === String(developerId)
+      (dev) => String(dev.userID) === String(developerId)
     )
   );
+
+
   const editData = {
-    userId: singleDeveloper.email,
-    name: singleDeveloper.name,
-    role: singleDeveloper.role,
-    password: "",
+    userID: singleDeveloper.userID,
+    developerName: singleDeveloper.developerName,
+    developerRole: singleDeveloper.developerRole,
+    password: singleDeveloper.password,
   };
+
+
+  if (isLoading)
+      return (
+        <div className="w-full h-screen bg-Bgprimary flex flex-row items-center justify-center">
+          {" "}
+          <img src={loader} alt="loading animation" className="w-20 h-20" />{" "}
+        </div>
+      );
+    if (error)
+      return (
+        <div className="w-full h-screen flex flex-row bg-Bgprimary items-center justify-center">
+          {" "}
+          <p className="font-bold text-xl font-satoshi text-white">
+            Error fetching developers
+          </p>
+        </div>
+      );
 
   return (
     <div
@@ -53,18 +76,18 @@ const DeveloperDetailsPage = () => {
         <div className="w-full h-fit md:p-6 p-4 bg-[#3B3D43] drop-shadow-xl rounded-xl flex flex-col gap-5 md:flex-row justify-between ">
           <div className="h-full w-fit flex flex-row gap-x-4 items-center ">
             <div className=" p-[25px] bg-[#30738D] aspect-square rounded-full flex items-center justify-center text-5xl text-heading font-nunito font-bold ">
-              {getDeveloperInitials(singleDeveloper.name)}
+              {getDeveloperInitials(singleDeveloper.developerName)}
             </div>
 
             <div className=" flex flex-col gap-y-1">
               <h1 className="text-heading font-bold font-satoshi capitalize text-3xl  ">
-                {singleDeveloper.name}
+                {singleDeveloper.developerName}
               </h1>
               <span className=" font-satoshi font-normal text-base text-commontext ">
-                {singleDeveloper.email}
+                {singleDeveloper.userID}
               </span>
               <span className=" font-satoshi font-normal text-base text-commontext ">
-                {singleDeveloper.role}
+                {singleDeveloper.developerRole}
               </span>
               <span className=" font-satoshi font-normal text-base text-commontext ">
                 {createdTime(singleDeveloper.created)}

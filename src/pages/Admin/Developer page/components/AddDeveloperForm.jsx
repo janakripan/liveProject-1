@@ -1,21 +1,34 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import { addDeveloperValidation } from "../../../../validations/addDeveloperValidation";
+import { useQueryClient } from "@tanstack/react-query";
+import { usePostDevelopers } from "../../../../api/admin/hooks";
 
 function AddDeveloperForm({ handleClick }) {
+  const queryClient = useQueryClient();
+
+  const { mutate,  isError, error } = usePostDevelopers();
+
   const initialValues = {
-    userId: "",
-    name: "",
-    role: "",
+    userID: "",
+    developerName: "",
+    developerRole: "",
     password: "",
   };
 
-  
-
-  const handleSubmit = (values, { resetForm }) => {
-    console.log("Form Submitted:", values);
-    resetForm(); // Clear the form after submission
-    alert("Form Submitted Successfully!");
+  const handleSubmit = (values, { resetForm,setSubmitting }) => {
+    
+    mutate(values, {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["getDevelopers"]);
+        resetForm();
+        setSubmitting(false)
+      },
+      onError:()=>{
+        console.log(error)
+         setSubmitting(false)
+      }
+    });
   };
 
   return (
@@ -29,20 +42,20 @@ function AddDeveloperForm({ handleClick }) {
           <Form className="flex flex-col gap-y-6">
             <div>
               <label
-                htmlFor="userId"
+                htmlFor="userID"
                 className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2"
               >
                 User ID
               </label>
               <Field
                 type="email"
-                id="userId"
-                name="userId"
+                id="userID"
+                name="userID"
                 placeholder="Enter Email ID"
                 className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm"
               />
               <ErrorMessage
-                name="userId"
+                name="userID"
                 component="div"
                 className="text-red-500 text-sm"
               />
@@ -50,20 +63,20 @@ function AddDeveloperForm({ handleClick }) {
 
             <div>
               <label
-                htmlFor="name"
+                htmlFor="developerName"
                 className="block font-dm-sans text-sm md:text-base text-heading font-medium mb-2"
               >
                 User Name
               </label>
               <Field
                 type="text"
-                id="name"
-                name="name"
+                id="developerName"
+                name="developerName"
                 placeholder="Enter Name"
                 className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm"
               />
               <ErrorMessage
-                name="name"
+                name="developerName"
                 component="div"
                 className="text-red-500 text-sm"
               />
@@ -71,15 +84,15 @@ function AddDeveloperForm({ handleClick }) {
 
             <div>
               <label
-                htmlFor="role"
+                htmlFor="developerRole"
                 className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2"
               >
                 Role
               </label>
               <Field
                 as="select"
-                id="role"
-                name="role"
+                id="developerRole"
+                name="developerRole"
                 className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm bg-Bgprimary"
               >
                 <option disabled className="text-[#9EA3A7]" value="">
@@ -90,7 +103,7 @@ function AddDeveloperForm({ handleClick }) {
                 <option value="manager">Manager</option>
               </Field>
               <ErrorMessage
-                name="role"
+                name="developerRole"
                 component="div"
                 className="text-red-500 text-sm"
               />
@@ -117,7 +130,7 @@ function AddDeveloperForm({ handleClick }) {
             </div>
             <div className="w-full h-fit flex flex-row gap-x-5 ">
               <button
-              type="button"
+                type="button"
                 className="w-full cursor-pointer bg-[#5A5D63] text-heading md:p-4 p-2 border border-[#5A5D63] duration-300 text-sm md:text-base rounded-md hover:scale-105 active:scale-95 transition"
                 onClick={() => {
                   handleClick();
@@ -134,6 +147,14 @@ function AddDeveloperForm({ handleClick }) {
                 {isSubmitting ? "Adding..." : "Add"}
               </button>
             </div>
+            {isError && (
+              <div className="text-red-600 mt-2">
+                {error?.response?.data?.message ||
+                  error?.response?.data?.error ||
+                  error?.message ||
+                  "Something went wrong"}
+              </div>
+            )}
           </Form>
         )}
       </Formik>

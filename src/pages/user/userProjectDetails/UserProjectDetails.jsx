@@ -21,7 +21,7 @@ const UserProjectDetails = () => {
   </div>)}
   return (
     <div
-      className={` max-h-screen w-full  relative  transition-all duration-300 flex flex-col  max-w-screen-xl overflow-hidden mx-auto`}
+      className={` max-h-screen w-full  relative  transition-all duration-300 flex flex-col  max-w-screen-xl overflow-hidden mx-auto no-scrollbar `}
     >
       <div className="w-full h-full p-4">
         
@@ -38,18 +38,18 @@ const UserProjectDetails = () => {
           {/* preview conent */}
           <div
             ref={scrollContainerRef}
-            className="w-4/5  h-full min-h-full px-4 overflow-hidden overflow-y-scroll "
+            className="w-4/5  h-full min-h-full px-4 overflow-hidden overflow-y-scroll no-scrollbar "
           >
             {project.modules?.map((module) => (
               <section className="w-full h-fit  " key={module.module_id}>
                 {module.sub_modules.map((sub) => (
                   <section
                     key={sub.sub_module_id}
-                    className="w-full h-full max-h-[80vh] min-h-[60vh] pb-5  my-5 border-b overflow-hidden border-[#E6E1E280] gap-5"
+                    className="w-full h-full max-h-[80vh] min-h-[60vh] pb-5  my-5 border-b overflow-hidden border-[#E6E1E280] gap-5 no-scrollbar"
                     id={sub.sub_module_id}
                   >
                   
-                    <div className="w-full h-full min-h-[60vh] mb-5 overflow-hidden max-h-[78vh] flex flex-row ">
+                    <div className="w-full h-full min-h-[60vh] mb-5 overflow-hidden max-h-[78vh] flex flex-row no-scrollbar ">
                       <div className="w-full lg:w-1/2 flex flex-col overflow-y-scroll no-scrollbar ">
                         <h1 className="text-heading mb-4 font-bold font-satoshi capitalize text-[26px]">
                           {sub.name}

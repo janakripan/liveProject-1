@@ -5,72 +5,65 @@ import { FaArrowRight } from "react-icons/fa";
 import { AuthSchema } from "../../validations/authValidation";
 import { useNavigate } from "react-router";
 import { useToken } from "../../contexts/auth/UserDataContext";
-import {  useUserLogin } from "../../api/admin/hooks";
+import { useUserLogin } from "../../api/admin/hooks";
 
 function AuthForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const [credError, SetCredError] = useState("")
-  const navigate = useNavigate()
-  const {setUserToken} = useToken()
-  const {mutate: handleLogin, isLoading,} = useUserLogin()
-
-
-
+  const [credError, SetCredError] = useState("");
+  const navigate = useNavigate();
+  const { setUserToken } = useToken();
+  const { mutate: handleLogin, isLoading } = useUserLogin();
 
   const initialValues = {
     email: "",
     password: "",
     rememberMe: false,
   };
-  const handleSubmit = (values,{setSubmitting}) => {
-    handleLogin(values,{
-      onSuccess:(data,variable)=>{
-        
-        const userData = data.data[0]
-        console.log(userData.Role)
-      const storage = variable.rememberMe? localStorage : sessionStorage ;
-      storage.setItem("userData", JSON.stringify(userData));
-      storage.setItem("token", userData.Role);
+  const handleSubmit = (values, { setSubmitting }) => {
+    handleLogin(values, {
+      onSuccess: (response, variable) => {
+        const userData = response.data[0];
+        console.log(userData)
+      
+        const storage = variable.rememberMe ? localStorage : sessionStorage;
+        storage.setItem("userData", JSON.stringify(userData));
+        storage.setItem("token",  userData.Role );
 
-       setUserToken(userData)
+        setUserToken(userData);
 
-     
-      if (userData.Role === "User") {
-        navigate("/user");
-      } else if (userData.Role === "admin" || userData.Role === "manager") {
-        navigate("/admin");
-      } else {
-        console.warn("Unknown role:", userData.Role);
-        navigate("/");
-      }
+        if (userData.Role === "User") {
+          navigate("/user");
+        } else if (userData.Role === "Admin" || userData.Role === "Manager") {
+          navigate("/admin");
+        } else {
+          console.warn("Unknown role:", userData.Role);
+          navigate("/");
+        }
       },
-      onError: (error) =>{
-        if(error.response){
-          if(error.response.status===401){
-            SetCredError("invalid username or password")
-          }else{
+      onError: (error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            SetCredError("invalid username or password");
+          } else {
             SetCredError(
               error.response.data.message || "login failed . please try again"
-            )
+            );
           }
-        }else if(error.request){
+        } else if (error.request) {
           // The request was made but no response was received
-          SetCredError("Network error. Please check your connection.")
-        }else{
+          SetCredError("Network error. Please check your connection.");
+        } else {
           // Something happened in setting up the request that triggered an Error
           SetCredError("An error occurred. Please try again later.");
         }
-         setSubmitting(false);
+        setSubmitting(false);
       },
-      onSettled: () =>{
-        setSubmitting(false)
-      }
-    })
-   
+      onSettled: () => {
+        setSubmitting(false);
+      },
+    });
   };
 
-
-  
   return (
     <div className="w-full h-full  ">
       <Formik
@@ -78,10 +71,8 @@ function AuthForm() {
         onSubmit={handleSubmit}
         validationSchema={AuthSchema}
       >
-        
-        {({  handleChange, handleBlur,isSubmitting}) => (
+        {({ handleChange, handleBlur, isSubmitting }) => (
           <Form className="w-full h-fit flex flex-col gap-y-2">
-          
             <div>
               <label className="block text-xl font-semibold font-open my-2 text-gray-900">
                 Email
@@ -91,9 +82,9 @@ function AuthForm() {
                 name="email"
                 placeholder="Enter your Email"
                 autoComplete="username"
-                 onChange={(e) => {
+                onChange={(e) => {
                   handleChange(e);
-                  SetCredError(""); 
+                  SetCredError("");
                 }}
                 onBlur={handleBlur}
                 className="w-full p-2 px-4 min-h-12 border bg-[#F4F9FC] placeholder:font-inter placeholder:tracking-tight placeholder:text-base border-[#BAE4FF] rounded-lg outline-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -115,9 +106,9 @@ function AuthForm() {
                   placeholder="Enter your password"
                   autoComplete="current-password"
                   onChange={(e) => {
-                  handleChange(e);
-                  SetCredError(""); 
-                }}
+                    handleChange(e);
+                    SetCredError("");
+                  }}
                   className="w-full p-2 px-4 border  min-h-12 bg-[#F4F9FC] border-[#BAE4FF] placeholder:tracking-tight placeholder:font-inter placeholder:text-base rounded-lg outline-0 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
                 <button
@@ -154,9 +145,10 @@ function AuthForm() {
               className="w-full bg-[#3399FF] mt-8 h-12 text-white text-sm py-2 font-rubik rounded-lg hover:bg-blue-600 transition flex items-center justify-center gap-5 
               disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              {isSubmitting || isLoading ? "Logging in..." : "Login"} <FaArrowRight />
+              {isSubmitting || isLoading ? "Logging in..." : "Login"}{" "}
+              <FaArrowRight />
             </button>
-            {credError&&(<p className="text-xs text-red-500  ">{credError}</p>)}
+            {credError && <p className="text-xs text-red-500  ">{credError}</p>}
           </Form>
         )}
       </Formik>

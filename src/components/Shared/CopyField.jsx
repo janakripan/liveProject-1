@@ -5,13 +5,16 @@ import { IoCheckmarkDone } from "react-icons/io5";
 
 const CopyField = ({ heading, content }) => {
   const [copied, setCopied] = useState(false);
+  const [isError , setError] = useState()
   const handleCopy = async () => {
+    setError("")
     try {
       await navigator.clipboard.writeText(content);
       setCopied(true);
       setTimeout(() => setCopied(false), 5000);
     } catch (err) {
       console.error("Failed to copy: ", err);
+      setError("Failed to copy: ", err)
     }
   };
 
@@ -36,6 +39,7 @@ const CopyField = ({ heading, content }) => {
       <pre className="whitespace-pre-wrap p-5 bg-Bghilight rounded-b-md font-satoshi text-base font-normal text-heading">
         {content}
       </pre>
+      {isError&&(<p className="text-sm text-red-500">{isError}</p>)}
     </div>
   );
 };
