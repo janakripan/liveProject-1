@@ -23,6 +23,7 @@ function AddDeveloperForm({ handleClick }) {
         queryClient.invalidateQueries(["getDevelopers"]);
         resetForm();
         setSubmitting(false)
+        handleClick()
       },
       onError:()=>{
         console.log(error)

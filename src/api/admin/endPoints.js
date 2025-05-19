@@ -12,3 +12,11 @@ export const GET_DEVELOPERS = "getDevelopers"
 //post developers
 
 export const POST_DEVELOPERS = "postDevelopers"
+
+//get projects
+
+export const GET_PROJECTS = "getProjectMaster"
+
+// POST PROJECTS
+
+export const POST_PROJECTS = "postProjectMaster"

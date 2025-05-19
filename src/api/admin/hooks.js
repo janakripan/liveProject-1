@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getDevelopers, postDevelopers, userLogin, userLogout } from "./services";
+import { getDevelopers, getProjects, postDevelopers, postProjects, userLogin, userLogout } from "./services";
 
 export const useUserLogin = () =>
   useMutation({
@@ -24,5 +24,18 @@ export const usePostDevelopers = () =>
   useMutation({
     mutationFn:postDevelopers,
     mutationKey:["postDevelopers"],
+    
+  })
+
+  export const useGetProjects = () =>
+  useQuery({
+    queryFn:getProjects,
+    queryKey: ["getProjects"]
+  })
+
+  export const usePostProjects = () =>
+  useMutation({
+    mutationFn:postProjects,
+    mutationKey:["postProjects"],
     
   })

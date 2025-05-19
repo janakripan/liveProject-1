@@ -9,6 +9,7 @@ import EditDeveloperForm from "../../../components/Shared/EditDeveloperForm";
 import { useSidebar } from "../../../contexts/admin/SidebarContext";
 import { useDevelopers } from "../../../contexts/admin/DevApiContext";
 import loader from '../../../assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg'
+import { MdDisabledVisible } from "react-icons/md";
 
 const DeveloperDetailsPage = () => {
   const { developerId } = useParams();
@@ -102,6 +103,7 @@ const DeveloperDetailsPage = () => {
             >
               <FaEdit /> <span>edit profile</span>
             </button>
+            
 
             <button className=" whitespace-nowrap cursor-pointer hover:scale-105 active:scale-95 transition-all duration-150 py-3 px-4 rounded-lg text-heading capitalize font-satoshi font-bold text-xs md:text-base bg-[#FF375F] flex justify-center items-center gap-1 ">
               <RiDeleteBin6Fill />

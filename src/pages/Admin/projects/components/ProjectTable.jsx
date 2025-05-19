@@ -57,10 +57,10 @@ function ProjectTable({ data,setEdit,setEditId, }) {
           </tr>
         </thead>
         <tbody>
-          {data.map((project) => (
+          {data?.map((project) => (
             <tr key={project.project_id} className=" border bg-Bgprimary text-heading border-[#4C4F55]">
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
-                {project.name}
+                {project.projectName}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
                 {project.description}

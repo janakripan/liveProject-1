@@ -1,34 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { ImSortAmountAsc } from "react-icons/im";
 import ProjectTable from "./components/ProjectTable";
-import { projectData } from "../../../constants/Projects/ProjectConstant";
 import AddProjectForm from "./components/AddProjectForm";
 import { IoMdClose } from "react-icons/io";
 import EditProjectForm from "./components/EditProjectForm";
 import SearchBar from "../../../components/Shared/SearchBar";
 import { useSidebar } from "../../../contexts/admin/SidebarContext";
+import { useProjects } from "../../../contexts/admin/ProjectApiContext";
+import loader from "../../../assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg"
 
 
 
 function ProjectPage() {
-  const [displayData, setDisplayData] = useState(projectData);
+  const {projects, isLoading, error } = useProjects()
+  const [displayData, setDisplayData] = useState(projects);
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editId , setEditId] = useState("");
   const {isOpen} = useSidebar()
   
 
+  useEffect(()=>{
+    setDisplayData(projects)
+  },[projects])
+
   const handleSearch = (query) => {
     
 
     if (!query.trim()) {
-      setDisplayData(projectData || []);
+      setDisplayData(projects || []);
 
       return;
     }
     const lowerCaseQuery = query.toLowerCase();
-    const filteredResults = projectData.filter((item) =>
+    const filteredResults = projects.filter((item) =>
       Object.values(item).some((value) =>
         String(value).toLowerCase().includes(lowerCaseQuery)
       )
@@ -41,6 +47,23 @@ function ProjectPage() {
   const handleEditClick = () =>{
     setEdit(false)
   }
+
+   if (isLoading)
+      return (
+        <div className="w-full h-screen bg-Bgprimary flex flex-row items-center justify-center">
+          {" "}
+          <img src={loader} alt="loading animation" className="w-20 h-20" />{" "}
+        </div>
+      );
+    if (error)
+      return (
+        <div className="w-full h-screen flex flex-row bg-Bgprimary items-center justify-center">
+          {" "}
+          <p className="font-bold text-xl font-satoshi text-white">
+            Error fetching developers
+          </p>
+        </div>
+      );
   return (
     <div
       className={`h-screen w-full p-5 relative  transition-all duration-300 flex flex-col  max-w-screen-xl  mx-auto`}

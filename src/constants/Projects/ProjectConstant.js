@@ -52,7 +52,6 @@ export const projectData = [
     name: "Payment API",
     description: "Internal APIs for the company.",
     base_url: "https://api.company.com",
-    version: "v1.0",
     status: "completed",
     lastUpdated: "1742789070",
     modules: [
