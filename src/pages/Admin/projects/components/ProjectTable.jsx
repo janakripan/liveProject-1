@@ -46,7 +46,7 @@ const statusUpdater = (status)=>{
                 {project.projectDescription}
               </td>
               
-              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal capitalize ">
+              <td className={`md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal capitalize  ${project.isActive === true ?" text-yellow-500  " :"text-[#30D158] "} `} >
                 {statusUpdater(project.isActive)}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">

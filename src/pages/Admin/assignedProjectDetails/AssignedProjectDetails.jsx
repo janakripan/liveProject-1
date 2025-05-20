@@ -6,15 +6,18 @@ import AssignedDevelopersTable from "./components/AssignedDevelopersTable";
 import { IoMdClose } from "react-icons/io";
 import AssignProjectForm from "../../../pages/Admin/Assign project/components/AssignProjectForm";
 import { useSidebar } from "../../../contexts/admin/SidebarContext";
+import { useProjects } from "../../../contexts/admin/ProjectApiContext";
+import { useDevelopers } from "../../../contexts/admin/DevApiContext";
 
 const AssignedProjectDetails = () => {
-
+  const {projects} = useProjects()
+  const {developers} = useDevelopers()
   const { projectId } = useParams();
   const [assign, setAssign] = useState(false);
   const {isOpen} = useSidebar()
 
-  const singleProject = projectData.find(
-    (pro) => String(pro.project_id) === projectId
+  const singleProject = projects.find(
+    (pro) => String(pro.projectAID) === String(projectId)
   );
 
   const getDeveloperInitials = (name) => {
@@ -28,6 +31,12 @@ const AssignedProjectDetails = () => {
       return (words[0][0] + words[1][0]).toUpperCase();
     }
   };
+
+  const statusUpdater = (status)=>{
+  if(status === true){
+    return "in progress"
+  }else{return "completed"}
+}
 
   const createdTime = (timestamps) => {
     const date = new Date(timestamps * 1000);
@@ -85,14 +94,14 @@ const AssignedProjectDetails = () => {
         <div className="w-full mt-5 h-fit p-6 bg-[#3B3D43] drop-shadow-xl rounded-xl flex md:flex-row flex-col  gap-4 justify-between ">
           <div className="flex flex-col gap-y-4">
             <h3 className="text-heading font-satoshi font-bold md:text-xl text-lg lg:text-2xl">
-              {singleProject.name}
+              {singleProject.projectName}
             </h3>
             <div className="flex flex-row gap-2 items-center">
               <span className="text-commontext text-sm md:text-base font-satoshi font-normal ">
                 Status:
               </span>
-              <span className=" bg-[#30D15833] text-[#30D158] text-xs md:text-sm px-3 md:px-5 py-1.5 md:py-2.5 rounded-full ">
-                {singleProject.status}
+              <span className={`  text-xs md:text-sm px-3 md:px-5 py-1.5 md:py-2.5 rounded-full ${singleProject.isActive === true ?" text-yellow-500 bg-[#FFD60A33] " :"text-[#30D158]  bg-[#30D15833]"}  `}>
+                {statusUpdater(singleProject.isActive)}
               </span>
             </div>
             <div className="flex flex-row gap-2 items-center">
@@ -100,17 +109,17 @@ const AssignedProjectDetails = () => {
                 Developers:
               </span>
               <div className="w-fit h-fit flex flex-row ">
-                {singleProject.developers.map((dev, index) => {
+                {singleProject.developers?.map((dev, index) => {
                   const randomColor =
                     bgColors[Math.floor(Math.random() * bgColors.length)];
                   return (
                     <div
-                      key={dev.developer_id}
+                      key={dev.developerAID}
                       className={` w-8 aspect-square rounded-full border border-white text-heading text-sm font-satoshi font-medium flex items-center justify-center ${randomColor} ${
                         index !== 0 ? "-ml-4" : ""
                       } `}
                     >
-                      {getDeveloperInitials(dev.name)}
+                      {getDeveloperInitials(dev.developerName)}
                     </div>
                   );
                 })}

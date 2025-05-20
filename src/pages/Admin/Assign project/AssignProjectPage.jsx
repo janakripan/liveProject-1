@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SearchBar from "../../../components/Shared/SearchBar";
 import { ImSortAmountAsc } from "react-icons/im";
 import { FaPlus } from "react-icons/fa6";
@@ -7,13 +7,18 @@ import AssignProjectTable from "./components/AssignProjectTable";
 import AssignProjectForm from "./components/AssignProjectForm";
 import { IoMdClose } from "react-icons/io";
 import { useSidebar } from "../../../contexts/admin/SidebarContext";
+import { useProjects } from "../../../contexts/admin/ProjectApiContext";
 
 const AssignProjectPage = () => {
   const [assign, setAssign] = useState(false);
   const {isOpen} = useSidebar()
+  const {projects} = useProjects()
 
   const data = projectData;
-  const [displayData, setDisplayData] = useState(data);
+  const [displayData, setDisplayData] = useState(projects);
+  useEffect(()=>{
+    setDisplayData(projects)
+  },[projects])
 
   const handleSearch = (query) => {
     if (!query.trim()) {

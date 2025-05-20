@@ -90,9 +90,7 @@ const DeveloperDetailsPage = () => {
               <span className=" font-satoshi font-normal text-base text-commontext ">
                 {singleDeveloper.developerRole}
               </span>
-              <span className=" font-satoshi font-normal text-base text-commontext ">
-                {createdTime(singleDeveloper.created)}
-              </span>
+              
             </div>
           </div>
 

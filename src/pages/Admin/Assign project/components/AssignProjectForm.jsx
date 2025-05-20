@@ -1,62 +1,66 @@
 import React from "react";
-import { developers } from "../../../../constants/Developers/DevelopersConstant";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { projectData } from "../../../../constants/Projects/ProjectConstant";
 import calenderIcon from "../../../../assets/calenderIcon.svg";
 import * as Yup from "yup";
+import { useDevelopers } from "../../../../contexts/admin/DevApiContext";
+import { useProjects } from "../../../../contexts/admin/ProjectApiContext";
 
 const validationSchema = Yup.object({
-  developer: Yup.string().required("Please select a developer"),
-  project: Yup.string().required("Please select a project"),
+  developerAID: Yup.string().required("Please select a developer"),
+  projectAID: Yup.string().required("Please select a project"),
 });
 
-const AssignProjectForm = ({ setAssign, projectName }) => {
-  const today = new Date().toISOString().split("T")[0];
-
+const AssignProjectForm = ({ setAssign, projectAID }) => {
+ const {developers} = useDevelopers()
+ const {projects} = useProjects()
+console.log(projects)
   const initialValues = {
-    developer: "",
-    project:projectName || "",
-    updatedDate: today,
+    developerAID: "",
+    projectAID:projectAID || "",
+    
   };
-  return (
-    <div className="w-full h-fit ">
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
-          console.log("Assigned Values:", values);
+
+  const handleSubmit = (values,{resetForm, setSubmitting})=>{
+    console.log("Assigned Values:", values);
 
           setSubmitting(false);
           resetForm();
           setAssign(false);
-        }}
+
+  }
+  return (
+    <div className="w-full h-fit ">
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
         {({ isSubmitting, resetForm }) => (
           <Form className="flex flex-col gap-y-6">
             <div>
               <label
-                htmlFor="developer"
+                htmlFor="developerAID"
                 className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2"
               >
                 Developer
               </label>
               <Field
                 as="select"
-                id="developer"
-                name="developer"
+                id="developerAID"
+                name="developerAID"
                 className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm bg-Bgprimary"
               >
                 <option disabled className="text-[#9EA3A7]" value="">
                   Select Developer
                 </option>
-                {developers.map((dev) => (
-                  <option key={dev.developer_id} value={dev.developer_id}>
-                    {dev.name}{" "}
+                {developers?.map((dev) => (
+                  <option key={dev.developerAID} value={dev.developerAID}>
+                    {dev.developerName}{" "}
                   </option>
                 ))}
               </Field>
               <ErrorMessage
-                name="developer"
+                name="developerAID"
                 component="div"
                 className="text-red-500 text-sm"
               />
@@ -64,33 +68,33 @@ const AssignProjectForm = ({ setAssign, projectName }) => {
 
             <div>
               <label
-                htmlFor="project"
+                htmlFor="projectAID"
                 className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2"
               >
                 Project
               </label>
               <Field
                 as="select"
-                id="project"
-                name="project"
+                id="projectAID"
+                name="projectAID"
                 className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm bg-Bgprimary"
               >
                 <option disabled className="text-[#9EA3A7]" value="">
                   Select project
                 </option>
-                {projectData.map((project) => (
-                  <option key={project.project_id} value={project.project_id}>
-                    {project.name}{" "}
+                {projects?.map((project) => (
+                  <option key={project.projectAID} value={project.projectAID}>
+                    {project.projectName}{" "}
                   </option>
                 ))}
               </Field>
               <ErrorMessage
-                name="project"
+                name="projectAID"
                 component="div"
                 className="text-red-500 text-sm"
               />
             </div>
-            <div>
+            {/* <div>
               <label
                 htmlFor="updatedDate"
                 className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2 appearance-none"
@@ -116,7 +120,7 @@ const AssignProjectForm = ({ setAssign, projectName }) => {
                 component="div"
                 className="text-red-500 text-sm"
               />
-            </div>
+            </div> */}
 
             <div className="w-full h-fit flex flex-row gap-x-5 ">
               <button
@@ -129,6 +133,7 @@ const AssignProjectForm = ({ setAssign, projectName }) => {
                 Cancel
               </button>
               <button
+              
                 type="submit"
                 className="w-full cursor-pointer bg-buttonBlue text-heading p-2  md:p-4 text-sm md:text-base rounded-md hover:scale-105 active:scale-95 duration-300 transition"
                 disabled={isSubmitting}

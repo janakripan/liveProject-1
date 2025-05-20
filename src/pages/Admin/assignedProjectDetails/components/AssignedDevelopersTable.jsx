@@ -41,35 +41,25 @@ const AssignedDevelopersTable = ({data,singleProject}) => {
                 <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
                   Project
                 </th>
+              
                 <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
-                  created
-                </th>
-                <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
-                  last updated
-                </th>
-                <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
-                  action
+                  actions
                 </th>
               </tr>
             </thead>
             <tbody>
-              {data.map((dev) => (
-                <tr key={dev.developer_id} className=" border bg-Bgprimary text-heading border-[#4C4F55]">
+              {data?.map((dev) => (
+                <tr key={dev.developerAID} className=" border bg-Bgprimary text-heading border-[#4C4F55]">
                   <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal">
-                    {dev.name}
+                    {dev.developerName}
                   </td>
                   <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal">
-                    {dev.role}
+                    {dev.developerRole}
                   </td>
                   <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal">
-                   {singleProject.name}
+                   {singleProject.projectName}
                   </td>
-                  <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal">
-                    {createdTime(dev.created)}
-                  </td>
-                  <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal">
-                    {updatedTime(dev.lastUpdated)}
-                  </td>
+                  
                   <td className="md:px-5 px-2 md:py-4 py-2  font-satoshi text-xs md:text-base font-normal text-center ">
                     <div className="w-fit h-full flex flex-row items-center gap-x-2.5">
                       <button 
