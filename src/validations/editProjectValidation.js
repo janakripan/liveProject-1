@@ -6,5 +6,9 @@ export  const editProjectValidation = Yup.object({
       .required("Project name is required")
       .min(3, "Project name must be at least 3 characters")
       .max(50, "Project name can't exceed 50 characters"),
-    status: Yup.string().required("select a status"),
+     projectDescription: Yup.string()
+      .required("Project description is required")
+      .min(3, "Project description must be at least 3 characters"),
+       
+    isActive: Yup.string().required("select a status"),
   });

@@ -5,34 +5,11 @@ import { useNavigate } from "react-router";
 
 function DeveloperTable({ data, setEdit, setEditData }) {
   const navigate = useNavigate();
-console.log(data)
+  console.log(data);
   const handleViewClick = (developerId) => {
     navigate(`/admin/developer/${developerId}`);
   };
 
-  const createdTime = (timestamps) => {
-    const date = new Date(timestamps * 1000);
-    return date.toLocaleDateString("en-GB");
-  };
-
-  const updatedTime = (timestamp) => {
-    const now = new Date();
-    const date = new Date(parseInt(timestamp) * 1000);
-    const diffInSeconds = Math.floor((now - date) / 1000);
-
-    if (diffInSeconds < 60) {
-      return "Just now";
-    } else if (diffInSeconds < 3600) {
-      const minutes = Math.floor(diffInSeconds / 60);
-      return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
-    } else if (diffInSeconds < 86400) {
-      const hours = Math.floor(diffInSeconds / 3600);
-      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-    } else {
-      const days = Math.floor(diffInSeconds / 86400);
-      return `${days} day${days > 1 ? "s" : ""} ago`;
-    }
-  };
   return (
     <div className="w-full h-fit bg-Bgprimary border border-Bghilight overflow-x-auto rounded-lg ">
       <table className="w-full table-auto border-collapse">
@@ -47,9 +24,7 @@ console.log(data)
             <th className=" w-1/6 text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
               role
             </th>
-            <th className=" w-1/6 text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
-              created
-            </th>
+
             <th className=" w-1/6 text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
               Action
             </th>
@@ -70,9 +45,7 @@ console.log(data)
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 {data.developerRole}
               </td>
-              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
-                {createdTime(data.created)}
-              </td>
+
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 <div className="w-full h-full flex flex-row items-center gap-x-2.5">
                   <button

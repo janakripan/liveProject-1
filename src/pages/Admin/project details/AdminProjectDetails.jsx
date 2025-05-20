@@ -8,8 +8,9 @@ import ProjectModulesTable from "./components/ProjectModulesTable";
 import { IoMdClose } from "react-icons/io";
 import AddModuleForm from "./components/AddModuleForm";
 import EditModuleForm from "../../../components/Shared/EditModuleForm";
-import { projectData } from "../../../constants/Projects/ProjectConstant";
 import { useSidebar } from "../../../contexts/admin/SidebarContext";
+import { useProjects } from "../../../contexts/admin/ProjectApiContext";
+import loader from '../../../assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg'
 
 
 
@@ -22,6 +23,8 @@ const AdminProjectDetails = () => {
     const [editId , setEditId] = useState(null)
     const [editModuleId , setEditModuleId] = useState(null)
     const {isOpen } = useSidebar()
+    const {projects, isLoading , error} = useProjects()
+   
 
 
       
@@ -29,17 +32,19 @@ const AdminProjectDetails = () => {
 
   const { projectId } = useParams();
   const navigate = useNavigate()
-  const project = projectData.find((p) => String(p.project_id) === String(projectId));
+  const project = projects?.find((p) => String(p.projectAID) === String(projectId));
   
   
   
   const [displayData, setDisplayData] = useState(project || []);
   useEffect(() => {
-    const updatedProject = projectData.find(
-      (p) => String(p.project_id) === String(projectId)
+    const updatedProject = projects?.find(
+      (p) => String(p.projectAID) === String(projectId)
     );
     setDisplayData(updatedProject || []);
-  }, [projectId]);
+    console.log(updatedProject)
+    
+  }, [projectId, projects]);
 
 
   
@@ -78,7 +83,22 @@ const AdminProjectDetails = () => {
   
 
 
-  
+  if (isLoading)
+        return (
+          <div className="w-full h-screen bg-Bgprimary flex flex-row items-center justify-center">
+            {" "}
+            <img src={loader} alt="loading animation" className="w-20 h-20" />{" "}
+          </div>
+        );
+      if (error)
+        return (
+          <div className="w-full h-screen flex flex-row bg-Bgprimary items-center justify-center">
+            {" "}
+            <p className="font-bold text-xl font-satoshi text-white">
+              Error fetching developers
+            </p>
+          </div>
+        );
   return (
     <div
       className={`h-screen w-full p-5 relative  transition-all duration-300 flex flex-col  max-w-screen-xl  mx-auto`}
@@ -104,9 +124,9 @@ const AdminProjectDetails = () => {
                 value={projectId}
                 className=" text-heading border-0 appearance-none transition-all  font-satoshi font-bold md:text-base text-xs capitalize bg-Bgprimary focus:outline-0  p-2 rounded-md"
               >
-                {projectData.map((project) => (
-                  <option key={project.project_id} value={project.project_id}>
-                    {project.name}
+                {projects?.map((project) => (
+                  <option key={project.projectAID} value={project.projectAID}>
+                    {project.projectName}
                   </option>
                 ))}
               </select>

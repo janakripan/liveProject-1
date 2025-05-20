@@ -20,49 +20,82 @@ function AuthForm() {
     rememberMe: false,
   };
   const handleSubmit = (values, { setSubmitting }) => {
-    handleLogin(values, {
-      onSuccess: (response, variable) => {
-        const userData = response.data[0];
-        console.log(userData)
+    // handleLogin(values, {
+    //   onSuccess: (response, variable) => {
+    //     const userData = response.data[0];
+    //     console.log(userData)
       
-        const storage = variable.rememberMe ? localStorage : sessionStorage;
-        storage.setItem("userData", JSON.stringify(userData));
-        storage.setItem("token",  userData.Role );
+    //     const storage = variable.rememberMe ? localStorage : sessionStorage;
+    //     storage.setItem("userData", JSON.stringify(userData));
+    //     storage.setItem("token",  userData.Role );
 
-        setUserToken(userData);
+    //     setUserToken(userData);
 
-        if (userData.Role === "User") {
-          navigate("/user");
-        } else if (userData.Role === "Admin" || userData.Role === "Manager") {
-          navigate("/admin");
-        } else {
-          console.warn("Unknown role:", userData.Role);
-          navigate("/");
-        }
-      },
-      onError: (error) => {
-        if (error.response) {
-          if (error.response.status === 401) {
-            SetCredError("invalid username or password");
-          } else {
-            SetCredError(
-              error.response.data.message || "login failed . please try again"
-            );
-          }
-        } else if (error.request) {
-          // The request was made but no response was received
-          SetCredError("Network error. Please check your connection.");
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          SetCredError("An error occurred. Please try again later.");
-        }
-        setSubmitting(false);
-      },
-      onSettled: () => {
-        setSubmitting(false);
-      },
-    });
+    //     if (userData.Role === "User") {
+    //       navigate("/user");
+    //     } else if (userData.Role === "Admin" || userData.Role === "Manager") {
+    //       navigate("/admin");
+    //     } else {
+    //       console.warn("Unknown role:", userData.Role);
+    //       navigate("/");
+    //     }
+    //   },
+    //   onError: (error) => {
+    //     if (error.response) {
+    //       if (error.response.status === 401) {
+    //         SetCredError("invalid username or password");
+    //       } else {
+    //         SetCredError(
+    //           error.response.data.message || "login failed . please try again"
+    //         );
+    //       }
+    //     } else if (error.request) {
+    //       // The request was made but no response was received
+    //       SetCredError("Network error. Please check your connection.");
+    //     } else {
+    //       // Something happened in setting up the request that triggered an Error
+    //       SetCredError("An error occurred. Please try again later.");
+    //     }
+    //     setSubmitting(false);
+    //   },
+    //   onSettled: () => {
+    //     setSubmitting(false);
+    //   },
+    // });
+
+    // login simulation
+     const userData = {
+    UserId: 8,
+    FullName: "FS",
+    Email: "fs@gmail.com",
+    PhoneNumber: "12345",
+    Role: "Admin",
+    ImageUrl: "http//image.1",
+    CreatedAt: "2025-04-21T13:49:17.71",
+    IsActive: true,
   };
+
+  try {
+    const storage = values.rememberMe ? localStorage : sessionStorage;
+    storage.setItem("userData", JSON.stringify(userData));
+    storage.setItem("token", userData.Role);
+
+    if (userData.Role === "User" || userData.Role === "Developer") {
+      navigate("/user");
+    } else if (userData.Role === "Admin" || userData.Role === "Manager") {
+      navigate("/admin");
+    } else {
+      console.warn("Unknown role:", userData.Role);
+      navigate("/");
+    }
+  } catch (error) {
+    SetCredError("Something went wrong during login simulation.");
+    console.log(error)
+  } finally {
+    setSubmitting(false);
+  }
+};
+  
 
   return (
     <div className="w-full h-full  ">

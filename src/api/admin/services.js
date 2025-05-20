@@ -6,6 +6,7 @@ import {
   GET_PROJECTS,
   POST_DEVELOPERS,
   POST_PROJECTS,
+  UPDATE_PROJECT,
 } from "./endPoints";
 
 //////////////////////   USER LOGIN ⚠️⚠️⚠️⚠️⚠️⚠️   ////////////////////////////
@@ -52,3 +53,20 @@ export const postProjects = (data) => DevAPI.post(POST_PROJECTS,{
    isActive:data.status
     
 });
+
+//////////////////////   PUT PROJECTS ⚠️⚠️⚠️⚠️⚠️⚠️   ////////////////////////////
+
+export const updateProjects = ({data, id}) => {
+  return DevAPI.put(
+    UPDATE_PROJECT,
+    data,
+    {
+      headers: {
+        
+        'accept': '*/*',
+        'ProjectID': id,
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+};

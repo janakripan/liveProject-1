@@ -20,3 +20,7 @@ export const GET_PROJECTS = "getProjectMaster"
 // POST PROJECTS
 
 export const POST_PROJECTS = "postProjectMaster"
+
+//update projects 
+
+export const UPDATE_PROJECT = "putProjectMaster"

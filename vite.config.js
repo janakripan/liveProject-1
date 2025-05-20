@@ -37,30 +37,6 @@ export default defineConfig({
           },
         ],
       },
-      // workbox: {
-      //   runtimeCaching: [
-      //     {
-      //       urlPattern:
-      //         /^https:\/\/alnibraz-bufzaeheasasbbgf\.southindia-01\.azurewebsites\.net\/api\/.*/i, // replace with your actual API URL
-      //       handler: "NetworkOnly", // 🛡️ Do not cache login/API requests
-      //       options: {
-      //         cacheName: "api-no-cache",
-      //       },
-      //     },
-      //     {
-      //       // optionally cache static assets like images, fonts, etc.
-      //       urlPattern: /\.(?:png|jpg|jpeg|svg|gif|woff2?|eot|ttf|otf)$/i,
-      //       handler: "CacheFirst",
-      //       options: {
-      //         cacheName: "assets-cache",
-      //         expiration: {
-      //           maxEntries: 50,
-      //           maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
-      //         },
-      //       },
-      //     },
-      //   ],
-      // },
     }),
   ],
   server: {
