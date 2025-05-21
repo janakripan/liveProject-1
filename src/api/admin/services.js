@@ -6,6 +6,7 @@ import {
   GET_PROJECTS,
   POST_DEVELOPERS,
   POST_PROJECTS,
+  UPDATE_DEVELOPERS,
   UPDATE_PROJECT,
 } from "./endPoints";
 
@@ -70,3 +71,18 @@ export const updateProjects = ({data, id}) => {
     }
   );
 };
+
+//////////////////////   PUT DEVELOPERS ⚠️⚠️⚠️⚠️⚠️⚠️   ////////////////////////////
+
+export const updateDevelopers = ({data,id})=>{
+  return DevAPI.put(UPDATE_DEVELOPERS,
+    data,
+    {
+      headers:{
+        'accept':'*/*',
+        'id':id,
+        'Content-Type':'application/json'
+      }
+    }
+  )
+}

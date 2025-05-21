@@ -8,7 +8,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 function EditProjectForm({ handleEditClick, editId }) {
   const { projects } = useProjects();
-  const { mutate, isPending } = useUpdateProjects();
+  const { mutate} = useUpdateProjects();
   const queryClient = useQueryClient()
   const [initialValues, setInitialValues] = useState({
     projectName: "",

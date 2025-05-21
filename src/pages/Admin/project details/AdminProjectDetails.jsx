@@ -11,6 +11,7 @@ import EditModuleForm from "../../../components/Shared/EditModuleForm";
 import { useSidebar } from "../../../contexts/admin/SidebarContext";
 import { useProjects } from "../../../contexts/admin/ProjectApiContext";
 import loader from '../../../assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg'
+import { projectData } from "../../../constants/Projects/ProjectConstant";
 
 
 
@@ -24,6 +25,7 @@ const AdminProjectDetails = () => {
     const [editModuleId , setEditModuleId] = useState(null)
     const {isOpen } = useSidebar()
     const {projects, isLoading , error} = useProjects()
+    const dummy = projectData
    
 
 
@@ -32,19 +34,20 @@ const AdminProjectDetails = () => {
 
   const { projectId } = useParams();
   const navigate = useNavigate()
-  const project = projects?.find((p) => String(p.projectAID) === String(projectId));
+  // const project = projects?.find((p) => String(p.projectAID) === String(projectId));
+  const project = dummy?.find((p) => String(p.project_id) === String(projectId));
   
   
   
-  const [displayData, setDisplayData] = useState(project || []);
+  const [displayData, setDisplayData] = useState(dummy || []);
   useEffect(() => {
-    const updatedProject = projects?.find(
-      (p) => String(p.projectAID) === String(projectId)
+    const updatedProject = dummy?.find(
+      (p) => String(p.project_id) === String(projectId)
     );
     setDisplayData(updatedProject || []);
     console.log(updatedProject)
     
-  }, [projectId, projects]);
+  }, [projectId, dummy]);
 
 
   
@@ -64,12 +67,12 @@ const AdminProjectDetails = () => {
      
     
         if (!query.trim()) {
-          setDisplayData(project || []);
+          setDisplayData(dummy || []);
     
           return;
         }
         const lowerCaseQuery = query.toLowerCase();
-        const filteredResults = (project?.modules || []).filter((item) =>
+        const filteredResults = (dummy?.modules || []).filter((item) =>
           Object.values(item).some((value) =>
             String(value).toLowerCase().includes(lowerCaseQuery)
           )
@@ -124,9 +127,9 @@ const AdminProjectDetails = () => {
                 value={projectId}
                 className=" text-heading border-0 appearance-none transition-all  font-satoshi font-bold md:text-base text-xs capitalize bg-Bgprimary focus:outline-0  p-2 rounded-md"
               >
-                {projects?.map((project) => (
-                  <option key={project.projectAID} value={project.projectAID}>
-                    {project.projectName}
+                {dummy?.map((project) => (
+                  <option key={project.project_id} value={project.project_id}>
+                    {project.name}
                   </option>
                 ))}
               </select>

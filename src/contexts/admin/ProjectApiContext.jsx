@@ -7,7 +7,7 @@ const ProjectContext = createContext()
 export const ProjectProvider = ({children})=>{
     const { data, isLoading, error, refetch } = useGetProjects()
     const [projects , setProjects] = useState()
-    console.log(data)
+
 
     useEffect(()=>{
         setProjects(data?.data)

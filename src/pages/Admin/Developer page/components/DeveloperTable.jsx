@@ -3,7 +3,7 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useNavigate } from "react-router";
 
-function DeveloperTable({ data, setEdit, setEditData }) {
+function DeveloperTable({ data, setEdit, setEditId }) {
   const navigate = useNavigate();
   console.log(data);
   const handleViewClick = (developerId) => {
@@ -31,9 +31,9 @@ function DeveloperTable({ data, setEdit, setEditData }) {
           </tr>
         </thead>
         <tbody>
-          {data.map((data) => (
+          {data?.map((data) => (
             <tr
-              key={data.userID}
+              key={data.developerAID}
               className=" border border-Bghilight text-heading"
             >
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
@@ -49,7 +49,7 @@ function DeveloperTable({ data, setEdit, setEditData }) {
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 <div className="w-full h-full flex flex-row items-center gap-x-2.5">
                   <button
-                    onClick={() => handleViewClick(data.userID)}
+                    onClick={() => handleViewClick(data.developerAID)}
                     className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#3A3D44] text-white font-sans rounded-md font-medium text-xs md:text-base hover:cursor-pointer"
                   >
                     View
@@ -57,12 +57,7 @@ function DeveloperTable({ data, setEdit, setEditData }) {
                   <button
                     onClick={() => {
                       setEdit(true);
-                      setEditData({
-                        userID: data.userID,
-                        developerName: data.developerName,
-                        developerRole: data.developerRole,
-                        password: data.password,
-                      });
+                      setEditId(data.developerAID);
                     }}
                     className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-sm md:text-xl hover:cursor-pointer "
                   >

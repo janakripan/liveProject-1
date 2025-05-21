@@ -4,29 +4,7 @@ import React from 'react'
 const AssignedDevelopersTable = ({data,singleProject}) => {
     console.log(data)
 
-    const createdTime = (timestamps) => {
-        const date = new Date(timestamps * 1000);
-        return date.toLocaleDateString("en-GB");
-      };
-    
-      const updatedTime = (timestamp) => {
-        const now = new Date();
-        const date = new Date(parseInt(timestamp) * 1000);
-        const diffInSeconds = Math.floor((now - date) / 1000);
-    
-        if (diffInSeconds < 60) {
-          return "Just now";
-        } else if (diffInSeconds < 3600) {
-          const minutes = Math.floor(diffInSeconds / 60);
-          return `${minutes} minute${minutes > 1 ? "s" : ""} ago`;
-        } else if (diffInSeconds < 86400) {
-          const hours = Math.floor(diffInSeconds / 3600);
-          return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-        } else {
-          const days = Math.floor(diffInSeconds / 86400);
-          return `${days} day${days > 1 ? "s" : ""} ago`;
-        }
-      };
+   
   return (
     <div className="w-full  bg-Bgprimary border border-[#4C4F55] overflow-x-auto no-scrollbar rounded-lg ">
           <table className="w-full table-auto border-collapse">

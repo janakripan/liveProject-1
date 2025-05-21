@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
-import { projectData } from "../../../constants/Projects/ProjectConstant";
 import { FaPlus } from "react-icons/fa6";
 import AssignedDevelopersTable from "./components/AssignedDevelopersTable";
 import { IoMdClose } from "react-icons/io";

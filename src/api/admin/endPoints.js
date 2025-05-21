@@ -24,3 +24,7 @@ export const POST_PROJECTS = "postProjectMaster"
 //update projects 
 
 export const UPDATE_PROJECT = "putProjectMaster"
+
+//update developers
+
+export const UPDATE_DEVELOPERS = "putDeveloper"

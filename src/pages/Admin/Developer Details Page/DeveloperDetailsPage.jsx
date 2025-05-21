@@ -9,17 +9,18 @@ import EditDeveloperForm from "../../../components/Shared/EditDeveloperForm";
 import { useSidebar } from "../../../contexts/admin/SidebarContext";
 import { useDevelopers } from "../../../contexts/admin/DevApiContext";
 import loader from '../../../assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg'
-import { MdDisabledVisible } from "react-icons/md";
 
 const DeveloperDetailsPage = () => {
   const { developerId } = useParams();
   const [edit, setEdit] = useState(false);
   const { isOpen } = useSidebar();
    const { developers, isLoading, error } = useDevelopers();
+   console.log(developerId)
 
-  const singleDeveloper = developers.find(
-    (dev) => String(dev.userID) === String(developerId)
+  const singleDeveloper = developers?.find(
+    dev => String(dev.developerAID) === String(developerId)
   );
+  
   console.log(singleDeveloper)
 
   const getDeveloperInitials = (name) => {
@@ -33,10 +34,7 @@ const DeveloperDetailsPage = () => {
       return (words[0][0] + words[1][0]).toUpperCase();
     }
   };
-  const createdTime = (timestamps) => {
-    const date = new Date(timestamps * 1000);
-    return date.toLocaleDateString("en-GB");
-  };
+  
   const assignedProjects = projectData.filter((project) =>
     project.developers.some(
       (dev) => String(dev.userID) === String(developerId)

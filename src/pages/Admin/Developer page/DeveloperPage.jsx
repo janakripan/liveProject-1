@@ -14,12 +14,7 @@ function DeveloperPage() {
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(false);
   const { developers, isLoading, error } = useDevelopers();
-  const [editData, setEditData] = useState({
-    userId: "",
-    name: "",
-    role: "",
-    password: "",
-  });
+  const [editId, setEditId] = useState();
   const { isOpen } = useSidebar();
 
   console.log(developers)
@@ -108,7 +103,7 @@ function DeveloperPage() {
           <DeveloperTable
             data={displayData}
             setEdit={setEdit}
-            setEditData={setEditData}
+            setEditId={setEditId}
           />
         </div>
       </div>
@@ -164,7 +159,7 @@ function DeveloperPage() {
               </button>
             </div>
             <hr className="border-Bghilight mt-1 mb-4" />
-            <EditDeveloperForm setEdit={setEdit} editData={editData} />
+            <EditDeveloperForm setEdit={setEdit} editId={editId} />
           </div>
         </div>
       )}

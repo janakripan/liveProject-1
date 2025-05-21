@@ -1,27 +1,55 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import { editDeveloperValidation } from "../../validations/editDeveloperValidation";
+import { useUpdateDevelopers } from "../../api/admin/hooks";
+import { useDevelopers } from "../../contexts/admin/DevApiContext";
+import { useQueryClient } from "@tanstack/react-query";
 
-const EditDeveloperForm = ({ setEdit, editData }) => {
+const EditDeveloperForm = ({ setEdit, editId }) => {
+  const {mutate} = useUpdateDevelopers()
+  const {developers} = useDevelopers()
+  const queryClient = useQueryClient()
   
+  const editData = developers?.find(dev=>dev.developerAID === editId)
+console.log("editId:", editId, typeof editId);  console.log(editData)
+
   const initialValues = {
-    userID: "",
-    developerName: "",
-    status:"",
-    developerRole: "",
-    password: "",
+      userID: editData?.userID || "",
+  developerName: editData?.developerName || "",
+  developerRole: editData?.developerRole || "",
+  password:editData.password || "",
   };
 
-  const handleSubmit = (values, { resetForm }) => {
-    console.log("Form Submitted:", values);
-    resetForm();
-    alert("Form Submitted Successfully!");
-  };
+  const handleSubmit = (values, { resetForm,setSubmitting }) => {
+    const payload ={
+      developerName:values.developerName,
+      developerRole:values.developerRole
+    }
+      mutate(
+    {
+      id: editId,
+      data:payload
+    },
+    {
+      onSuccess: (data) => {
+        console.log(data)
+        queryClient.invalidateQueries(["getDevelopers"]);
+        setEdit(false);
+        resetForm();
+        setSubmitting(false);
+      },
+      onError: (error) => {
+        console.error("Update failed:", error);
+        setSubmitting(false);
+      },
+    }
+  );
+};
 
   return (
     <div className="w-full h-fit ">
       <Formik
-        initialValues={editData || initialValues}
+        initialValues={ initialValues}
         validationSchema={editDeveloperValidation}
         onSubmit={handleSubmit}
       >
@@ -71,7 +99,7 @@ const EditDeveloperForm = ({ setEdit, editData }) => {
             </div>
 
             {/*status selector */}
-            <div>
+            {/* <div>
               <label
                 htmlFor="status"
                 className="block font-dm-sans capitalize text-heading   text-sm md:text-base font-medium mb-2"
@@ -96,7 +124,7 @@ const EditDeveloperForm = ({ setEdit, editData }) => {
                 component="div"
                 className="text-red-500 text-sm"
               />
-            </div>
+            </div> */}
 
             <div>
               <label
@@ -136,6 +164,7 @@ const EditDeveloperForm = ({ setEdit, editData }) => {
                 id="password"
                 name="password"
                 placeholder="Enter Password"
+                disabled
                 className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm"
               />
               <ErrorMessage
@@ -160,7 +189,7 @@ const EditDeveloperForm = ({ setEdit, editData }) => {
                 className="w-full cursor-pointer bg-buttonBlue text-heading p-2  md:p-4 text-sm md:text-base rounded-md hover:scale-105 active:scale-95 duration-300 transition"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Adding..." : "Add"}
+                {isSubmitting ? "Updating..." : "Update"}
               </button>
             </div>
           </Form>
