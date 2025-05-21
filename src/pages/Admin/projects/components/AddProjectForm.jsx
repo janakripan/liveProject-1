@@ -1,6 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import React, { useEffect, useState } from "react";
-// import calenderIcon from "../../../../assets/calenderIcon.svg";
+import React from "react";
 import { addProjectFormValidation } from "../../../../validations/addProjectFormValidation";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePostProjects } from "../../../../api/admin/hooks";
@@ -8,12 +7,7 @@ import { usePostProjects } from "../../../../api/admin/hooks";
 function AddProjectForm({ handleClick }) {
   const queryClient = useQueryClient();
   const { mutate, isError, error } = usePostProjects();
-  // const [currentDate, setCurrentDate] = useState("");
 
-  // useEffect(() => {
-  //   const today = new Date().toISOString().split("T")[0]; // Format as YYYY-MM-DD
-  //   setCurrentDate(today);
-  // }, []);
 
   const initialValues = {
     projectName: "",
@@ -116,34 +110,6 @@ function AddProjectForm({ handleClick }) {
               />
             </div>
 
-            {/* Created Date */}
-            {/* <div>
-              <label
-                htmlFor="createdDate"
-                className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2 appearance-none"
-              >
-                Created Date
-              </label>
-              <div className="relative">
-                <Field
-                  type="date"
-                  id="createdDate"
-                  name="createdDate"
-                  readOnly
-                  className="w-full  md:py-4 py-2 px-2.5 md:px-5 border text-commontext bg-Bgprimary focus:outline-0 placeholder:text-[#9EA3A7] placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#C8CACD80]/50 rounded-sm"
-                />
-                <img
-                  src={calenderIcon}
-                  className="w-6 bg-Bgprimary pointer-events-none h-6 absolute right-4 top-1/2 -translate-y-1/2"
-                  alt=""
-                />
-              </div>
-              <ErrorMessage
-                name="createdDate"
-                component="div"
-                className="text-red-500 text-sm"
-              />
-            </div> */}
 
             <div className="w-full h-fit flex flex-row gap-x-5 ">
               <button

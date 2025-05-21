@@ -32,7 +32,7 @@ export const UserDataProvider = ({children}) =>{
     };
 
     setUserToken(userData);
-    console.log("Simulated user loaded:", userData);
+   
   }, []); // empty deps => run once on mount
   
 

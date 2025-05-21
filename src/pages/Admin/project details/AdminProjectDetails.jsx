@@ -10,98 +10,79 @@ import AddModuleForm from "./components/AddModuleForm";
 import EditModuleForm from "../../../components/Shared/EditModuleForm";
 import { useSidebar } from "../../../contexts/admin/SidebarContext";
 import { useProjects } from "../../../contexts/admin/ProjectApiContext";
-import loader from '../../../assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg'
+import loader from "../../../assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg";
 import { projectData } from "../../../constants/Projects/ProjectConstant";
-
-
-
-
+import { useModules } from "../../../contexts/admin/ModulesApiContext";
 
 const AdminProjectDetails = () => {
-    const [selectOpen , setSelectOpen] = useState(false)
-    const [add , setAdd] = useState(false)
-    const [edit , setEdit] = useState(false)
-    const [editId , setEditId] = useState(null)
-    const [editModuleId , setEditModuleId] = useState(null)
-    const {isOpen } = useSidebar()
-    const {projects, isLoading , error} = useProjects()
-    const dummy = projectData
-   
+  const { modules, isLoading, error } = useModules();
+  const [selectOpen, setSelectOpen] = useState(false);
+  const [add, setAdd] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [editModuleId, setEditModuleId] = useState(null);
+  const { isOpen } = useSidebar();
+  const { projects } = useProjects();
+  const dummy = projectData;
 
-
-      
-    const selectRef = useRef(null);
+  const selectRef = useRef(null);
 
   const { projectId } = useParams();
-  const navigate = useNavigate()
-  // const project = projects?.find((p) => String(p.projectAID) === String(projectId));
-  const project = dummy?.find((p) => String(p.project_id) === String(projectId));
+  const navigate = useNavigate();
+
   
-  
-  
-  const [displayData, setDisplayData] = useState(dummy || []);
+  const [displayData, setDisplayData] = useState([]);
+
   useEffect(() => {
-    const updatedProject = dummy?.find(
-      (p) => String(p.project_id) === String(projectId)
-    );
-    setDisplayData(updatedProject || []);
-    console.log(updatedProject)
-    
-  }, [projectId, dummy]);
+    if (modules?.length && projectId) {
+      const matchedModule = modules.filter(mod =>Number( mod.projectAID) === Number(projectId));
+      
+      setDisplayData(matchedModule || []);
+    }
+  }, [projectId, modules]);
 
-
-  
 
   const handleChange = (e) => {
-    
     const selectedId = e.target.value;
     if (projectId !== selectedId) {
       navigate(`/admin/project/${selectedId}`);
       selectRef.current?.blur();
-      
     }
-
   };
 
-  const handleSearch = (query) =>{
-     
-    
-        if (!query.trim()) {
-          setDisplayData(dummy || []);
-    
-          return;
-        }
-        const lowerCaseQuery = query.toLowerCase();
-        const filteredResults = (dummy?.modules || []).filter((item) =>
-          Object.values(item).some((value) =>
-            String(value).toLowerCase().includes(lowerCaseQuery)
-          )
-        );
-        setDisplayData(filteredResults);
+  const handleSearch = (query) => {
+    if (!query.trim()) {
+      setDisplayData(dummy || []);
 
-  }
-  const handleEditClick = ()=>{
-    setEdit(false)
-  }
-  
-
+      return;
+    }
+    const lowerCaseQuery = query.toLowerCase();
+    const filteredResults = (dummy?.modules || []).filter((item) =>
+      Object.values(item).some((value) =>
+        String(value).toLowerCase().includes(lowerCaseQuery)
+      )
+    );
+    setDisplayData(filteredResults);
+  };
+  const handleEditClick = () => {
+    setEdit(false);
+  };
 
   if (isLoading)
-        return (
-          <div className="w-full h-screen bg-Bgprimary flex flex-row items-center justify-center">
-            {" "}
-            <img src={loader} alt="loading animation" className="w-20 h-20" />{" "}
-          </div>
-        );
-      if (error)
-        return (
-          <div className="w-full h-screen flex flex-row bg-Bgprimary items-center justify-center">
-            {" "}
-            <p className="font-bold text-xl font-satoshi text-white">
-              Error fetching developers
-            </p>
-          </div>
-        );
+    return (
+      <div className="w-full h-screen bg-Bgprimary flex flex-row items-center justify-center">
+        {" "}
+        <img src={loader} alt="loading animation" className="w-20 h-20" />{" "}
+      </div>
+    );
+  if (error)
+    return (
+      <div className="w-full h-screen flex flex-row bg-Bgprimary items-center justify-center">
+        {" "}
+        <p className="font-bold text-xl font-satoshi text-white">
+          Error fetching developers
+        </p>
+      </div>
+    );
   return (
     <div
       className={`h-screen w-full p-5 relative  transition-all duration-300 flex flex-col  max-w-screen-xl  mx-auto`}
@@ -112,47 +93,52 @@ const AdminProjectDetails = () => {
             <span className="font-satoshi text-[#40CBE0] font-medium text-xs md:text-base ">
               Project
             </span>
-           <div className="flex flex-row md:gap-2 items-center">
-           <span className={`text-xs text-[#5A5A5A] transition-all duration-200 ${
-                selectOpen ?"rotate-90" : "rotate-0"
-            } `}>
-              <FaCaretRight />
-            </span>
-            <div>
-              <select
-                onChange={(e)=>{handleChange(e);setSelectOpen(false); }}
-                ref={selectRef}
-                onFocus={() => setSelectOpen(true)}
-                onBlur={() => setSelectOpen(false)}
-                value={projectId}
-                className=" text-heading border-0 appearance-none transition-all  font-satoshi font-bold md:text-base text-xs capitalize bg-Bgprimary focus:outline-0  p-2 rounded-md"
+            <div className="flex flex-row md:gap-2 items-center">
+              <span
+                className={`text-xs text-[#5A5A5A] transition-all duration-200 ${
+                  selectOpen ? "rotate-90" : "rotate-0"
+                } `}
               >
-                {dummy?.map((project) => (
-                  <option key={project.project_id} value={project.project_id}>
-                    {project.name}
-                  </option>
-                ))}
-              </select>
+                <FaCaretRight />
+              </span>
+              <div>
+                <select
+                  onChange={(e) => {
+                    handleChange(e);
+                    setSelectOpen(false);
+                  }}
+                  ref={selectRef}
+                  onFocus={() => setSelectOpen(true)}
+                  onBlur={() => setSelectOpen(false)}
+                  value={projectId}
+                  className=" text-heading border-0 appearance-none transition-all  font-satoshi font-bold md:text-base text-xs capitalize bg-Bgprimary focus:outline-0  p-2 rounded-md"
+                >
+                  {projects?.map((project) => (
+                    <option key={project.projectAID} value={project.projectAID}>
+                      {project.projectName}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-           </div>
           </div>
 
           <div className=" flex flex-row items-center gap-2 ">
-          <button
-            onClick={() => navigate(`/admin/project/${projectId}/preview`)}
-           className="font-satoshi  text-xs md:text-base cursor-pointer font-semibold text-heading bg-[#30D158] px-2 md:px-4 py-1.5 md:py-3 rounded-lg hover:scale-105 active:scale-95 transition-transform duration-300 ">
+            <button
+              onClick={() => navigate(`/admin/project/${projectId}/preview`)}
+              className="font-satoshi  text-xs md:text-base cursor-pointer font-semibold text-heading bg-[#30D158] px-2 md:px-4 py-1.5 md:py-3 rounded-lg hover:scale-105 active:scale-95 transition-transform duration-300 "
+            >
               Preview
             </button>
 
-            <button 
-          onClick={() =>setAdd(true)}
-          className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-xs md:text-base text-white flex flex-row items-center justify-center active:scale-95 gap-x-2.5 px-3 md:px-4 py-2 md:py-3 rounded-lg hover:scale-105 transition-transform duration-300 ">
-            <FaPlus />
-            <span className="hidden md:block"> Add New Module</span>
-          </button>
+            <button
+              onClick={() => setAdd(true)}
+              className=" bg-buttonBlue cursor-pointer font-satoshi font-bold text-xs md:text-base text-white flex flex-row items-center justify-center active:scale-95 gap-x-2.5 px-3 md:px-4 py-2 md:py-3 rounded-lg hover:scale-105 transition-transform duration-300 "
+            >
+              <FaPlus />
+              <span className="hidden md:block"> Add New Module</span>
+            </button>
           </div>
-
-          
         </div>
 
         {/* searchbar and sort button */}
@@ -175,13 +161,19 @@ const AdminProjectDetails = () => {
 
         {/* module details table */}
         <div className="w-full max-h-[75vh] h-fit  lg:max-h-[63vh] overflow-y-auto my-5 no-scrollbar rounded-lg border border-[#4C4F55]">
-          <ProjectModulesTable displayData={displayData} setEditModuleId={setEditModuleId} setEditId={setEditId}  setEdit={()=>setEdit(true)} />
-
+          <ProjectModulesTable
+            displayData={displayData}
+            setEditModuleId={setEditModuleId}
+            setEdit={() => setEdit(true)}
+          />
         </div>
-
       </div>
       {add && (
-        <div className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${isOpen?"md:pl-[290px] ":""}`}>
+        <div
+          className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 md:p-8 p-4 ${
+            isOpen ? "md:pl-[290px] " : ""
+          }`}
+        >
           <div
             className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
           >
@@ -197,13 +189,17 @@ const AdminProjectDetails = () => {
               </button>
             </div>
             <hr className="border-[#F1F1F1] mt-1 mb-4" />
-            <AddModuleForm handleClick={()=>setAdd(false)}/>
+            <AddModuleForm handleClick={() => setAdd(false)} />
           </div>
         </div>
       )}
-       {/* Edit project popup */}
-       {edit && (
-        <div className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 p-8 ${isOpen?"pl-[290px] ":""}`}>
+      {/* Edit project popup */}
+      {edit && (
+        <div
+          className={`w-full h-screen fixed inset-1 top-0  backdrop-blur-md flex items-center  transition-all duration-300 p-8 ${
+            isOpen ? "pl-[290px] " : ""
+          }`}
+        >
           <div
             className={`ml-[50px] mr-[10px] md:mx-auto w-full h-fit md:w-9/12 md:h-10/12 lg:w-[750px] lg:h-11/12 max-h-fit overflow-y-auto  bg-Bgprimary drop-shadow-2xl p-4 rounded-[10px] `}
           >
@@ -219,12 +215,14 @@ const AdminProjectDetails = () => {
               </button>
             </div>
             <hr className="border-[#F1F1F1] mt-1 mb-4" />
-            <EditModuleForm handleEditClick={handleEditClick} editId={editId} editModuleId={editModuleId} />
+            <EditModuleForm
+              handleEditClick={handleEditClick}
+              editModuleId={editModuleId}
+            />
           </div>
         </div>
       )}
     </div>
-
   );
 };
 

@@ -1,5 +1,20 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getDevelopers, getProjects, postDevelopers, postProjects, updateDevelopers, updateProjects, userLogin, userLogout } from "./services";
+import {
+  getDevelopers,
+  getModules,
+  getProjects,
+  postDevelopers,
+  postModules,
+  postProjects,
+  updateDevelopers,
+  updateModules,
+  updateProjects,
+  userLogin,
+  userLogout,
+} from "./services";
+
+
+///////////////////////// AUTHENTICATION ⚠️⚠️⚠️⚠️////////////////////////
 
 export const useUserLogin = () =>
   useMutation({
@@ -13,41 +28,63 @@ export const useUserLogout = () =>
     mutationKey: ["userLogout"],
   });
 
+  /////////////////////DEVELOPER HOOKS 👨‍💻👨‍💻👨‍💻👨‍💻////////////////////////
 
 export const useGetDevelopers = () =>
   useQuery({
-    queryFn:getDevelopers,
-    queryKey: ["getDevelopers"]
-  })
+    queryFn: getDevelopers,
+    queryKey: ["getDevelopers"],
+  });
 
 export const usePostDevelopers = () =>
   useMutation({
-    mutationFn:postDevelopers,
-    mutationKey:["postDevelopers"],
-    
-  })
+    mutationFn: postDevelopers,
+    mutationKey: ["postDevelopers"],
+  });
 
-  export const useGetProjects = () =>
-  useQuery({
-    queryFn:getProjects,
-    queryKey: ["getProjects"]
-  })
-
-  export const usePostProjects = () =>
+export const useUpdateDevelopers = () =>
   useMutation({
-    mutationFn:postProjects,
-    mutationKey:["postProjects"],
-    
+    mutationFn: ({ data, id }) => updateDevelopers({ data, id }),
+    mutationKey: ["updateDevelopers"],
+  });
+
+
+  //////////////////////////PROJECTS HOOKS🗃️🗃️🗃️🗃️🗃️ ///////////////////
+
+export const useGetProjects = () =>
+  useQuery({
+    queryFn: getProjects,
+    queryKey: ["getProjects"],
+  });
+
+export const usePostProjects = () =>
+  useMutation({
+    mutationFn: postProjects,
+    mutationKey: ["postProjects"],
+  });
+
+export const useUpdateProjects = () =>
+  useMutation({
+    mutationFn: ({ data, id }) => updateProjects({ data, id }),
+    mutationKey: ["updateProjects"],
+  });
+
+  ////////////////  MODULE HOOKS 📂📂📂📂 //////////////////
+
+ export const useGetModules = () =>
+  useQuery({
+    queryFn:getModules,
+    queryKey:["getModules"]
   })
 
-  export const useUpdateProjects = () =>
+  export const usePostModules = () =>
     useMutation({
-      mutationFn:({ data, id }) => updateProjects({data, id}),
-      mutationKey:["updateProjects"]
+      mutationFn:postModules,
+      mutationKey:["postModules"]
     })
 
-  export const useUpdateDevelopers = () =>
+  export const useUpdateModules = () =>
     useMutation({
-      mutationFn:({data,id})=>updateDevelopers({data,id}),
-      mutationKey:["updateDevelopers"]
+      mutationFn:({data, projectAID , moduleID}) => updateModules({data, projectAID , moduleID}),
+      mutationKey:["updateModules"]
     })

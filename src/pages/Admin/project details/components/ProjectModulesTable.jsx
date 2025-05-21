@@ -5,16 +5,34 @@ import { useNavigate } from "react-router";
 
 const ProjectModulesTable = ({
   displayData,
-  setEditId,
   setEdit,
   setEditModuleId,
 }) => {
   const navigate = useNavigate()
-  function formatUnixDate(unixTimestamp) {
-    const date = new Date(unixTimestamp * 1000);
-    const formatted = date.toLocaleDateString("en-GB");
-    return formatted;
-  }
+  
+
+  const getTimeAgo = (dateString) => {
+  if (!dateString) return "No date";
+
+  const past = new Date(dateString);
+  if (isNaN(past.getTime())) return "Invalid date";
+
+  const now = new Date();
+  const diff = Math.floor((now - past) / 1000);
+
+  if (diff < 60) return "Just now";
+  if (diff < 3600) return `${Math.floor(diff / 60)} minute(s) ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)} hour(s) ago`;
+  if (diff < 2592000) return `${Math.floor(diff / 86400)} day(s) ago`;
+  if (diff < 31536000) return `${Math.floor(diff / 2592000)} month(s) ago`;
+  return `${Math.floor(diff / 31536000)} year(s) ago`;
+};
+
+  const statusUpdater = (status)=>{
+  if(status == true){
+    return "in progress"
+  }else{return "completed"}
+}
 
   return (
     <div className="w-full  bg-Bgprimary border border-[#4C4F55] overflow-x-auto no-scrollbar rounded-lg ">
@@ -47,35 +65,35 @@ const ProjectModulesTable = ({
           </tr>
         </thead>
         <tbody>
-          {displayData.modules?.map((module, index) => (
+          {displayData?.map((module, index) => (
             <tr
-              key={module.module_id}
+              key={module.moduleID}
               className=" border bg-Bgprimary text-heading border-[#4C4F55]"
             >
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
                 {index + 1}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
-                {module.name}
+                {module.moduleName}
+              </td>
+              <td className={`md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ${module.isActive === true ?" text-yellow-500  " :"text-[#30D158] "}  `}>
+                {statusUpdater(module.isActive)}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
-                {displayData.status}
+                {module.subModules?.length}
               </td>
-              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
-                {module.sub_modules.length}
+              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-sm font-normal ">
+                {module.createdDate.slice(0 ,10)}
               </td>
-              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
-                {formatUnixDate(displayData.created)}
-              </td>
-              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
-                {formatUnixDate(displayData.lastUpdated)}
+              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-sm font-normal ">
+                {getTimeAgo(module?.updatedDate)}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
                 <div className="w-full h-full flex flex-row items-center justify-between gap-x-2.5">
                   <button
                     onClick={() =>
                       navigate(
-                        `/admin/project/${displayData.project_id}/modules/${module.module_id}`
+                        `/admin/project/${module.projectAID}/modules/${module.moduleID}`
                       )
                     }
                     className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#3A3D44] text-white font-sans rounded-md font-medium text-xs md:text-base hover:cursor-pointer"
@@ -85,8 +103,7 @@ const ProjectModulesTable = ({
                   <button
                     onClick={() => {
                       setEdit(true);
-                      setEditId(displayData.project_id);
-                      setEditModuleId(module.module_id);
+                      setEditModuleId(module.moduleID); 
                     }}
                     className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-sm md:text-xl hover:cursor-pointer "
                   >

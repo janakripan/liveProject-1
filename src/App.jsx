@@ -7,6 +7,7 @@ import AutoLogin from "./utils/AutoLogin.jsx";
 import { UserDataProvider } from "./contexts/auth/UserDataContext.jsx";
 import { DeveloperProvider } from "./contexts/admin/DevApiContext.jsx";
 import { ProjectProvider } from "./contexts/admin/ProjectApiContext.jsx";
+import { ModuleProvider } from "./contexts/admin/ModulesApiContext.jsx";
 
 const AssignedProjectDetails = lazy(() =>
   import("./pages/Admin/assignedProjectDetails/AssignedProjectDetails.jsx")
@@ -62,6 +63,7 @@ export default function App() {
         <DeveloperProvider>
           <ProjectProvider>
             <UserDataProvider>
+              <ModuleProvider>
               <SidebarProvider>
                 <Suspense
                   fallback={
@@ -143,6 +145,7 @@ export default function App() {
                   </Routes>
                 </Suspense>
               </SidebarProvider>
+              </ModuleProvider>
             </UserDataProvider>
           </ProjectProvider>
         </DeveloperProvider>

@@ -1,44 +1,52 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import React, { useEffect, useState } from "react";
-import { projectData } from "../../constants/Projects/ProjectConstant";
 import { editModuleValidation } from "../../validations/editModuleValidation";
+import { useModules } from "../../contexts/admin/ModulesApiContext";
+import { useUpdateModules } from "../../api/admin/hooks";
+import { useParams } from "react-router";
+import { useQueryClient } from "@tanstack/react-query";
 
+function EditModuleForm({ handleEditClick, editModuleId }) {
+  const { modules } = useModules();
+  const { projectId } = useParams();
+  const { mutate, isPending} = useUpdateModules();
+  const queryClient = useQueryClient()
 
-function EditModuleForm({ handleEditClick, editId,editModuleId }) {
+  const selectedModule = modules?.find(
+    (module) => Number(module.moduleID) === Number(editModuleId)
+  );
+  console.log(selectedModule);
+  const initialValues = {
+    moduleName: selectedModule.moduleName || "",
+    moduleDescription: selectedModule.moduleDescription || "",
+    status: selectedModule.isActive || "",
+  };
 
-  console.log(editModuleId)
-  const [initialValues, setInitialValues] = useState({
-    moduleName: "",
-   
-  });
-
- 
-  useEffect(() => {
-    if (editId) {
-      const selectedProject = projectData.find(
-        (project) => String(project.project_id) === String(editId)
-      );
-
-      if (selectedProject) {
-        const selectedModule = selectedProject.modules.find(mod=>String(mod.module_id) === String(editModuleId))
-        console.log(selectedModule)
-
-        setInitialValues({
-          moduleName: selectedModule.name || "",
-          
-        });
-      }
+  const handleEditSubmit = (values, { resetForm, setSubmitting }) => {
+    const payload = {
+      moduleName: values.moduleName,
+      moduleDescription: values.moduleDescription,
+      isActive: values.status === "true",
+    };
+    mutate(
+      {
+      data: payload,
+      moduleID: editModuleId,
+      projectAID: projectId,
+    },
+    {
+      onSuccess: (data) => {
+        console.log(data)
+        queryClient.invalidateQueries(["getModules"]);
+        handleEditClick()
+        resetForm();
+        setSubmitting(false);
+      },
+      onError: (error) => {
+        console.error("Update failed:", error);
+        setSubmitting(false);
+      },
     }
-  }, [editModuleId,editId]);
-
-  
-
-  
-
-  const handleEditSubmit = (values, { resetForm }) => {
-    console.log("Form edited:", values);
-    alert("Project Form edited Successfully!");
-    resetForm();
+  );
   };
 
   return (
@@ -71,11 +79,59 @@ function EditModuleForm({ handleEditClick, editId,editModuleId }) {
                 className="text-red-500 text-sm"
               />
             </div>
-           
+
+            <div>
+              <label
+                htmlFor="moduleDescription"
+                className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2"
+              >
+                Module Name
+              </label>
+              <Field
+                type="text"
+                id="moduleDescription"
+                name="moduleDescription"
+                placeholder="Enter module description"
+                className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm"
+              />
+              <ErrorMessage
+                name="moduleDescription"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
+
+            {/* status selector */}
+            <div>
+              <label
+                htmlFor="status"
+                className="block font-dm-sans capitalize text-heading   text-sm md:text-base font-medium mb-2"
+              >
+                status
+              </label>
+              <Field
+                as="select"
+                id="status"
+                name="status"
+                className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm bg-Bgprimary"
+              >
+                <option disabled value="">
+                  {" "}
+                  Status
+                </option>
+                <option value="true">In Progress</option>
+                <option value="false">Completed</option>
+              </Field>
+              <ErrorMessage
+                name="status"
+                component="div"
+                className="text-red-500 text-sm"
+              />
+            </div>
 
             <div className="w-full h-fit flex flex-row gap-x-5 ">
               <button
-              type="button"
+                type="button"
                 className="w-full cursor-pointer bg-[#5A5D63] text-heading md:p-4 p-2 border border-[#5A5D63] duration-300 text-sm md:text-base rounded-md hover:scale-105 active:scale-95 transition"
                 onClick={handleEditClick}
               >
@@ -84,9 +140,9 @@ function EditModuleForm({ handleEditClick, editId,editModuleId }) {
               <button
                 type="submit"
                 className="w-full cursor-pointer bg-buttonBlue text-heading p-2  md:p-4 text-sm md:text-base rounded-md hover:scale-105 active:scale-95 duration-300 transition"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isPending}
               >
-                {isSubmitting ? "Saving..." : "Save Changes"}
+                {isSubmitting || isPending ? "Saving..." : "Save Changes"}
               </button>
             </div>
           </Form>

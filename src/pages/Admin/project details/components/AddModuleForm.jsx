@@ -1,33 +1,43 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import React, { useEffect, useState } from "react";
-import calenderIcon from "../../../../assets/calenderIcon.svg";
+import React from "react";
 import { addModuleValdation } from "../../../../validations/addModuleValidation";
+import {  usePostModules } from "../../../../api/admin/hooks";
+import { useParams } from "react-router";
+import { useQueryClient } from "@tanstack/react-query";
 
 function AddModuleForm({ handleClick }) {
-  const [currentDate, setCurrentDate] = useState("");
+  const {mutate , isPending ,error } = usePostModules()
+  const {projectId} = useParams()
+  console.log(projectId)
+  const queryClient = useQueryClient()
 
-  useEffect(() => {
-    const today = new Date().toISOString().split("T")[0]; // Format as YYYY-MM-DD
-    setCurrentDate(today);
-  }, []);
-
+  
   const initialValues = {
+   
     moduleName: "",
-    createdDate: currentDate,
+    moduleDescription:"",
   };
 
 
 
-  const handleSubmit = (values, { resetForm }) => {
-    const unixDate = Math.floor(new Date(values.createdDate).getTime() / 1000); // ✅ to UNIX
-
-    const finalValues = {
+  const handleSubmit = (values, { resetForm,setSubmitting }) => {
+    const payload = {
       ...values,
-      createdDate: unixDate,
-    };
-    console.log("Form Submitted:", finalValues);
-    alert("Project Form Submitted Successfully!");
-    resetForm();
+       projectAID:Number(projectId),
+    }
+   mutate(payload,{
+   onSuccess: () => {
+        queryClient.invalidateQueries(["getModules"]);
+        resetForm();
+        setSubmitting(false);
+        handleClick();
+      },
+      onError: () => {
+        console.log(error);
+        setSubmitting(false);
+      },
+
+   })
   };
 
   return (
@@ -61,30 +71,22 @@ function AddModuleForm({ handleClick }) {
               />
             </div>
 
-            {/* Created Date */}
             <div>
               <label
-                htmlFor="createdDate"
-                className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2 appearance-none"
+                htmlFor="moduleDescription"
+                className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2"
               >
-                Created Date
+                Module Name
               </label>
-              <div className="relative">
-                <Field
-                  type="date"
-                  id="createdDate"
-                  name="createdDate"
-                  readOnly
-                  className="w-full  md:py-4 py-2 px-2.5 md:px-5 border text-commontext bg-Bgprimary focus:outline-0 placeholder:text-[#9EA3A7] placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#C8CACD80]/50 rounded-sm"
-                />
-                <img
-                  src={calenderIcon}
-                  className="w-6 bg-Bgprimary pointer-events-none h-6 absolute right-4 top-1/2 -translate-y-1/2"
-                  alt=""
-                />
-              </div>
+              <Field
+                type="text"
+                id="moduleDescription"
+                name="moduleDescription"
+                placeholder="Enter module description"
+                className="w-full md:py-4 py-2 px-2.5 md:px-5 focus:outline-none focus:ring-2 focus:ring-buttonBlue  border text-sm md:text-base text-heading placeholder:text-commontext placeholder:font-dm-sans placeholder:font-normal placeholder:md:text-base placeholder:text-sm border-[#7F828A80] rounded-sm"
+              />
               <ErrorMessage
-                name="createdDate"
+                name="moduleDescription"
                 component="div"
                 className="text-red-500 text-sm"
               />
@@ -100,9 +102,9 @@ function AddModuleForm({ handleClick }) {
               <button
                 type="submit"
                 className="w-full cursor-pointer bg-buttonBlue text-heading p-2  md:p-4 text-sm md:text-base rounded-md hover:scale-105 active:scale-95 duration-300 transition"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isPending}
               >
-                {isSubmitting ? "Adding..." : "Add"}
+                {isSubmitting || isPending ? "Adding..." : "Add"}
               </button>
             </div>
           </Form>

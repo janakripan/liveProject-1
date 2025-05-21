@@ -2,25 +2,21 @@ import React from "react";
 import { projectData } from "../../../../constants/Projects/ProjectConstant";
 import developer from "../../../../assets/developer-badge.svg";
 import endpoints from "../../../../assets/endpointsBadge.svg";
-import projects from "../../../../assets/project-badge.svg";
+import project from "../../../../assets/project-badge.svg";
+import { useProjects } from "../../../../contexts/admin/ProjectApiContext";
+import { useDevelopers } from "../../../../contexts/admin/DevApiContext";
 
 function Report() {
-  const data = projectData;
+ const {projects} = useProjects()
+ const {developers} = useDevelopers()
 
-  const projectCount = data.length;
+  const projectCount = projects?.length;
  
 
-  const developerCount = new Set(
-    projectData.reduce((acc, project) => {
-      project.developers.forEach(dev => acc.push(dev.developer_id));
-      return acc;
-    }, [])
-  ).size;
+  const developerCount = developers?.length;
 
 
-  const endpointCount = projectData.reduce((acc, project) => {
-    return acc + project.modules?.length;
-  }, 0);
+  const endpointCount = 0;
   console.log(endpointCount)
   return (
     <div className="w-full h-fit grid grid-cols-1  md:grid-cols-3 gap-4">
@@ -29,7 +25,7 @@ function Report() {
           <h5 className="text-commontext whitespace-nowrap text-sm md:text-base uppercase font-bold font-satoshi ">
             Total Projects
           </h5>
-          <img src={projects} alt="project badge" />
+          <img src={project} alt="project badge" />
         </div>
         <div className="w-fit h-[65px] flex flex-col justify-end">
           <h4 className="text-2xl md:text-4xl lg:text-5xl  font-bold text-heading font-satoshi ">

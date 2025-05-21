@@ -28,3 +28,14 @@ export const UPDATE_PROJECT = "putProjectMaster"
 //update developers
 
 export const UPDATE_DEVELOPERS = "putDeveloper"
+
+//get modules
+
+export const GET_MODULES = "getProjectModules"
+
+//post modules
+
+export const POST_MODULES = "postProjectModules"
+
+// update Modules 
+export const UPDATE_MODULES = "putProjectModules"
