@@ -3,37 +3,39 @@ import { FiEdit } from "react-icons/fi";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { useNavigate, useParams } from "react-router";
 
-const SubmodulesTable = ({
-  displayData,
-  
-}) => {
-  const navigate = useNavigate()
-  const {projectId} = useParams()
-  console.log(projectId)
+const SubmodulesTable = ({ displayData }) => {
+  const navigate = useNavigate();
+  const { projectId } = useParams();
 
-  function formatUnixDate(unixTimestamp) {
-    const date = new Date(unixTimestamp * 1000);
-    const formatted = date.toLocaleDateString("en-GB");
-    return formatted;
-  }
- 
-  function timeAgo(unixTimestamp) {
-    const now = Date.now();
-    const updated = new Date(unixTimestamp * 1000).getTime();
-    const diffInSeconds = Math.floor((now - updated) / 1000);
-  
-    const minutes = Math.floor(diffInSeconds / 60);
-    const hours = Math.floor(diffInSeconds / 3600);
-    const days = Math.floor(diffInSeconds / 86400);
-  
-    if (diffInSeconds < 60) return `${diffInSeconds} seconds ago`;
-    if (minutes < 60) return `${minutes} minutes ago`;
-    if (hours < 24) return `${hours} hours ago`;
-    return `${days} days ago`;
-  }
-  const handleEditClick = (moduleId,subModuleId) =>{
-    navigate(`/admin/project/${projectId}/preview/module/${moduleId}/submodule/${subModuleId}/edit`);
-  }
+ const getTimeAgo = (dateString) => {
+  if (!dateString) return "No date";
+
+  const past = new Date(dateString);
+  if (isNaN(past.getTime())) return "Invalid date";
+
+  if (past.getFullYear() < 1900) return "Not updated yet";
+
+  const now = new Date();
+  const diff = Math.floor((now - past) / 1000);
+
+  if (diff < 60) return "Just now";
+  if (diff < 3600) return `${Math.floor(diff / 60)} minute(s) ago`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)} hour(s) ago`;
+  if (diff < 2592000) return `${Math.floor(diff / 86400)} day(s) ago`;
+  if (diff < 31536000) return `${Math.floor(diff / 2592000)} month(s) ago`;
+  return `${Math.floor(diff / 31536000)} year(s) ago`;
+};
+
+  const statusUpdater = (status)=>{
+  if(status == true){
+    return "in progress"
+  }else{return "completed"}
+}
+  const handleEditClick = (moduleId, subModuleId) => {
+    navigate(
+      `/admin/project/${projectId}/preview/module/${moduleId}/submodule/${subModuleId}/edit`
+    );
+  };
 
   return (
     <div className="w-full  bg-Bgprimary border border-[#4C4F55] overflow-x-auto no-scrollbar rounded-lg ">
@@ -44,9 +46,9 @@ const SubmodulesTable = ({
               SL
             </th>
             <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
-             sub Modules
+              sub Modules
             </th>
-            
+
             <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
               Created
             </th>
@@ -61,23 +63,22 @@ const SubmodulesTable = ({
           </tr>
         </thead>
         <tbody>
-          {displayData.sub_modules?.map((module, index) => (
-            
+          {displayData?.map((module, index) => (
             <tr
-              key={module.sub_module_id}
+              key={module.subModuleID}
               className=" border bg-Bgprimary text-heading border-[#4C4F55]"
             >
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 {index + 1}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
-                {module.name}
+                {""}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
-                {formatUnixDate(module.created)}
+                {module.createdDate.slice(0, 10)}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
-                {timeAgo(module.lastUpdated)}
+                {getTimeAgo(module.updatedDate)}
               </td>
               <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal  ">
                 <div className="w-full h-full flex flex-row items-center justify-between gap-x-2.5">
@@ -92,7 +93,7 @@ const SubmodulesTable = ({
                     View
                   </button>
                   <button
-                    onClick={handleEditClick}
+                    onClick={()=>handleEditClick(module.moduleID,module.subModuleID)}
                     className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-sm md:text-xl hover:cursor-pointer "
                   >
                     <FiEdit />

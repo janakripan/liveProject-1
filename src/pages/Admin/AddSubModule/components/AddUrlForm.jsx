@@ -1,17 +1,25 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React from "react";
+import React, { useRef } from "react";
 import * as Yup from "yup";
+import RichTextField from "../../../../components/Shared/RichTextField";
 
 const apiFieldSchema = Yup.object().shape({
   urlType: Yup.string().required("Type is required"),
-  apiContent: Yup.string().required("API content is required"),
+  apiContent: Yup.object()
+    .required("API content is required")
+    .test(
+      "not-empty",
+      "API content cannot be empty",
+      (value) => value && value.content && value.content.length > 0
+    ),
 });
 
-const AddUrlForm = ({ formRef,initialValues }) => {
+const AddUrlForm = ({ formRef, initialValues,editorRef }) => {
   const defaultValues = {
     urlType: "",
-    apiContent: "",
+    apiContent: { type: "doc", content: [] },
   };
+  
 
   const mergedInitialValues = { ...defaultValues, ...initialValues };
   return (
@@ -25,7 +33,7 @@ const AddUrlForm = ({ formRef,initialValues }) => {
           return values;
         }}
       >
-        {() => (
+        {(errors, touched) => (
           <Form className="w-full h-fit p-4 space-y-4">
             {/* Type Field */}
             <div className="w-full h-fit">
@@ -51,22 +59,17 @@ const AddUrlForm = ({ formRef,initialValues }) => {
             <div>
               <label
                 htmlFor="apiContent"
-                className="block font-satoshi text-base text-heading font-medium"
+                name="apiContent"
+                className="block text-heading font-satoshi font-medium  mb-1"
               >
-                API Example
+                Api Content
               </label>
-              <Field
-                as="textarea"
-                name="apiContent"
-                rows={8}
-                placeholder={`e.g.\n$ curl -X GET 'https://www.zohoapis.com/books/v3/organizations' \\\n  -H 'Authorization: Zoho-oauthtoken 1000.xxxxx.xxxxx'`}
-                className="w-full border rounded p-2 mt-1 font-satoshi border-Bghilight placeholder:text-commontext text-heading focus:outline-none focus:ring-1 focus:ring-buttonBlue"
-              />
-              <ErrorMessage
-                name="apiContent"
-                component="div"
-                className="text-red-500 text-sm mt-1"
-              />
+              <RichTextField name="apiContent" editorRef={editorRef} />
+              {errors.apiContent && touched.apiContent && (
+                <div className="text-red-500 text-sm mt-1">
+                  {errors.apiContent}
+                </div>
+              )}
             </div>
           </Form>
         )}

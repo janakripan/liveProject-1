@@ -1,18 +1,23 @@
 import React, { useRef, useState } from "react";
 import { IoIosSave } from "react-icons/io";
-
-import { useNavigate } from "react-router";
+import DescriptionRenderer from "../../../components/Shared/DescriptonRenderer";
+import { useNavigate, useParams } from "react-router";
 import AddUrlForm from "./components/AddUrlForm";
 import { MdDeleteForever } from "react-icons/md";
 import AddDescriptionForm from "./components/AddDescriptionForm";
+import { usePostSubmodules } from "../../../api/admin/hooks";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AddSubModule = () => {
   const descriptionRef = useRef();
   const urlRef = useRef();
   const editorRef = useRef();
+  const {projectId , moduleId} = useParams()
   const navigate = useNavigate();
   const [isDefault, setIsDefault] = useState(true);
   const [formError, setFormError] = useState("");
+  const { mutate, isPending } = usePostSubmodules();
+  const queryClient = useQueryClient()
 
   const [urlSets, setUrlSets] = useState([]);
 
@@ -48,7 +53,6 @@ const AddSubModule = () => {
         );
         descriptionRef.current.setTouched({
           name: true,
-          isSubAttribute: true,
           description: true,
         });
         return;
@@ -63,18 +67,28 @@ const AddSubModule = () => {
 
       try {
         const descData = await descriptionRef.current.submitForm();
-        
-        const combinedData = {
-          ...descData,
 
-          urls: urlSets,
+        const combinedData = {
+          projectAID: projectId,
+          moduleID: moduleId,
+          subModuleDescription: JSON.stringify(descData.description),
+          customAttributes: JSON.stringify(urlSets),
         };
 
-        console.log("✅ Combined Data:", combinedData);
-
-        descriptionRef.current.resetForm();
-        editorRef.current?.commands.clearContent();
-        setUrlSets([]);
+        mutate(combinedData, {
+          onSuccess: (data) => { 
+            queryClient.invalidateQueries(["getSubmodules"])
+            console.log(data);
+            descriptionRef.current.resetForm();
+            editorRef.current?.commands.clearContent();
+            setUrlSets([]);
+            navigate(-1);
+          },
+          onError: (error) => {
+            console.error("❌ Submission failed:", error);
+            setFormError("Something went wrong. Please try again.");
+          },
+        });
       } catch (error) {
         console.error("Form submission error:", error);
       }
@@ -87,13 +101,13 @@ const AddSubModule = () => {
 
   return (
     <div
-      className={`h-screen w-full p-5 relative  transition-all duration-300 flex flex-col overflow-hidden no-scrollbar max-w-screen-xl  mx-auto`}
+      className={`h-screen w-full p-5 relative  transition-all duration-300 flex flex-col overflow-hidden  no-scrollbar max-w-screen-xl  mx-auto`}
     >
       <div className="w-full h-fit ">
         {/* header */}
         <div className="w-full h-fit flex flex-row justify-between items-center">
           <h1 className="capitalize text-heading font-bold font-satoshi text-2xl ">
-            Create module
+            Create submodule
           </h1>
           <div className="w-fit h-fit flex flex-row gap-2">
             <button
@@ -105,6 +119,7 @@ const AddSubModule = () => {
             <button
               type="button"
               onClick={handleExternalSubmit}
+              disabled={isPending}
               className="bg-buttonBlue flex items-center cursor-pointer hover:scale-105 transition-transform duration-300 active:scale-95 justify-center text-heading py-3 px-7 rounded-lg "
             >
               <IoIosSave /> Save
@@ -138,13 +153,16 @@ const AddSubModule = () => {
         {formError && (
           <div className="text-red-500 font-medium mb-2">{formError}</div>
         )}
-        <div className="w-full h-[78vh]  overflow-y-auto no-scrollbar ">
+        <div className="w-full h-[80vh]  overflow-y-auto no-scrollbar ">
           <div
             className={`w-full h-fit transition-all  duration-300 ${
               isDefault ? " block" : " hidden"
             }`}
           >
-            <AddDescriptionForm formRef={descriptionRef} editorRef={editorRef} />
+            <AddDescriptionForm
+              formRef={descriptionRef}
+              editorRef={editorRef}
+            />
           </div>
 
           <div
@@ -154,13 +172,14 @@ const AddSubModule = () => {
           >
             <AddUrlForm
               formRef={urlRef}
+              editorRef={editorRef}
               urlSets={urlSets}
               setUrlSets={setUrlSets}
             />
           </div>
 
           {/* Add URL Set Button */}
-          <div className="w-full flex justify-end mt-4">
+          <div className="w-full flex justify-end mt-4 pr-4">
             <button
               type="button"
               onClick={addUrlSet}
@@ -186,9 +205,13 @@ const AddSubModule = () => {
                       <p>
                         <strong>Type:</strong> {set.urlType}
                       </p>
-                      <p className="mt-1 whitespace-pre-wrap">
-                        <strong>API:</strong> {set.apiContent}
-                      </p>
+                      <span>
+                        <strong>API:</strong>
+                        <DescriptionRenderer
+                          content={set.apiContent}
+                          className="mt-1 whitespace-pre-wrap"
+                        />
+                      </span>
                     </div>
                     <button
                       onClick={() => handleDeleteUrlSet(index)}

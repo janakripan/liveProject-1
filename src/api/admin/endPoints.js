@@ -39,3 +39,15 @@ export const POST_MODULES = "postProjectModules"
 
 // update Modules 
 export const UPDATE_MODULES = "putProjectModules"
+
+// get sub modules
+
+export const GET_SUB_MODULES = "getProjectSubModules"
+
+// post  sub modules
+
+export const POST_SUB_MODULES = "postProjectSubModules"
+
+// update sub modules
+
+export const UPDATE_SUB_MODULES = "putProjectSubModules"

@@ -1,31 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaCaretRight, FaPlus } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router";
-import { projectData } from "../../../constants/Projects/ProjectConstant";
 import { ImSortAmountAsc } from "react-icons/im";
 import SearchBar from "../../../components/Shared/SearchBar";
 import SubmodulesTable from "./components/SubmodulesTable";
+import { useModules } from "../../../contexts/admin/ModulesApiContext";
+import { useSubmodule } from "../../../contexts/admin/SubmodulesApiContext";
+import loader from '../../../assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg'
 
 const ModuleDetails = () => {
   const [selectOpen, setSelectOpen] = useState(false);
   const { projectId, moduleId } = useParams();
+  const {modules} = useModules()
+  const {submodules , isLoading , error} = useSubmodule()
   const navigate = useNavigate();
   const selectRef = useRef(null);
 
-  const project = projectData.find(
-    (project) => String(project.project_id) === String(projectId)
-  );
-  const module = project?.modules.find(
-    (module) => String(module.module_id) === String(moduleId)
-  );
-  const [displayData, setDisplayData] = useState(module?.sub_modules || []);
+  const projectModules = modules?.filter((mod) => Number(mod.projectAID) === Number(projectId))
+  const relatedSubmodules = submodules?.filter(mod =>Number(mod.moduleID)=== Number(moduleId))
 
-  useEffect(() => {
-    const updatedModule = project?.modules.find(
-      (m) => String(m.module_id) === String(moduleId)
-    );
-    setDisplayData(updatedModule || []);
-  }, [moduleId]);
+  console.log(relatedSubmodules)
+
+  const module = projectModules?.find(
+    (module) => Number(module.moduleID) === Number(moduleId)
+  );
+  
+  const [displayData, setDisplayData] = useState(relatedSubmodules|| []);
+
+useEffect(() => {
+  if (JSON.stringify(displayData) !== JSON.stringify(relatedSubmodules)) {
+    setDisplayData(relatedSubmodules || []);
+  }
+}, [relatedSubmodules,displayData]);
 
   const handleChange = (e) => {
     const selectedId = e.target.value;
@@ -37,7 +43,7 @@ const ModuleDetails = () => {
 
   const handleSearch = (query) => {
     if (!query.trim()) {
-      setDisplayData(project?.modules || []);
+      setDisplayData(modules || []);
 
       return;
     }
@@ -49,8 +55,23 @@ const ModuleDetails = () => {
     );
     setDisplayData(filteredResults);
   };
-  console.log(displayData);
-
+ 
+   if (isLoading)
+      return (
+        <div className="w-full h-screen bg-Bgprimary flex flex-row items-center justify-center">
+          {" "}
+          <img src={loader} alt="loading animation" className="w-20 h-20" />{" "}
+        </div>
+      );
+    if (error)
+      return (
+        <div className="w-full h-screen flex flex-row bg-Bgprimary items-center justify-center">
+          {" "}
+          <p className="font-bold text-xl font-satoshi text-white">
+            Error fetching details
+          </p>
+        </div>
+      );
   return (
     <div
       className={`h-screen w-full p-5 relative  transition-all duration-300 flex flex-col  max-w-screen-xl  mx-auto`}
@@ -59,7 +80,7 @@ const ModuleDetails = () => {
         <div className="w-full h-fit flex flex-row justify-between items-center  ">
           <div className="flex flex-col md:flex-row md:items-center items-start md:gap-x-2 ">
             <span className="font-satoshi text-[#40CBE0] font-medium text-xs md:text-base ">
-              Project
+              Module
             </span>
             <div className="flex flex-row md:gap-2 items-center">
               <span
@@ -81,9 +102,9 @@ const ModuleDetails = () => {
                   value={moduleId}
                   className=" text-heading border-0 appearance-none transition-all  font-satoshi font-bold md:text-base text-xs capitalize bg-Bgprimary focus:outline-0  p-2 rounded-md"
                 >
-                  {project.modules.map((project) => (
-                    <option key={project.module_id} value={project.module_id}>
-                      {project.name}
+                  {projectModules?.map((mod) => (
+                    <option key={mod.moduleID} value={mod.moduleID}>
+                      {mod.moduleName}
                     </option>
                   ))}
                 </select>

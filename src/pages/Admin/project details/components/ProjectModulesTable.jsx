@@ -33,6 +33,15 @@ const ProjectModulesTable = ({
     return "in progress"
   }else{return "completed"}
 }
+if (!displayData.length){
+  return(
+    <div className="w-full h-full min-h-[500px] flex flex-row items-center justify-center">
+      <span className="capitalize font-satoshi font-bold text-3xl text-heading  ">
+        there are no modules in this project
+      </span>
+    </div>
+  )
+}
 
   return (
     <div className="w-full  bg-Bgprimary border border-[#4C4F55] overflow-x-auto no-scrollbar rounded-lg ">

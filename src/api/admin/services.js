@@ -5,9 +5,11 @@ import {
   GET_DEVELOPERS,
   GET_MODULES,
   GET_PROJECTS,
+  GET_SUB_MODULES,
   POST_DEVELOPERS,
   POST_MODULES,
   POST_PROJECTS,
+  POST_SUB_MODULES,
   UPDATE_DEVELOPERS,
   UPDATE_MODULES,
   UPDATE_PROJECT,
@@ -108,3 +110,20 @@ export const updateModules = ({data, projectAID,moduleID}) =>{
     },
   })
 }
+
+
+//////////////////////   GET SUB MODULES ⚠️⚠️⚠️⚠️⚠️⚠️   ////////////////////////////
+
+export const getSubModules = async () =>{
+  const response = await DevAPI.get(GET_SUB_MODULES);
+  return response.data
+}
+
+//////////////////////   POST SUB MODULES ⚠️⚠️⚠️⚠️⚠️⚠️   ////////////////////////////
+
+export const postSubmodules = (data)=>
+  DevAPI.post(POST_SUB_MODULES ,data)
+
+
+
+//////////////////////   PUT SUB MODULES ⚠️⚠️⚠️⚠️⚠️⚠️   ////////////////////////////

@@ -3,16 +3,17 @@ import {
   getDevelopers,
   getModules,
   getProjects,
+  getSubModules,
   postDevelopers,
   postModules,
   postProjects,
+  postSubmodules,
   updateDevelopers,
   updateModules,
   updateProjects,
   userLogin,
   userLogout,
 } from "./services";
-
 
 ///////////////////////// AUTHENTICATION ⚠️⚠️⚠️⚠️////////////////////////
 
@@ -28,7 +29,7 @@ export const useUserLogout = () =>
     mutationKey: ["userLogout"],
   });
 
-  /////////////////////DEVELOPER HOOKS 👨‍💻👨‍💻👨‍💻👨‍💻////////////////////////
+/////////////////////DEVELOPER HOOKS 👨‍💻👨‍💻👨‍💻👨‍💻////////////////////////
 
 export const useGetDevelopers = () =>
   useQuery({
@@ -48,8 +49,7 @@ export const useUpdateDevelopers = () =>
     mutationKey: ["updateDevelopers"],
   });
 
-
-  //////////////////////////PROJECTS HOOKS🗃️🗃️🗃️🗃️🗃️ ///////////////////
+//////////////////////////PROJECTS HOOKS🗃️🗃️🗃️🗃️🗃️ ///////////////////
 
 export const useGetProjects = () =>
   useQuery({
@@ -69,22 +69,35 @@ export const useUpdateProjects = () =>
     mutationKey: ["updateProjects"],
   });
 
-  ////////////////  MODULE HOOKS 📂📂📂📂 //////////////////
+////////////////  MODULE HOOKS 📂📂📂📂 //////////////////
 
- export const useGetModules = () =>
+export const useGetModules = () =>
   useQuery({
-    queryFn:getModules,
-    queryKey:["getModules"]
-  })
+    queryFn: getModules,
+    queryKey: ["getModules"],
+  });
 
-  export const usePostModules = () =>
-    useMutation({
-      mutationFn:postModules,
-      mutationKey:["postModules"]
-    })
+export const usePostModules = () =>
+  useMutation({
+    mutationFn: postModules,
+    mutationKey: ["postModules"],
+  });
 
-  export const useUpdateModules = () =>
-    useMutation({
-      mutationFn:({data, projectAID , moduleID}) => updateModules({data, projectAID , moduleID}),
-      mutationKey:["updateModules"]
-    })
+export const useUpdateModules = () =>
+  useMutation({
+    mutationFn: ({ data, projectAID, moduleID }) =>
+      updateModules({ data, projectAID, moduleID }),
+    mutationKey: ["updateModules"],
+  });
+
+export const useGetSubModules = () =>
+  useQuery({
+    queryKey: ["getSubmodules"],
+    queryFn: getSubModules,
+  });
+
+export const usePostSubmodules = () =>
+  useMutation({
+    mutationFn: postSubmodules,
+    mutationKey: ["postSubmodules"],
+  });

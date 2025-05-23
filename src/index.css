@@ -36,8 +36,16 @@
  
 }
 @layer base {
+  .rich-text-renderer ul,
+  .rich-text-renderer ol {
+    @apply list-disc list-inside ml-4 mb-2;
+  }
+
+  .rich-text-renderer ol {
+    @apply list-decimal;
+  }
   .ProseMirror {
-      @apply focus:outline-none focus:ring-0 text-heading w-full h-full caret-heading;
+      @apply focus:outline-none  focus:ring-0 text-heading w-full h-full caret-heading;
   }
 }
 

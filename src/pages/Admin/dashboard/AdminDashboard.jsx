@@ -2,8 +2,28 @@ import React from "react";
 import Report from "./components/Report";
 import { Link } from "react-router";
 import ProjectsTable from "./components/ProjectsTable";
+import { useProjects } from "../../../contexts/admin/ProjectApiContext";
+import loader from '../../../assets/loding animation/Dual Ball@1x-1.0s-200px-200px.svg'
 
 function AdminDashboard() {
+  const { isLoading, error} = useProjects()
+
+   if (isLoading)
+      return (
+        <div className="w-full h-screen bg-Bgprimary flex flex-row items-center justify-center">
+          {" "}
+          <img src={loader} alt="loading animation" className="w-20 h-20" />{" "}
+        </div>
+      );
+    if (error)
+      return (
+        <div className="w-full h-screen flex flex-row bg-Bgprimary items-center justify-center">
+          {" "}
+          <p className="font-bold text-xl font-satoshi text-white">
+            Error fetching developers
+          </p>
+        </div>
+      );
   return (
     <div
       className={`h-full p-5 relative  transition-all duration-300 flex flex-col w-full max-w-screen-xl  mx-auto`}

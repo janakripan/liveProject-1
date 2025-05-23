@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useField, useFormikContext } from "formik";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -16,6 +16,7 @@ import { ColorPickerDropdown } from "./ColorPickerDropdown ";
 import { CgArrowsBreakeV } from "react-icons/cg";
 import { FaLink } from "react-icons/fa6";
 import FontSize from "../../utils/FontSize";
+import HorizontalRule from "@tiptap/extension-horizontal-rule";
 
 const MenuBar = React.memo(({ editor }) => {
   const [, setEditorState] = useState(0);
@@ -216,7 +217,7 @@ const MenuBar = React.memo(({ editor }) => {
   );
 });
 
-const RichTextField = ({ name, label ,editorRef}) => {
+const RichTextField = ({ name, label, editorRef }) => {
   const [field, meta] = useField(name);
   const { setFieldValue } = useFormikContext();
 
@@ -242,13 +243,13 @@ const RichTextField = ({ name, label ,editorRef}) => {
       typeof field.value === "object" &&
       field.value.type === "doc"
         ? field.value
-        : { type: "doc", content: [] },
+        : "<p></p>",
     onUpdate: ({ editor }) => {
       const json = editor.getJSON();
       setEditorValue(json);
     },
   });
-  
+
   // ✅ Separate useEffect to assign ref
   useEffect(() => {
     if (editorRef && editor) {
@@ -262,17 +263,23 @@ const RichTextField = ({ name, label ,editorRef}) => {
         <label className="block font-semibold w-full h-fit mb-1">{label}</label>
       )}
 
-      <MenuBar editor={editor} />
-
-      <div
-        onClick={() => editor?.chain().focus().run()}
-        className="editor-wrapper border rounded bg-Bgprimary border-Bghilight min-h-[150px] p-2 prose prose-sm max-w-none list-outside text-commontext focus:outline-none focus:ring-1 focus:ring-buttonBlue"
-      >
-        {editor ? (
-          <EditorContent key={field.value} editor={editor} />
-        ) : (
-          <div>Loading editor...</div>
-        )}
+      <div className="border rounded bg-Bgprimary border-Bghilight w-full overflow-hidden flex flex-col h-[500px] md:h-[300px]">
+        <div className="bg-transparent sticky top-0 z-10">
+          <MenuBar editor={editor} />
+        </div>
+        <div
+          onClick={() => editor?.chain().focus().run()}
+          className="editor-wrapper  rounded bg-Bgprimary border-Bghilight min-h-full md:min-h-[150px] w-full min-w-0 overflow-auto p-2 prose prose-sm max-w-none list-outside text-commontext focus:outline-none focus:ring-1 focus:ring-buttonBlue"
+        >
+          {editor ? (
+            <EditorContent
+              editor={editor}
+              className="prose max-w-none w-full min-w-0 leading-tight"
+            />
+          ) : (
+            <div>Loading editor...</div>
+          )}
+        </div>
       </div>
 
       {meta.touched && meta.error && (

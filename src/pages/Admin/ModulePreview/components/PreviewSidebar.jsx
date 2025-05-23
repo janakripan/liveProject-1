@@ -36,8 +36,8 @@ export default function PreviewSidebar({ data, scrollContainerRef, edit,setEditP
       observerRef.current = observer;
 
       const allElements = data.flatMap((module) =>
-        module.sub_modules.map((sub) =>
-          document.getElementById(sub.sub_module_id)
+        module.subModules.map((sub) =>
+          document.getElementById(sub.subModuleID)
         )
       );
 
@@ -58,26 +58,26 @@ export default function PreviewSidebar({ data, scrollContainerRef, edit,setEditP
   return (
     <div className="w-full h-full bg-Bgsecondary text-heading p-1.5 space-y-4">
       {data?.map((module) => (
-        <div key={module.module_id}>
+        <div key={module.moduleID}>
           {/* Parent Item */}
           <div
-            onClick={() => toggleDropdown(module.name)}
+            onClick={() => toggleDropdown(module.moduleID)}
             className={`flex items-center justify-between px-2 py-3 rounded-md hover:bg-[#3B3D43] transition-all duration-100 cursor-pointer  ${
-              module.sub_modules.some((sub) => sub.sub_module_id == activeId)
+              module.subModules.some((sub) =>Number( sub.subModuleID )== Number(activeId))
                 ? "bg-Bghilight text-buttonBlue"
                 : "hover:bg-gray-700"
             }`}
           >
-            <span className="capitalize">{module.name}</span>
+            <span className="capitalize">{module.moduleName}</span>
             <span>
               {edit ? (
                 <button
-                onClick={()=>{setEditProject(true);setEditModuleId(module.module_id)}}
+                onClick={()=>{setEditProject(true);setEditModuleId(module.moduleID)}}
                  className="h-full aspect-square rounded-md cursor-pointer flex items-center justify-center hover:bg-Bghilight p-2 active:scale-95 transition-all duration-150">
                   <FiEdit />
                 </button>
               ) 
-              : openDropdowns[module.name] ? (
+              : openDropdowns[module.moduleID] ? (
                 <FaChevronUp size={16} />
               ) : (
                 <FaChevronDown size={16} />
@@ -86,19 +86,19 @@ export default function PreviewSidebar({ data, scrollContainerRef, edit,setEditP
           </div>
 
           {/* Children */}
-          {openDropdowns[module.name] && (
+          {openDropdowns[module.moduleID] && (
             <div className="space-y-1 mt-1 flex flex-col">
-              {module.sub_modules.map((child) => (
+              {module.subModules?.map((child) => (
                 <button
-                  key={child.sub_module_id}
+                  key={child.subModuleID}
                   className={`block w-full text-left px-2 py-1 rounded capitalize transition-all duration-100 ${
-                    activeId == child.sub_module_id
+                    activeId == child.subModuleID
                       ? "bg-[#9747FF0A] text-[#9747FF]"
                       : "hover:bg-gray-700"
                   }`}
                   onClick={() => {
                     const element = document.getElementById(
-                      child.sub_module_id
+                      child.subModuleID
                     );
                     if (element) {
                       element.scrollIntoView({
@@ -108,7 +108,7 @@ export default function PreviewSidebar({ data, scrollContainerRef, edit,setEditP
                     }
                   }}
                 >
-                  {child.name}
+                  {child.subModuleID}
                 </button>
               ))}
             </div>
