@@ -2,42 +2,41 @@ import React, { useEffect, useRef, useState } from "react";
 import { IoIosSave } from "react-icons/io";
 import { useNavigate, useParams } from "react-router";
 import { MdDeleteForever } from "react-icons/md";
-
-
-import { projectData } from "../../../constants/Projects/ProjectConstant";
 import AddDescriptionForm from "../AddSubModule/components/AddDescriptionForm";
 import AddUrlForm from "../AddSubModule/components/AddUrlForm";
+import { useSubmodule } from "../../../contexts/admin/SubmodulesApiContext";
+import DescriptionRenderer from "../../../components/Shared/DescriptonRenderer";
+import { useUpdateSubmodules } from "../../../api/admin/hooks";
+import { useQueryClient } from "@tanstack/react-query";
 
 const EditSubModule = () => {
   const descriptionRef = useRef();
   const urlRef = useRef();
+  const editorRef = useRef();
   const navigate = useNavigate();
   const [isDefault, setIsDefault] = useState(true);
   const [formError, setFormError] = useState("");
   const { projectId, moduleId, subModuleId } = useParams();
+  const {submodules} = useSubmodule()
+  const { mutate, isPending } = useUpdateSubmodules();
+  const queryClient = useQueryClient()
  
   const [urlSets, setUrlSets] = useState([]);
 
-  const project = projectData.find(
-    (p) => String(p.project_id) === String(projectId)
-  );
 
-  const module = project?.modules?.find(
-    (m) => String(m.module_id) === String(moduleId)
-  );
 
-  const subModule = module?.sub_modules?.find(
-    (s) => String(s.sub_module_id) === String(subModuleId)
-  );
+  const subModule = submodules?.find(sub => Number( sub.subModuleID)===Number(subModuleId))
+  console.log(subModule)
 
   useEffect(() => {
-    if (subModule?.urlSets?.length > 0) {
-      setUrlSets(subModule.urlSets);
+    if(Array.isArray(subModule?.customAttributes) && subModule.customAttributes.length > 0) {
+      setUrlSets(subModule.customAttributes);
     }
+    
   }, [subModule]);
 
   const addUrlSet = async () => {
-    if (urlRef.current) {
+   if (urlRef.current) {
       const urlErrors = await urlRef.current.validateForm();
       const isUrlValid = Object.keys(urlErrors).length === 0;
 
@@ -49,11 +48,9 @@ const EditSubModule = () => {
         return;
       }
 
-      await urlRef.current.submitForm();
       const urlData = urlRef.current.values;
 
       setUrlSets((prev) => [...prev, urlData]);
-      console.log(urlSets);
 
       urlRef.current.resetForm();
     }
@@ -70,7 +67,6 @@ const EditSubModule = () => {
         );
         descriptionRef.current.setTouched({
           name: true,
-          isSubAttribute: true,
           description: true,
         });
         return;
@@ -87,19 +83,41 @@ const EditSubModule = () => {
         const descData = await descriptionRef.current.submitForm();
         
 
-        const combinedData = {
-          sub_module_id: subModuleId,
-          ...descData,
-          description: descData,
-          urls: urlSets,
+       const combinedData = {
+          
+          subModuleDescription: JSON.stringify(descData.description),
+          customAttributes: JSON.stringify(urlSets),
+          isActive: true,
         };
 
-        console.log("✅ Combined Data:", combinedData);
+        mutate(
+          {
+            projectAID : projectId,
+            moduleID: moduleId,
+            subModuleID: subModuleId,
+            data:combinedData,
+          },
+          {
+            onSuccess:(data)=>{ 
+            queryClient.invalidateQueries(["getSubmodules"])
+            console.log(data);
+            descriptionRef.current.resetForm();
+            urlRef.current.resetForm();
+            editorRef.current?.commands.clearContent();
+            setUrlSets([]);
+            navigate(`/admin/project/${projectId}/preview`);;
+          },
+          onError: (error) => {
+            console.error("❌ Submission failed:", error);
+            setFormError("Something went wrong. Please try again.");
+          },
+          }
+        )
 
-        descriptionRef.current.resetForm();
-        setUrlSets([]);
 
-        navigate(`/admin/project/${projectId}/preview`);
+      
+        
+       
       } catch (error) {
         console.error("Form submission error:", error);
       }
@@ -119,7 +137,7 @@ const EditSubModule = () => {
         {/* header */}
         <div className="w-full h-fit flex flex-row justify-between items-center">
           <h1 className="capitalize text-heading font-bold font-satoshi text-2xl ">
-            {subModule ? `Edit Submodule: ${subModule.name}` : "Edit Submodule"}
+            {subModule ? `Edit Submodule: ${subModule.name || "no name yet"}` : "Edit Submodule"}
           </h1>
           <div className="w-fit h-fit flex flex-row gap-2">
             <button
@@ -131,6 +149,7 @@ const EditSubModule = () => {
             <button
               type="button"
               onClick={handleExternalSubmit}
+              disabled={isPending}
               className="bg-buttonBlue flex items-center cursor-pointer hover:scale-105 transition-transform duration-300 active:scale-95 justify-center text-heading py-3 px-7 rounded-lg "
             >
               <IoIosSave /> Save
@@ -174,8 +193,7 @@ const EditSubModule = () => {
               formRef={descriptionRef}
               initialValues={{
                 name: subModule?.name || "",
-                isSubAttribute: subModule?.isSubAttribute || true,
-                description: subModule?.description || "",
+                description: subModule?.subModuleDescription || "",
               }}
             />
           </div>
@@ -211,6 +229,7 @@ const EditSubModule = () => {
 
           {/* List of Added URL Sets */}
           {urlSets.length > 0 && (
+            
             <div className="mt-4">
               <h3 className="font-bold text-heading mb-2">Added URL Sets:</h3>
               <ul className="space-y-2">
@@ -219,16 +238,17 @@ const EditSubModule = () => {
                     key={index}
                     className="bg-Bghilight rounded-md p-4 text-sm flex text-heading justify-between items-start"
                   >
-                    <div className="flex-1">
+                     <div className="flex-1">
                       <p>
                         <strong>Type:</strong> {set.urlType}
                       </p>
-                      <p className="mt-1 whitespace-pre-wrap">
-                        <strong>API:</strong>{" "}
-                        {set.apiContent?.trim() || (
-                          <em className="text-gray-400">[Empty]</em>
-                        )}
-                      </p>
+                      <span>
+                        <strong>API:</strong>
+                        <DescriptionRenderer
+                          content={set.apiContent}
+                          className="mt-1 whitespace-pre-wrap"
+                        />
+                      </span>
                     </div>
                     <button
                       onClick={() => handleDeleteUrlSet(index)}

@@ -7,13 +7,13 @@ const SubmodulesTable = ({ displayData }) => {
   const navigate = useNavigate();
   const { projectId } = useParams();
 
- const getTimeAgo = (dateString) => {
-  if (!dateString) return "No date";
+const getTimeAgo = (dateString) => {
+  if (!dateString) return "Not updated yet";
 
   const past = new Date(dateString);
-  if (isNaN(past.getTime())) return "Invalid date";
-
-  if (past.getFullYear() < 1900) return "Not updated yet";
+  if (isNaN(past.getTime()) || dateString === "0001-01-01T00:00:00") {
+    return "Not updated yet";  // Handle invalid or placeholder date
+  }
 
   const now = new Date();
   const diff = Math.floor((now - past) / 1000);
@@ -25,7 +25,6 @@ const SubmodulesTable = ({ displayData }) => {
   if (diff < 31536000) return `${Math.floor(diff / 2592000)} month(s) ago`;
   return `${Math.floor(diff / 31536000)} year(s) ago`;
 };
-
   const statusUpdater = (status)=>{
   if(status == true){
     return "in progress"

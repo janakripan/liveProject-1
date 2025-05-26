@@ -73,6 +73,7 @@ const AddSubModule = () => {
           moduleID: moduleId,
           subModuleDescription: JSON.stringify(descData.description),
           customAttributes: JSON.stringify(urlSets),
+          
         };
 
         mutate(combinedData, {

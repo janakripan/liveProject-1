@@ -13,6 +13,7 @@ import {
   UPDATE_DEVELOPERS,
   UPDATE_MODULES,
   UPDATE_PROJECT,
+  UPDATE_SUB_MODULES,
 } from "./endPoints";
 
 //////////////////////   USER LOGIN ⚠️⚠️⚠️⚠️⚠️⚠️   ////////////////////////////
@@ -127,3 +128,15 @@ export const postSubmodules = (data)=>
 
 
 //////////////////////   PUT SUB MODULES ⚠️⚠️⚠️⚠️⚠️⚠️   ////////////////////////////
+
+export const updateSubmodules= ({data, projectAID , moduleID , subModuleID})=>{
+     return DevAPI.put(UPDATE_SUB_MODULES , data, {
+     headers: {
+      accept: "*/*",
+      projectAID: projectAID,
+      moduleID:moduleID,
+      subModuleID:subModuleID,
+      "Content-Type": "application/json",
+    },
+  })
+}

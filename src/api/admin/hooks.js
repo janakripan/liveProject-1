@@ -11,6 +11,7 @@ import {
   updateDevelopers,
   updateModules,
   updateProjects,
+  updateSubmodules,
   userLogin,
   userLogout,
 } from "./services";
@@ -101,3 +102,9 @@ export const usePostSubmodules = () =>
     mutationFn: postSubmodules,
     mutationKey: ["postSubmodules"],
   });
+
+  export const useUpdateSubmodules = ()=>
+    useMutation({
+      mutationFn:({data, projectAID , moduleID , subModuleID})=>updateSubmodules({data, projectAID , moduleID , subModuleID}),
+      mutationKey:['updateSubmodules']
+    })
