@@ -76,7 +76,7 @@ function AddModuleForm({ handleClick }) {
                 htmlFor="moduleDescription"
                 className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2"
               >
-                Module Name
+                Module Description
               </label>
               <Field
                 type="text"

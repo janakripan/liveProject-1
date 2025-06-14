@@ -67,7 +67,7 @@ function AddProjectForm({ handleClick }) {
                 htmlFor="projectDescription"
                 className="block font-dm-sans  text-heading text-sm md:text-base font-medium mb-2"
               >
-                Project Name
+                Project Description
               </label>
               <Field
                 type="text"

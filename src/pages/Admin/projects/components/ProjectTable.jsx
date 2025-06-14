@@ -5,57 +5,79 @@ import { useNavigate } from "react-router";
 
 function ProjectTable({ data, setEdit, setEditId }) {
   const navigate = useNavigate();
-const statusUpdater = (status)=>{
-  if(status == true){
-    return "in progress"
-  }else{return "completed"}
-}
-
+  const statusUpdater = (status) => {
+    if (status == true) {
+      return "in progress";
+    } else {
+      return "completed";
+    }
+  };
 
   return (
     <div className="w-full  bg-Bgprimary border border-[#4C4F55] overflow-x-auto no-scrollbar rounded-lg ">
-      <table className="w-full table-auto border-collapse">
-        <thead className="bg-Bghilight text-left">
-          <tr className="h-[60px] text-heading text-left">
-            <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
-              project name
+      <table className="w-full table-auto border-collapse shadow-lg rounded-lg overflow-hidden">
+        <thead className="bg-Bghilight">
+          <tr className="h-[65px]">
+            <th className="text-sm md:text-base font-satoshi font-bold text-heading text-left px-6 py-4 tracking-wide uppercase">
+              PROJECT NAME
             </th>
-            <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
-              description
+            <th className="text-sm md:text-base font-satoshi font-bold text-heading text-left px-6 py-4 tracking-wide">
+              DESCRIPTION
             </th>
-            
-            <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
-              status
+            <th className="text-sm md:text-base font-satoshi font-bold text-heading text-left px-6 py-4 tracking-wide">
+              STATUS
             </th>
-          
-            <th className="text-sm md:text-base font-satoshi font-bold capitalize px-5 py-3">
-              actions
+            <th className="text-sm md:text-base font-satoshi font-bold text-heading text-left px-6 py-4 tracking-wide">
+              ACTIONS
             </th>
           </tr>
         </thead>
-        <tbody>
-          {data?.map((project) => (
+        <tbody className="divide-y divide-[#4C4F55]/30">
+          {data?.map((project, index) => (
             <tr
               key={project.projectAID}
-              className=" border bg-Bgprimary text-heading border-[#4C4F55]"
+              className={`bg-Bgprimary text-heading hover:bg-[#4C4F55]/10 transition-colors duration-200 ${
+                index % 2 === 0 ? "bg-opacity-100" : "bg-opacity-95"
+              }`}
             >
-              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
-                {project.projectName}
+              <td className="px-6 py-5 text-left font-satoshi text-sm md:text-base font-medium">
+                <div className="flex items-center">
+                  <span
+                    className="truncate max-w-[200px]"
+                    title={project.projectName}
+                  >
+                    {project.projectName}
+                  </span>
+                </div>
               </td>
-              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
-                {project.projectDescription}
+              <td className="px-6 py-5 text-left font-satoshi text-sm md:text-base font-normal text-gray-300">
+                <div className="max-w-[300px]">
+                  <span
+                    className="line-clamp-2"
+                    title={project.projectDescription}
+                  >
+                    {project.projectDescription}
+                  </span>
+                </div>
               </td>
-              
-              <td className={`md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal capitalize  ${project.isActive === true ?" text-yellow-500  " :"text-[#30D158] "} `} >
-                {statusUpdater(project.isActive)}
+              <td className="px-6 py-5 text-left">
+                <span
+                  className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs md:text-sm font-medium font-satoshi whitespace-nowrap ${
+                    project.isActive === true
+                      ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
+                      : "bg-green-500/20 text-[#30D158] border border-green-500/30"
+                  }`}
+                >
+                  {statusUpdater(project.isActive)}
+                </span>
               </td>
-              <td className="md:px-5 px-2 md:py-4 py-2 text-left font-satoshi text-xs md:text-base font-normal ">
-                <div className="w-full h-full flex flex-row items-center gap-x-2.5">
+              <td className="px-6 py-5">
+                <div className="flex items-center gap-3">
                   <button
                     onClick={() =>
                       navigate(`/admin/project/${project.projectAID}`)
                     }
-                    className="py-1.5 hover:scale-110 transition-all duration-300 px-2.5 flex items-center justify-center bg-[#3A3D44] text-white font-sans rounded-md font-medium text-xs md:text-base hover:cursor-pointer "
+                    className="inline-flex items-center justify-center px-4 py-2.5 bg-[#3A3D44] hover:bg-[#4A4D54] text-white font-satoshi font-medium text-xs md:text-sm rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#3A3D44]/50"
                   >
                     View
                   </button>
@@ -64,12 +86,16 @@ const statusUpdater = (status)=>{
                       setEdit(true);
                       setEditId(project.projectAID);
                     }}
-                    className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#16A34A] text-[#16A34A] text-sm md:text-xl hover:cursor-pointer "
+                    className="inline-flex items-center justify-center p-2.5 border border-[#16A34A] text-[#16A34A] hover:bg-[#16A34A]/10 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#16A34A]/50"
+                    title="Edit Project"
                   >
-                    <FiEdit />
+                    <FiEdit className="w-4 h-4 md:w-5 md:h-5" />
                   </button>
-                  <button className="py-1.5 hover:scale-110 transition-all duration-300  px-2.5 flex items-center justify-center rounded-md font-medium border border-[#DC2626] text-[#DC2626] text-sm md:text-xl hover:cursor-pointer ">
-                    <RiDeleteBin5Line />
+                  <button
+                    className="inline-flex items-center justify-center p-2.5 border border-[#DC2626] text-[#DC2626] hover:bg-[#DC2626]/10 rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#DC2626]/50"
+                    title="Delete Project"
+                  >
+                    <RiDeleteBin5Line className="w-4 h-4 md:w-5 md:h-5" />
                   </button>
                 </div>
               </td>
